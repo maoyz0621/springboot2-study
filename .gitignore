@@ -1,0 +1,43 @@
+/target/
+!.mvn/wrapper/maven-wrapper.jar
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/build/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+/mvnw.cmd
+/mvnw
+/.mvn/
+/springboot2-task/.mvn/
+/springboot2-task/mvnw
+/springboot2-task/mvnw.cmd
+/springboot2-validation/.mvn/
+/springboot2-validation/mvnw.cmd
+/springboot2-validation/mvnw
+/springboot2-swagger/.mvn/
+/springboot2-swagger/mvnw
+/springboot2-swagger/mvnw.cmd
+/springboot2-mybatis/.mvn/
+/springboot2-mybatis/mvnw
+/springboot2-mybatis/mvnw.cmd
+/springboot2-async/src/
+/springboot2-async/mvnw.cmd
+/springboot2-async/mvnw

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC
+        "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+    <!--　外部资源文件　-->
+    <properties resource="config/jdbc.properties"/>
+
+    <!-- !!!! Driver Class Path !!!! -->
+    <classPathEntry
+            location="/home/maoyz0621/.m2/repository/mysql/mysql-connector-java/5.1.42/mysql-connector-java-5.1.42.jar"/>
+
+    <context id="context" targetRuntime="MyBatis3">
+
+        <!-- 生成的pojo，将implements Serializable-->
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"></plugin>
+
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"/>
+            <property name="suppressDate" value="true"/>
+        </commentGenerator>
+
+        <!-- !!!! 连接数据库 !!!! -->
+        <jdbcConnection driverClass="${spring.datasource.druid.first.master.driver-class-name}"
+                        connectionURL="${spring.datasource.druid.first.master.url}"
+                        userId="${spring.datasource.druid.first.master.username}"
+                        password="${spring.datasource.druid.first.master.password}"/>
+
+        <!--
+        默认false，把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer
+            true，把JDBC DECIMAL 和 NUMERIC 类型解析为java.math.BigDecimal
+        -->
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <!-- !!!! Model　指定javabean的生成策略 !!!!
+            targetPackage：目标包名
+            targetProject：目标工程
+        -->
+        <javaModelGenerator targetPackage="com.myz.springboot2mybatis.entity" targetProject="./src/main/java">
+            <property name="enableSubPackages" value="true"/>
+            <!-- 从数据库返回的值被清理前后的空格  -->
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <!-- !!!! Mapper XML sql映射生成策略　!!!! -->
+        <sqlMapGenerator targetPackage="mapper" targetProject="./src/main/resources">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <!-- !!!! Mapper Interface 指定Mapper接口　!!!! -->
+        <javaClientGenerator targetPackage="com.myz.springboot2mybatis.mapper" targetProject="./src/main/java"
+                             type="XMLMAPPER">
+            <property name="enableSubPackages" value="false"/>
+        </javaClientGenerator>
+
+        <!-- !!!! Table Configurations 逆向生成javabean !!!!
+            tableName:数据库表名
+            domainObjectName：javabean名称
+        -->
+        <table tableName="test_user" domainObjectName="UserEntity"
+               enableCountByExample="true"
+               enableDeleteByExample="true"
+               enableSelectByExample="true"
+               enableUpdateByExample="true"
+               enableInsert="true"
+               enableSelectByPrimaryKey="true"
+               enableDeleteByPrimaryKey="true"
+               enableUpdateByPrimaryKey="true"
+        />
+
+        <table tableName="test_role" domainObjectName="Role"
+        enableCountByExample="true"
+        enableDeleteByExample="true"
+        enableSelectByExample="true"
+        enableUpdateByExample="true"
+        enableInsert="true"
+        enableSelectByPrimaryKey="true"
+        enableDeleteByPrimaryKey="true"
+        enableUpdateByPrimaryKey="true" />
+    </context>
+</generatorConfiguration>
