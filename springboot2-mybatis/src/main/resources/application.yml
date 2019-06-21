@@ -2,7 +2,6 @@ spring:
   profiles:
     active: dev
 
-
   datasource:
     #  数据源类型
     type: com.alibaba.druid.pool.DruidDataSource

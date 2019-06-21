@@ -66,8 +66,8 @@
         </where>
     </sql>
     <sql id="Base_Column_List">
-    ROLE_ID, ROLE_NAME
-  </sql>
+        ROLE_ID, ROLE_NAME
+    </sql>
     <select id="selectByExample" parameterType="com.myz.springboot2mybatis.module.entity.RoleExample"
             resultMap="BaseResultMap">
         select
@@ -90,19 +90,19 @@
         where ROLE_ID = #{roleId,jdbcType=INTEGER}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from test_role
-    where ROLE_ID = #{roleId,jdbcType=INTEGER}
-  </delete>
+        delete from test_role
+        where ROLE_ID = #{roleId,jdbcType=INTEGER}
+    </delete>
     <delete id="deleteByExample" parameterType="com.myz.springboot2mybatis.module.entity.RoleExample">
         delete from test_role
         <if test="_parameter != null">
             <include refid="Example_Where_Clause"/>
         </if>
     </delete>
-    <insert id="insert" parameterType="com.myz.springboot2mybatis.module.entity.Role">
-    insert into test_role (ROLE_ID, ROLE_NAME)
-    values (#{roleId,jdbcType=INTEGER}, #{roleName,jdbcType=VARCHAR})
-  </insert>
+    <insert id="insert" parameterType="com.myz.springboot2mybatis.module.entity.Role" useGeneratedKeys="true" keyProperty="ROLE_ID">
+        insert into test_role (ROLE_ID, ROLE_NAME)
+        values (#{roleId,jdbcType=INTEGER}, #{roleName,jdbcType=VARCHAR})
+    </insert>
     <insert id="insertSelective" parameterType="com.myz.springboot2mybatis.module.entity.Role">
         insert into test_role
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -161,8 +161,8 @@
         where ROLE_ID = #{roleId,jdbcType=INTEGER}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.myz.springboot2mybatis.module.entity.Role">
-    update test_role
-    set ROLE_NAME = #{roleName,jdbcType=VARCHAR}
-    where ROLE_ID = #{roleId,jdbcType=INTEGER}
-  </update>
+        update test_role
+        set ROLE_NAME = #{roleName,jdbcType=VARCHAR}
+        where ROLE_ID = #{roleId,jdbcType=INTEGER}
+    </update>
 </mapper>

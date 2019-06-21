@@ -24,14 +24,24 @@ import java.util.List;
  */
 @ControllerAdvice
 public class BindExceptionHandler {
+
     private static final Logger logger = LoggerFactory.getLogger(BindExceptionHandler.class);
+
+    @ExceptionHandler(Exception.class)
+    @ResponseBody
+    public Result handleException(Exception ex) {
+        Result errorResult = new Result();
+        if (ex instanceof BindException) {
+            handleBindException((BindException) ex, errorResult);
+        }
+
+        return errorResult;
+    }
 
     /**
      * BindException专门用来处理数据检验validation异常
      */
-    @ExceptionHandler(BindException.class)
-    @ResponseBody
-    public Result handleBindException(BindException ex) {
+    private Result handleBindException(BindException ex, Result errorResult) {
         // ex.getFieldError():随机返回一个对象属性的异常信息
         // 如果要一次性返回所有对象属性异常信息，则调用ex.getAllErrors()
 
@@ -57,7 +67,6 @@ public class BindExceptionHandler {
         }
 
         // 生成返回结果
-        Result errorResult = new Result();
         errorResult.setCode(400);
         errorResult.setMessage(sb.toString());
         return errorResult;

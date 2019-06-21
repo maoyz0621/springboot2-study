@@ -38,6 +38,11 @@
 /springboot2-mybatis/.mvn/
 /springboot2-mybatis/mvnw
 /springboot2-mybatis/mvnw.cmd
-/springboot2-async/src/
 /springboot2-async/mvnw.cmd
 /springboot2-async/mvnw
+/springboot2-hikaricp/.mvn/
+/springboot2-hikaricp/mvnw.cmd
+/springboot2-hikaricp/mvnw
+/springboot2-mybatis-plus/.mvn/
+/springboot2-mybatis-plus/mvnw
+/springboot2-mybatis-plus/mvnw.cmd
