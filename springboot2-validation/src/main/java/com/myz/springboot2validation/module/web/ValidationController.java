@@ -6,15 +6,18 @@ package com.myz.springboot2validation.module.web;
 import com.alibaba.fastjson.JSONObject;
 import com.myz.springboot2validation.common.Result;
 import com.myz.springboot2validation.common.model.CustomerDto;
+import com.myz.springboot2validation.utils.ValidatorUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.Date;
 
 /**
  * @author maoyz0621 on 19-1-11
@@ -30,7 +33,7 @@ public class ValidationController {
      */
     @RequestMapping(value = "/validated/save1", method = RequestMethod.POST)
     public Result saveCustomerPageValidated(@Validated CustomerDto model) {
-        logger.debug("birthday = {}" + model.getBirthday());
+        logger.debug("birthday = {}",model.getBirthday());
 
         Result okResult = new Result();
         okResult.setCode(200);
@@ -43,7 +46,7 @@ public class ValidationController {
      */
     @RequestMapping(value = "/validated/save2", method = RequestMethod.POST)
     public Result saveCustomerPageValidated(@Validated CustomerDto model, BindingResult bindingResult) {
-        logger.debug("birthday = {}" + model.getBirthday());
+        logger.debug("birthday = {}" , model.getBirthday());
 
         if (bindingResult.hasErrors()) {
             StringBuilder sb = new StringBuilder();
@@ -68,7 +71,7 @@ public class ValidationController {
      */
     @RequestMapping(value = "/valid/save1", method = RequestMethod.POST)
     public Result saveCustomerPageValid(@Valid CustomerDto model) {
-        logger.debug("birthday = {}" + model.getBirthday());
+        logger.debug("birthday = {}" ,model.getBirthday());
 
         Result okResult = new Result();
         okResult.setCode(200);
@@ -81,7 +84,7 @@ public class ValidationController {
      */
     @RequestMapping(value = "/valid/save2", method = RequestMethod.POST)
     public Result saveCustomerPageValid(@Valid CustomerDto model, BindingResult bindingResult) {
-        logger.debug("birthday = {}" + model.getBirthday());
+        logger.debug("birthday = {}" ,model.getBirthday());
 
         if (bindingResult.hasErrors()) {
             StringBuilder sb = new StringBuilder();
@@ -99,6 +102,40 @@ public class ValidationController {
         okResult.setCode(200);
         okResult.setMessage(JSONObject.toJSON(model).toString());
         return okResult;
+    }
+
+    /**
+     * 自行校验不通过
+     */
+    @GetMapping(value = "/valid")
+    public Result valid() {
+        CustomerDto dto = new CustomerDto();
+        dto.setUsername("a");
+        dto.setAge(80);
+        dto.setGender(CustomerDto.Gender.MALE);
+        Result validator = ValidatorUtils.validator(dto);
+        if (validator != null){
+            return validator;
+        }
+        return null;
+    }
+
+    /**
+     * 自行校验通过
+     */
+    @GetMapping(value = "/valid1")
+    public Result valid1() {
+        CustomerDto dto = new CustomerDto();
+        dto.setUsername("aaa");
+        dto.setAge(50);
+        dto.setEmail("22222222@qq.com");
+        dto.setGender(CustomerDto.Gender.MALE);
+        dto.setBirthday(new Date());
+        Result validator = ValidatorUtils.validator(dto);
+        if (validator != null){
+            return validator;
+        }
+        return null;
     }
 
     @RequestMapping(value = "/get", method = RequestMethod.GET)

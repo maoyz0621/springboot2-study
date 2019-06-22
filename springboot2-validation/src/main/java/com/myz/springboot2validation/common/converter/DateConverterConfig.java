@@ -3,7 +3,6 @@
  **/
 package com.myz.springboot2validation.common.converter;
 
-import com.myz.springboot2validation.common.exception.BindExceptionHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.convert.converter.Converter;
