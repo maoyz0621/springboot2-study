@@ -14,7 +14,10 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Rest异常捕获，处理数据检验validation异常
@@ -32,9 +35,26 @@ public class BindExceptionHandler {
     public Result handleException(Exception ex) {
         Result errorResult = new Result();
         if (ex instanceof BindException) {
-            handleBindException((BindException) ex, errorResult);
+            return handleBindException((BindException) ex, errorResult);
+        } else if (ex instanceof ConstraintViolationException) {
+            return handleConstraintViolationException((ConstraintViolationException) ex, errorResult);
         }
 
+        return errorResult;
+    }
+
+    /**
+     * ConstraintViolationException
+     * @param ex
+     * @param errorResult
+     * @return
+     */
+    private Result handleConstraintViolationException(ConstraintViolationException ex, Result errorResult) {
+        List<String> list = ex.getConstraintViolations().stream()
+                .map(ConstraintViolation::getMessage)
+                .collect(Collectors.toList());
+        errorResult.setCode(1000001);
+        errorResult.setMessage(list.toString());
         return errorResult;
     }
 
@@ -48,23 +68,23 @@ public class BindExceptionHandler {
         // 获取绑定结果
         BindingResult bindingResult = ex.getBindingResult();
 
-        logger.debug("数据校验错误量 = {}", bindingResult.getErrorCount());
-
         // 方法1
         List<FieldError> fieldErrors = bindingResult.getFieldErrors();
 
         // 方法2
         List<FieldError> allErrors = ex.getFieldErrors();
-        StringBuilder sb = new StringBuilder();
 
-        for (FieldError fieldError : allErrors) {
+        StringBuilder sb = new StringBuilder();
+        ex.getFieldErrors().forEach((fieldError) -> {
             sb.append(fieldError.getField())
                     .append(" = [")
                     .append(fieldError.getRejectedValue())
-                    .append("] ")
+                    .append("] : ")
                     .append(fieldError.getDefaultMessage())
                     .append(" ; ");
-        }
+        });
+
+        logger.debug("*********** 数据校验错误量 = {} , 错误信息[{}]*************", bindingResult.getErrorCount(), sb);
 
         // 生成返回结果
         errorResult.setCode(400);
