@@ -84,7 +84,7 @@ public class BindExceptionHandler {
                     .append(" ; ");
         });
 
-        logger.debug("*********** 数据校验错误量 = {} , 错误信息[{}]*************", bindingResult.getErrorCount(), sb);
+        logger.error("*********** 数据校验错误量 = {} , 错误信息[{}]*************", bindingResult.getErrorCount(), sb);
 
         // 生成返回结果
         errorResult.setCode(400);

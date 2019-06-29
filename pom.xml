@@ -46,6 +46,12 @@
         <module>springboot2-mybatis</module>
         <module>springboot2-hikaricp</module>
         <module>springboot2-mybatis-plus</module>
+        <module>springboot2-servlet</module>
+        <module>springboot2-jetty</module>
+        <module>springboot2-mail</module>
+        <module>springboot2-elasticsearch</module>
+        <module>springboot2-client</module>
+        <module>springboot2-admin</module>
     </modules>
 
     <properties>
@@ -73,13 +79,6 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
                 <version>1.2.51</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-devtools</artifactId>
-                <scope>runtime</scope>
-                <optional>true</optional>
             </dependency>
         </dependencies>
     </dependencyManagement>

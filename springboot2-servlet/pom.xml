@@ -3,13 +3,17 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>springboot2-study</artifactId>
         <groupId>com.myz</groupId>
+        <artifactId>springboot2-study</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <artifactId>springboot2-hikaricp</artifactId>
+    <artifactId>springboot2-servlet</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>springboot2-hikaricp</name>
+    <name>springboot2-servlet</name>
+
+    <properties>
+        <java.version>1.8</java.version>
+    </properties>
 
     <dependencies>
         <dependency>
@@ -18,29 +22,10 @@
         </dependency>
 
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <!--<scope>runtime</scope>-->
-        </dependency>
-
-        <!-- 默认使用HikariCP作为连接池 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-jdbc</artifactId>
-        </dependency>
-
-        <!--<dependency>-->
-        <!--<groupId>com.zaxxer</groupId>-->
-        <!--<artifactId>HikariCP</artifactId>-->
-        <!--<version>3.1.0</version>-->
-        <!--</dependency>-->
-
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
 
     <build>

@@ -3,44 +3,42 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>springboot2-study</artifactId>
         <groupId>com.myz</groupId>
+        <artifactId>springboot2-study</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <artifactId>springboot2-hikaricp</artifactId>
+    <artifactId>springboot2-jetty</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>springboot2-hikaricp</name>
+    <name>springboot2-jetty</name>
+
+    <properties>
+        <java.version>1.8</java.version>
+    </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+            <!-- 排除tomcat -->
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <!--<scope>runtime</scope>-->
-        </dependency>
-
-        <!-- 默认使用HikariCP作为连接池 -->
+        <!-- 使用jetty -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-jdbc</artifactId>
+            <artifactId>spring-boot-starter-jetty</artifactId>
         </dependency>
-
-        <!--<dependency>-->
-        <!--<groupId>com.zaxxer</groupId>-->
-        <!--<artifactId>HikariCP</artifactId>-->
-        <!--<version>3.1.0</version>-->
-        <!--</dependency>-->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
 
     <build>
