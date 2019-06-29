@@ -49,7 +49,7 @@
         <module>springboot2-servlet</module>
         <module>springboot2-jetty</module>
         <module>springboot2-mail</module>
-        <module>springboot2-elasticsearch</module>
+        <module>elasticsearch-springboot2</module>
         <module>springboot2-client</module>
         <module>springboot2-admin</module>
     </modules>

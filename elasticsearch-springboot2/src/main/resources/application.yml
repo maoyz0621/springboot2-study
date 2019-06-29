@@ -1,0 +1,7 @@
+spring:
+  data:
+    elasticsearch:
+      #### 集群名称
+      cluster-name: maoyz
+      #### 地址
+      cluster-nodes: 127.0.0.1:9300
