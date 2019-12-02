@@ -50,7 +50,7 @@ public class MyBatisPlusConfig {
      * @return
      */
     @Bean
-    // @Profile({"dev","test"})
+    @Profile({"dev", "test"})
     public PerformanceInterceptor performanceInterceptor() {
         PerformanceInterceptor performanceInterceptor = new PerformanceInterceptor();
         performanceInterceptor.setFormat(false);

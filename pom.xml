@@ -52,6 +52,10 @@
         <module>elasticsearch-springboot2</module>
         <module>springboot2-client</module>
         <module>springboot2-admin</module>
+        <module>log4j-springboot2</module>
+        <module>log4j2-springboot2</module>
+        <module>springboot-helloworld</module>
+        <module>springboot2-error</module>
     </modules>
 
     <properties>

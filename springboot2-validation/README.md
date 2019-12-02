@@ -10,7 +10,7 @@
 
 两者作用基本相等
 
-## @Validated/@Valid注解附带BindingResult
+## @Validated和@Valid注解附带BindingResult
 
 + 绑定BindingResult
 
