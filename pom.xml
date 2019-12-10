@@ -65,9 +65,10 @@
         <module>log4j2-springboot2</module>
         <module>springboot2-error</module>
         <module>springboot2-banner</module>
-        <module>springboot2-swagger</module>
         <module>springboot2-actuator</module>
         <module>springboot2-commandlinerunner</module>
+        <module>swagger-springboot2</module>
+
     </modules>
 
     <properties>

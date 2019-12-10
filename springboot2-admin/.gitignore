@@ -26,3 +26,5 @@
 /mvnw.cmd
 /.mvn/
 /mvnw
+/springboot2-admin-client/target/
+/springboot2-admin-server/target/
