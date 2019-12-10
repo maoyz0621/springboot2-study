@@ -68,7 +68,7 @@
         <module>springboot2-actuator</module>
         <module>springboot2-commandlinerunner</module>
         <module>swagger-springboot2</module>
-
+        <module>springboot2-helloworld</module>
     </modules>
 
     <properties>

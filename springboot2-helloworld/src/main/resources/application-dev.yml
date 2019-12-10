@@ -1,0 +1,15 @@
+#　端口
+server:
+  port: 8082
+
+
+#　单独属性
+age: 18
+name: myz
+# 组合属性,加引号
+context: "age: ${age} , name: ${name}"
+
+#　分组属性
+user:
+  age: 18
+  name: myz

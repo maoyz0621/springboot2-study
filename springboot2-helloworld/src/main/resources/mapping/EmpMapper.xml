@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.mapper.EmpMapper">
+
+  <resultMap id="empEntity" type="com.example.entity.EmpEntity">
+    <id column="ACCT_ID" property="id"/>
+    <result column="USERNAME" property="username"/>
+    <result column="AGE" property="age"/>
+    <result column="POSITION" property="position"/>
+    <result column="SALARY" property="salary"/>
+    <result column="START_DATE" property="startDate"/>
+  </resultMap>
+  <insert id="insertEmp">
+        INSERT INTO emp (ACCT_ID,USERNAME,AGE,POSITION,SALARY ,START_DATE) VALUES
+            (#{id}, #{username},#{age},#{position},#{salary},#{startDate})
+    </insert>
+
+  <update id="update">
+    UPDATE emp
+    <set>
+      <if test="username != null">
+        USERNAME = #{username},
+      </if>
+      <if test="age != null">
+        AGE = #{age},
+      </if>
+      <if test="position != null">
+        POSITION = #{position},
+      </if>
+      <if test="salary != null">
+        SALARY = #{salary},
+      </if>
+      <if test="startDate != null">
+        START_DATE = #{startDate},
+      </if>
+    </set>
+    <where>
+      <if test="id != null">
+        ACCT_ID = #{id}
+      </if>
+    </where>
+  </update>
+
+  <delete id="del">
+    DELETE FROM emp WHERE ACCT_ID = #{id}
+  </delete>
+
+  <select id="selectByName" resultMap="empEntity">
+        SELECT * FROM emp WHERE USERNAME = #{username}
+    </select>
+
+  <select id="selectAll" resultMap="empEntity">
+        SELECT * FROM emp
+    </select>
+</mapper>

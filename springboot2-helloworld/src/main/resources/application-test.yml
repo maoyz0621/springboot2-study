@@ -1,0 +1,8 @@
+#　端口
+server:
+  port: 8888
+
+#　分组属性
+muser:
+  age: 18
+  name: hyr
