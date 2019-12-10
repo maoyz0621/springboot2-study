@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: application-admin-client
+
+  boot:
+    admin:
+      client:
+        url: http://localhost:8000  # 注册到admin-server指定中心
+
+# 端口号
+server:
+  port: 8100
+
+# 开放所有监控接口
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always

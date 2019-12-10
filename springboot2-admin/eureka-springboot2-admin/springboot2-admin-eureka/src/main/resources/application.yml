@@ -1,0 +1,14 @@
+eureka:
+  client:
+    registry-fetch-interval-seconds: 5
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+
+spring:
+  application:
+    name: application-admin-eureka
+
+server:
+  port: 8761

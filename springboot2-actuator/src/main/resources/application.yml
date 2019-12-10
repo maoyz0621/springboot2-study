@@ -1,0 +1,15 @@
+management:
+  endpoint:
+    info:
+      enabled: true
+    health:
+      enabled: true
+      show-details: always
+    shutdown:
+      enabled: true   # shutdown接口默认只支持 post 请求
+
+  endpoints:
+    web:
+      exposure:   # 暴露信息
+        include: "*"
+        exclude: "httptrace"

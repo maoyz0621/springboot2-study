@@ -21,6 +21,16 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository>
+
+        <!-- Spring Boot 官方 Maven 仓库 -->
+        <repository>
+            <id>spring-milestones</id>
+            <name>Spring Milestones</name>
+            <url>https://repo.spring.io/libs-milestone</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
     </repositories>
 
     <pluginRepositories>
@@ -50,17 +60,19 @@
         <module>springboot2-jetty</module>
         <module>springboot2-mail</module>
         <module>elasticsearch-springboot2</module>
-        <module>springboot2-client</module>
         <module>springboot2-admin</module>
         <module>log4j-springboot2</module>
         <module>log4j2-springboot2</module>
-        <module>springboot-helloworld</module>
         <module>springboot2-error</module>
+        <module>springboot2-banner</module>
+        <module>springboot2-swagger</module>
+        <module>springboot2-actuator</module>
+        <module>springboot2-commandlinerunner</module>
     </modules>
 
     <properties>
         <java.version>1.8</java.version>
-        <spring-boot.version>2.0.7.RELEASE</spring-boot.version>
+        <spring-boot.version>2.1.10.RELEASE</spring-boot.version>
     </properties>
 
     <dependencyManagement>
