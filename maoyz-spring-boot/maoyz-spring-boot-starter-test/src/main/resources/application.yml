@@ -1,0 +1,12 @@
+myz:
+  val: maoyz
+  cache: true
+  sizes:
+    - aaa
+    - bbb
+  sets:
+    - 111
+    - 222
+  param:
+    a: 1
+    b: 2

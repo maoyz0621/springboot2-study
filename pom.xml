@@ -70,6 +70,7 @@
         <module>swagger-springboot2</module>
         <module>springboot2-helloworld</module>
         <module>springboot2-flyway</module>
+        <module>maoyz-spring-boot</module>
     </modules>
 
     <properties>
