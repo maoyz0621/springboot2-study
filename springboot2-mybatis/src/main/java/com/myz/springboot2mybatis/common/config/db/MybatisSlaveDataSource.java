@@ -19,23 +19,23 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import javax.sql.DataSource;
 
 /**
- * 主数据源
+ * 从数据源
  * Spring Boot 2.X 版本不再支持配置继承，多数据源的话每个数据源的所有配置都需要单独配置，否则配置不会生效
  *
  * @author maoyz on 18-10-26
  * @version: v1.0
  */
 @Configuration
-@MapperScan(basePackages = MybatisSlaveDataSource.BASE_PACKAGE, sqlSessionTemplateRef = "baseSqlSessionTemplate")
+@MapperScan(basePackages = MybatisSlaveDataSource.SLAVE_PACKAGE, sqlSessionTemplateRef = "slaveSqlSessionTemplate")
 public class MybatisSlaveDataSource extends AbstractDataSource {
 
-    static final String BASE_PACKAGE = "com.myz.springboot2mybatis.module.mapper.slave";
+    static final String SLAVE_PACKAGE = "com.myz.springboot2mybatis.module.mapper.slave";
 
-    @Value("${spring.datasource.druid.first.master.username}")
+    @Value("${spring.datasource.druid.slave.username}")
     private String username;
-    @Value("${spring.datasource.druid.first.master.password}")
+    @Value("${spring.datasource.druid.slave.password}")
     private String password;
-    @Value("${spring.datasource.druid.first.master.url}")
+    @Value("${spring.datasource.druid.slave.url}")
     private String url;
 
     /**
@@ -50,7 +50,7 @@ public class MybatisSlaveDataSource extends AbstractDataSource {
      * 事务管理
      */
     @Bean(name = "slaveTransactionManager")
-    public DataSourceTransactionManager setTransactionManager(@Qualifier("masterDataSource") DataSource dataSource) {
+    public DataSourceTransactionManager setTransactionManager(@Qualifier("slaveDataSource") DataSource dataSource) {
         DataSourceTransactionManager transactionManager = new DataSourceTransactionManager();
         transactionManager.setDataSource(dataSource);
         return transactionManager;
@@ -60,10 +60,10 @@ public class MybatisSlaveDataSource extends AbstractDataSource {
      * SqlSessionFactory
      */
     @Bean(name = "slaveSqlSessionFactory")
-    public SqlSessionFactory setSqlSessionFactory(@Qualifier("masterDataSource") DataSource dataSource) throws Exception {
+    public SqlSessionFactory setSqlSessionFactory(@Qualifier("slaveDataSource") DataSource dataSource) throws Exception {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(dataSource);
-        bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources(MAPPER_LOCATION));
+        bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources(MAPPER_SLAVE_PACKAGE));
         return bean.getObject();
     }
 
@@ -71,7 +71,7 @@ public class MybatisSlaveDataSource extends AbstractDataSource {
      * 执行批量插入
      */
     @Bean(name = "slaveSqlSessionTemplate")
-    public SqlSessionTemplate setSqlSessionTemplate(@Qualifier("baseSqlSessionFactory") SqlSessionFactory sqlSessionFactory) throws Exception {
+    public SqlSessionTemplate setSqlSessionTemplate(@Qualifier("slaveSqlSessionFactory") SqlSessionFactory sqlSessionFactory) throws Exception {
         return new SqlSessionTemplate(sqlSessionFactory, ExecutorType.BATCH);
     }
 }

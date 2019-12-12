@@ -5,7 +5,7 @@ spring:
   datasource:
     #  数据源类型
     type: com.alibaba.druid.pool.DruidDataSource
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
     druid:
       # 监控统计拦截的filters
       filters: stat
@@ -50,8 +50,8 @@ spring:
 
 # mybatis配置
 mybatis:
-  # map文件
-  mapper-locations: classpath:mapper/*.xml
+# map文件
+#  mapper-locations: classpath:mapper/*.xml
 
 # 分页插件配置方法1
 pagehelper:

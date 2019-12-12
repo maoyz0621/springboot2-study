@@ -30,7 +30,8 @@ import java.util.Map;
 @PropertySource("classpath:config/jdbc.properties")
 public abstract class AbstractDataSource {
 
-    protected static final String MAPPER_LOCATION = "classpath*:mapper/*.xml";
+    static final String MAPPER_SLAVE_PACKAGE = "classpath:mapper/slave/*.xml";
+    static final String MAPPER_MASTER_PACKAGE = "classpath:mapper/master/*.xml";
 
     @Value("${spring.datasource.druid.stat-view-servlet.enabled}")
     private String enabled;

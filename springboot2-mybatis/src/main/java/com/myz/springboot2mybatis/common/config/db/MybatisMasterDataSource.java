@@ -27,16 +27,17 @@ import javax.sql.DataSource;
  * @version: v1.0
  */
 @Configuration
-@MapperScan(basePackages = MybatisMasterDataSource.BASE_PACKAGE, sqlSessionTemplateRef = "baseSqlSessionTemplate")
+@MapperScan(basePackages = MybatisMasterDataSource.MASTER_PACKAGE, sqlSessionTemplateRef = "masterSqlSessionTemplate")
 public class MybatisMasterDataSource extends AbstractDataSource {
 
-    static final String BASE_PACKAGE = "com.myz.springboot2mybatis.module.mapper.master";
+    static final String MASTER_PACKAGE = "com.myz.springboot2mybatis.module.mapper.master";
 
-    @Value("${spring.datasource.druid.first.master.username}")
+
+    @Value("${spring.datasource.druid.master.username}")
     private String username;
-    @Value("${spring.datasource.druid.first.master.password}")
+    @Value("${spring.datasource.druid.master.password}")
     private String password;
-    @Value("${spring.datasource.druid.first.master.url}")
+    @Value("${spring.datasource.druid.master.url}")
     private String url;
 
     /**
@@ -67,7 +68,7 @@ public class MybatisMasterDataSource extends AbstractDataSource {
     public SqlSessionFactory setSqlSessionFactory(@Qualifier("masterDataSource") DataSource dataSource) throws Exception {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(dataSource);
-        bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources(MAPPER_LOCATION));
+        bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources(MAPPER_MASTER_PACKAGE));
         return bean.getObject();
     }
 

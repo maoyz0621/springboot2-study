@@ -1,13 +1,13 @@
-package com.myz.springboot2mybatis.module.mapper;
+package com.myz.springboot2mybatis.module.mapper.master;
 
 import com.myz.springboot2mybatis.module.entity.Role;
 import com.myz.springboot2mybatis.module.entity.RoleExample;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
-
 public interface RoleMapper {
+
     long countByExample(RoleExample example);
 
     int deleteByExample(RoleExample example);

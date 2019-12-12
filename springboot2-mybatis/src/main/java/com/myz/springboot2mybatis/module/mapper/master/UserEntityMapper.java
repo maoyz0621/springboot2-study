@@ -1,10 +1,10 @@
-package com.myz.springboot2mybatis.module.mapper;
+package com.myz.springboot2mybatis.module.mapper.master;
 
 import com.myz.springboot2mybatis.module.entity.UserEntity;
 import com.myz.springboot2mybatis.module.entity.UserEntityExample;
-import java.util.List;
-
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface UserEntityMapper {
     long countByExample(UserEntityExample example);

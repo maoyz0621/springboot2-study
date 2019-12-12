@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class UserEntity implements Serializable {
+
     private Integer userId;
 
     private String username;
