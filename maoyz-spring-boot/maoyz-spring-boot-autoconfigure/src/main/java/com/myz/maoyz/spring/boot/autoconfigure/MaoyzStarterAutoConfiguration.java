@@ -67,5 +67,4 @@ public class MaoyzStarterAutoConfiguration {
         return new MaoyzService();
     }
 
-
 }

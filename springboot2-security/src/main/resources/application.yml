@@ -1,0 +1,15 @@
+server:
+  port: 8000
+  servlet:
+    context-path:
+
+logging:
+  level:
+    org.springframework:
+      data: DEBUG
+      security: DEBUG
+
+jwt:
+  header: Authorization
+  tokenPrefix: mySecret
+  tokenHead: "Bearer "
