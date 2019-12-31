@@ -2,6 +2,7 @@ package com.myz.springboot2.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -30,10 +31,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Qualifier(value = "jwtUserServiceImpl")
     private UserDetailsService userDetailsService;
 
+    /**
+     * AuthenticationManager的创建
+     *
+     * @param managerBuilder
+     * @throws Exception
+     */
     @Autowired
     public void configureAuthentication(AuthenticationManagerBuilder managerBuilder) throws Exception {
         managerBuilder.userDetailsService(userDetailsService)
                 .passwordEncoder(passwordEncoder());
+    }
+
+    @Bean
+    @ConfigurationProperties(prefix = "jwt.security")
+    public JwtConfigProperties jwtConfigProperties() {
+        return new JwtConfigProperties();
     }
 
     /**

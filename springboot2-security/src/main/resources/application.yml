@@ -8,8 +8,3 @@ logging:
     org.springframework:
       data: DEBUG
       security: DEBUG
-
-jwt:
-  header: Authorization
-  tokenPrefix: mySecret
-  tokenHead: "Bearer "

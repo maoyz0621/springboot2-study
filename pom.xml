@@ -72,6 +72,7 @@
         <module>springboot2-flyway</module>
         <module>maoyz-spring-boot</module>
         <module>springboot2-security</module>
+        <module>springboot2-retry</module>
     </modules>
 
     <properties>
