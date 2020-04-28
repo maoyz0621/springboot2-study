@@ -12,9 +12,10 @@ import java.util.Map;
 
 /**
  * springboot提供error
+ * 执行完BasicErrorController之后，抛出ResponseEntity,getErrorAttributes()可以加工改造
  *
  * @author maoyz0621 on 19-12-2
- * @version: v1.0
+ * @version v1.0
  */
 @Component
 @Slf4j

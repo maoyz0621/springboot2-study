@@ -18,9 +18,13 @@ import java.util.Map;
 /**
  * BasicErrorController，默认是处理 text/html类型请求的错误，可以继承该基类自定义处理更多的请求类型，
  * 添加公共方法并使用 @RequestMapping 注解的 produce属性指定处理类型。
+ * 可以处理所有的异常，包括未进入控制器的错误，404,401等
+ * 如果ErrorController和@ControllerAdvice同时存在？ 后者处理
+ * 对于@ControllerAdvice　可以多个拦截器,处理控制器抛出的异常
+ * ErrorController处理未进入控制器的异常
  *
  * @author maoyz0621 on 19-12-2
- * @version: v1.0
+ * @version v1.0
  */
 @Component
 public class MyErrorController extends BasicErrorController {
@@ -34,24 +38,24 @@ public class MyErrorController extends BasicErrorController {
 
 
     /**
-     * 处理json 错误
+     * 处理json请求 错误
      *
      * @param request
      * @return
      */
-    @RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<Map<String, Object>> jsonError(HttpServletRequest request) {
         return super.error(request);
     }
 
     /**
-     * 处理xml 错误
+     * 处理xml请求 错误
      *
      * @param request
      * @return
      */
-    @RequestMapping(produces = MediaType.APPLICATION_XML_VALUE)
+    @RequestMapping(consumes = MediaType.APPLICATION_XML_VALUE)
     @ResponseBody
     public ResponseEntity<Map<String, Object>> xmlError(HttpServletRequest request) {
         return super.error(request);
