@@ -1,0 +1,38 @@
+props:
+  age: 20
+  enabled: false
+  a1: a1
+  duration: 10s
+  duration0: 12
+  size: 10MB
+  max-size: 1024
+  deprecate: mao
+  # list
+  list1: 1,2,3
+  list2:
+    - 1
+    - 2
+    - 3
+  list3:
+    - a1: a1
+      b1: b1
+    - a2: a2
+      b2: b2
+  # map
+  map0:
+    key1: 'value1'
+    key2: 'value2'
+  map1:
+    key1:
+      - a1
+      - a2
+      - a3
+    key2:
+      - b1
+      - b2
+      - b3
+  map2:
+    key1: {key1: 'value1', key2: 'value2'}
+    key2:
+      key1: 'value1'
+      key2: 'value2'

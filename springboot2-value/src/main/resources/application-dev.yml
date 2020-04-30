@@ -1,0 +1,9 @@
+list1: 1,2,3
+list2:
+  - 1
+  - 2
+  - 3
+map0: "{key1: 'value1', key2: 'value2'}"
+map1:
+  k1: v1
+  k2: v2

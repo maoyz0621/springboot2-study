@@ -11,7 +11,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  * @author maoyz0621
  */
 @SpringBootApplication
-@EnableScheduling
 @PropertySource(value = {"classpath:web.properties"})
 public class Springboot2ValueApplication {
 
