@@ -10,7 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.PropertySource;
 
 /**
- * @author <a href="mailto:maoyuezhong@xiniaoyun.com">maoyz(maoyuezhong@xiniaoyun.com)</a>
+ * @author maoyz
  */
 @SpringBootApplication
 @PropertySource(value = {"classpath:jdbc.properties"})

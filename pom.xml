@@ -75,6 +75,9 @@
         <module>springboot2-retry</module>
         <module>xxl-job</module>
         <module>sharding-jdbc</module>
+        <module>springboot2</module>
+        <module>springboot2-aop</module>
+        <module>springboot2-dubbo</module>
     </modules>
 
     <properties>

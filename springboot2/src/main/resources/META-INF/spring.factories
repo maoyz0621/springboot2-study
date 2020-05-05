@@ -1,0 +1,2 @@
+#
+org.springframework.context.ApplicationListener=com.myz.springboot2.common.event.ApplicationPreparedEventListener,com.myz.springboot2.common.event.ApplicationReadyEventListener,com.myz.springboot2.common.event.ApplicationStartedEventListener

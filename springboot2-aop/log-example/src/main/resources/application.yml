@@ -1,0 +1,14 @@
+swagger:
+  base-package: com.myz.log.example.controller
+  contact:
+    url:
+    name: maoyz
+    email: 245890416@qq.com
+  title: log-aspect
+  description: log-aspect记录日志信息
+  version: 1.0
+
+spring:
+  devtools:
+    restart:
+      enabled: true

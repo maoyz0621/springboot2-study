@@ -12,8 +12,7 @@ import java.sql.SQLException;
  *
  * @author maoyz
  */
-public class ShardingJdbcMasterSlaveYamlManager
-        extends ShardingJdbcBaseManager {
+public class ShardingJdbcMasterSlaveYamlManager extends ShardingJdbcBaseManager {
 
     public static void main(String[] args) throws SQLException, IOException {
 

@@ -6,12 +6,11 @@
         <artifactId>springboot2-study</artifactId>
         <groupId>com.myz</groupId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath />
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>maoyz-spring-boot</artifactId>
-    <name>${project.artifactId}</name>
+    <name>maoyz-spring-boot</name>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
