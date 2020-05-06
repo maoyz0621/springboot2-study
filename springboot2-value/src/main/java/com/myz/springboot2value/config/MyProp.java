@@ -32,6 +32,8 @@ import java.util.Map;
  * 当我们为属性配置错误的值时，而又不希望 Spring Boot 应用启动失败，我们可以设置 ignoreInvalidFields 属性为 true (默认为 false)
  * 参数检验 @Validated 同时可以检验属性内容
  *
+ * configuration processor 创建 \META-INF\spring-configuration-metadata.json
+ *
  * @author maoyz
  */
 @Validated
