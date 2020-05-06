@@ -11,6 +11,6 @@ import javax.sql.DataSource;
 @Configuration
 public class ShardingjdbcConfig {
 
-    @Autowired
-    public DataSource dataSource;
+    // @Autowired
+    // public DataSource dataSource;
 }

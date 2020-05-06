@@ -9,7 +9,7 @@ spring:
     druid:
       # 监控统计拦截的filters
       filters: stat
-      driver-class-name: com.mysql.jdbc.Driver
+      driver-class-name: com.mysql.cj.jdbc.Driver
       keep-alive: true
       initial-size: 10
       max-active: 100
