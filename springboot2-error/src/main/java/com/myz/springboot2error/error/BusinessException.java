@@ -9,6 +9,7 @@ package com.myz.springboot2error.error;
  */
 public class BusinessException extends RuntimeException {
 
+    private int code;
     private String message;
 
     public BusinessException() {
@@ -16,6 +17,19 @@ public class BusinessException extends RuntimeException {
 
     public BusinessException(String message) {
         super(message);
+    }
+
+    public BusinessException(int code, String message) {
+        this.code = code;
+        this.message = message;
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
     }
 
     @Override
