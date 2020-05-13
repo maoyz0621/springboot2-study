@@ -1,0 +1,10 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: dubbo-auto-configure-provider-sample
+
+  profiles:
+#    active: base
+    active: zk
