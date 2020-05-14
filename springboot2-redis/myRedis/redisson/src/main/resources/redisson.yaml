@@ -1,0 +1,32 @@
+sentinelServersConfig:
+  idleConnectionTimeout: 10000
+  connectTimeout: 10000
+  timeout: 30000
+  retryAttempts: 3
+  retryInterval: 1500
+  failedSlaveReconnectionInterval: 3000
+  failedSlaveCheckInterval: 60000
+  password: 123456
+  subscriptionsPerConnection: 5
+  clientName: null
+  loadBalancer: !<org.redisson.connection.balancer.RoundRobinLoadBalancer> {}
+  subscriptionConnectionMinimumIdleSize: 1
+  subscriptionConnectionPoolSize: 50
+  slaveConnectionMinimumIdleSize: 24
+  slaveConnectionPoolSize: 64
+  masterConnectionMinimumIdleSize: 24
+  masterConnectionPoolSize: 64
+  readMode: "SLAVE"
+  subscriptionMode: "SLAVE"
+  sentinelAddresses:
+    - "redis://127.0.0.1:7200"
+    - "redis://127.0.0.1:7201"
+    - "redis://127.0.0.1:7202"
+  masterName: "mymaster"
+  database: 0
+#这个线程池数量被所有RTopic对象监听器，RRemoteService调用者和RExecutorService任务共同共享
+threads: 16
+#这个线程池数量是在一个Redisson实例内，被其创建的所有分布式数据类型和服务，以及底层客户端所一同共享的线程池里保存的线程数量
+nettyThreads: 32
+codec: !<org.redisson.codec.JsonJacksonCodec> {}
+transportMode: "NIO"

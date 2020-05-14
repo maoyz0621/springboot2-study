@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       default-init-method="init" default-destroy-method="destory"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:cache="http://www.springframework.org/schema/cache"
+
+       xsi:schemaLocation="http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+    <context:component-scan base-package="com.myz.redis1.*"/>
+
+    <context:property-placeholder file-encoding="utf8"
+                                  ignore-resource-not-found="true"
+                                  location="classpath*:redis.properties"/>
+
+
+    <!-- redis连接池配置 -->
+    <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <!--最大空闲数-->
+        <property name="maxIdle" value="${redis.maxIdle}" />
+        <!--连接池的最大数据库连接数  -->
+        <property name="maxTotal" value="${redis.maxTotal}" />
+        <!--最大建立连接等待时间-->
+        <property name="maxWaitMillis" value="${redis.maxWaitMillis}" />
+        <!--逐出连接的最小空闲时间 默认1800000毫秒(30分钟)-->
+        <property name="minEvictableIdleTimeMillis" value="${redis.minEvictableIdleTimeMillis}" />
+        <!--每次逐出检查时 逐出的最大数目 如果为负数就是 : 1/abs(n), 默认3-->
+        <property name="numTestsPerEvictionRun" value="${redis.numTestsPerEvictionRun}" />
+        <!--逐出扫描的时间间隔(毫秒) 如果为负数,则不运行逐出线程, 默认-1-->
+        <property name="timeBetweenEvictionRunsMillis" value="${redis.timeBetweenEvictionRunsMillis}" />
+        <!--是否在从池中取出连接前进行检验,如果检验失败,则从池中去除连接并尝试取出另一个-->
+        <property name="testOnBorrow" value="${redis.testOnBorrow}" />
+        <!--在空闲时检查有效性, 默认false  -->
+        <property name="testWhileIdle" value="${redis.testWhileIdle}" />
+    </bean>
+
+
+    <!-- redis集群配置 主从及哨兵模式 -->
+    <bean id="sentinelConfiguration" class="org.springframework.data.redis.connection.RedisSentinelConfiguration">
+        <property name="master">
+            <bean class="org.springframework.data.redis.connection.RedisNode">
+                <!--这个值要和Sentinel中指定的master的值一致，不然启动时找不到Sentinel会报错的-->
+                <property name="name" value="mymaster"/>
+            </bean>
+        </property>
+        <!-- 记住了,这里是指定Sentinel的IP和端口，不是Master和Slave的-->
+        <property name="sentinels">
+            <set>
+                <bean class="org.springframework.data.redis.connection.RedisNode">
+                    <constructor-arg name="host" value="${redis.sentinel.host1}"></constructor-arg>
+                    <constructor-arg name="port" value="${redis.sentinel.port1}"></constructor-arg>
+                </bean>
+                <bean class="org.springframework.data.redis.connection.RedisNode">
+                    <constructor-arg name="host" value="${redis.sentinel.host2}"></constructor-arg>
+                    <constructor-arg name="port" value="${redis.sentinel.port2}"></constructor-arg>
+                </bean>
+                <bean class="org.springframework.data.redis.connection.RedisNode">
+                    <constructor-arg name="host" value="${redis.sentinel.host3}"></constructor-arg>
+                    <constructor-arg name="port" value="${redis.sentinel.port3}"></constructor-arg>
+                </bean>
+            </set>
+        </property>
+    </bean>
+
+
+    <!-- redis集群配置 集群模式 -->
+    <bean id="clusterConfiguration" class="org.springframework.data.redis.connection.RedisClusterConfiguration">
+        <property name="maxRedirects" value="3"/>
+        <property name="clusterNodes">
+            <set>
+                <bean class="org.springframework.data.redis.connection.RedisClusterNode">
+                    <constructor-arg name="host" value="${redis.sentinel.host1}"></constructor-arg>
+                    <constructor-arg name="port" value="${redis.sentinel.port1}"></constructor-arg>
+                </bean>
+                <bean class="org.springframework.data.redis.connection.RedisClusterNode">
+                    <constructor-arg name="host" value="${redis.sentinel.host2}"></constructor-arg>
+                    <constructor-arg name="port" value="${redis.sentinel.port2}"></constructor-arg>
+                </bean>
+                <bean class="org.springframework.data.redis.connection.RedisClusterNode">
+                    <constructor-arg name="host" value="${redis.sentinel.host3}"></constructor-arg>
+                    <constructor-arg name="port" value="${redis.sentinel.port3}"></constructor-arg>
+                </bean>
+            </set>
+        </property>
+    </bean>
+
+
+    <!-- redis连接工厂 -->
+    <bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+        <!-- 连接池 -->
+        <constructor-arg ref="jedisPoolConfig"/>
+        <property name="hostName" value="${redis.hostName}"/>
+        <!--<property name="password" value="${redis.password}"/>-->
+        <property name="port" value="${redis.port}"/>
+        <property name="timeout" value="${redis.timeout}"/>
+        <!-- 集群 -->
+        <!--<constructor-arg ref="sentinelConfiguration"/>-->
+        <!--<constructor-arg ref="clusterConfiguration"/>-->
+    </bean>
+
+    <!-- redis模板 ，使用该对象可以操作redis-->
+    <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+        <!-- redis连接工厂 -->
+        <property name="connectionFactory" ref="jedisConnectionFactory"/>
+        <!-- redis指定key和value序列化的方式,而默认采用的JdkSerializationRedisSerializer,Java对象序列化方式
+             如果不配置Serializer，那么存储的时候缺省使用String，如果用User类型存储，那么会提示错误
+             User can't cast to String！！
+        -->
+        <property name="keySerializer">
+            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
+        </property>
+        <property name="valueSerializer">
+            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
+        </property>
+        <property name="hashKeySerializer">
+            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
+        </property>
+        <property name="hashValueSerializer">
+            <bean class="org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer"/>
+        </property>
+        <!--开启事务  -->
+        <property name="enableTransactionSupport" value="true"/>
+    </bean>
+
+
+    <!-- 专门处理字符串 -->
+    <bean id="stringRedisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate"
+          p:connection-factory-ref="jedisConnectionFactory"/>
+
+
+    <bean id="smartCacheManager" class="org.springframework.cache.support.SimpleCacheManager">
+        <property name="caches">
+            <set>
+                <bean id="redisCache" class="org.springframework.data.redis.cache.RedisCache">
+                    <constructor-arg name="name" value="redisCache"/>
+                    <constructor-arg name="prefix" value="webframe_"/>
+                    <constructor-arg ref="redisTemplate"/>
+                    <constructor-arg name="expiration" value="3600"/>
+                </bean>
+            </set>
+        </property>
+    </bean>
+
+    <cache:annotation-driven cache-manager="smartCacheManager" proxy-target-class="true"/>
+
+    <!-- ehcache -->
+    <!--<bean id="ehcacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">-->
+        <!--<property name="configLocation" value="classpath:ehcache.xml"/>-->
+    <!--</bean>-->
+
+    <!--<bean id="ehCache" class="org.springframework.cache.ehcache.EhCacheFactoryBean">-->
+        <!--<property name="cacheManager" ref="ehcacheManager"/>-->
+        <!--<property name="cacheName" value="ehCache"/>-->
+    <!--</bean>-->
+
+</beans>
