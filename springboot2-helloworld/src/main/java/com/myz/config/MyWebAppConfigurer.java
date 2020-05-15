@@ -1,7 +1,7 @@
 package com.myz.config;
 
-import com.example.interceptor.BaseInterceptor;
-import com.example.interceptor.MyInterceptor;
+import com.myz.interceptor.BaseInterceptor;
+import com.myz.interceptor.MyInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.*;
 

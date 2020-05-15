@@ -131,3 +131,6 @@ AbstractProxyFactory
 InvokerInvocationHandler
 
 dubbo重试：https://juejin.im/post/5ea56430f265da47fc0cfa5b
+
+@Reference 解析：ReferenceAnnotationBeanPostProcessor
+<dubbo:ref> 解析：DubboNamespaceHandler

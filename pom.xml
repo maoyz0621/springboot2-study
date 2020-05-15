@@ -92,6 +92,10 @@
         <hutool.version>5.3.3</hutool.version>
         <guava.version>28.1-jre</guava.version>
         <fastjosn.version>1.2.68</fastjosn.version>
+        <mybatis.version>2.1.2</mybatis.version>
+        <druid.version>1.1.22</druid.version>
+        <pagehelper.version>1.2.13</pagehelper.version>
+        <version.swagger>2.9.2</version.swagger>
     </properties>
 
     <dependencies>
@@ -145,6 +149,39 @@
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
                 <version>${guava.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${druid.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid</artifactId>
+                <version>${druid.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${mybatis.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper-spring-boot-starter</artifactId>
+                <version>${pagehelper.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${version.swagger}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${version.swagger}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

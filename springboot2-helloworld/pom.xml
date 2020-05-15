@@ -11,6 +11,7 @@
     <artifactId>springboot2-helloworld</artifactId>
     <name>springboot2-helloworld</name>
     <packaging>jar</packaging>
+    <version>0.0.1-SNAPSHOT</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -92,13 +93,11 @@
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
-            <version>1.3.0</version>
         </dependency>
         <!-- springboot分页插件 -->
         <dependency>
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper-spring-boot-starter</artifactId>
-            <version>1.2.2</version>
         </dependency>
 
         <!-- jpa -->
