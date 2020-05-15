@@ -79,6 +79,7 @@
         <module>springboot2-aop</module>
         <module>springboot2-zookeeper</module>
         <module>springboot2-dubbo</module>
+        <module>springboot2-redis</module>
     </modules>
 
     <properties>
