@@ -36,7 +36,7 @@ public class RedisUtils {
         if (jedisPool != null) {
             return jedisPool.getResource();
         }
-        return null;
+        return new Jedis(HOST_NAME,PORT);
     }
 
     public static void close(final Jedis jedis) {

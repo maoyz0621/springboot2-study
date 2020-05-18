@@ -1,14 +1,11 @@
 package com.myz.redis1;
 
-import com.google.common.collect.Maps;
 import com.myz.redis1.entity.User;
-import com.vip.vjtools.vjkit.collection.MapUtil;
 import com.vip.vjtools.vjkit.mapper.JsonMapper;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import redis.clients.jedis.Jedis;
-import redis.clients.jedis.Response;
 import redis.clients.jedis.Transaction;
 
 import java.io.IOException;
@@ -16,7 +13,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
-
 
 public class RedisTester {
 

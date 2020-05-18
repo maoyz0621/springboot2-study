@@ -46,6 +46,5 @@ public class SpringRedis {
     public void testCallback() {
         UserDao userDao = context.getBean(UserDao.class);
         userDao.useCallback();
-
     }
 }
