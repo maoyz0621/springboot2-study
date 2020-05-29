@@ -7,7 +7,10 @@ spring:
     druid:
       # 监控统计拦截的filters
       filters: stat
-      driver-class-name: com.mysql.jdbc.Driver
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/ds_master?useSSL=false&useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=Asia/Shanghai
+      username: root
+      password: root
       keep-alive: true
       initial-size: 10
       max-active: 100
@@ -45,6 +48,8 @@ spring:
           statement-close-after-log-enabled: false
           result-set-open-after-log-enabled: false
           result-set-close-after-log-enabled: false
+    url:
+
 #  shardingsphere:
 #    datasource:
 #      names: master,slave0,slave1,slave2

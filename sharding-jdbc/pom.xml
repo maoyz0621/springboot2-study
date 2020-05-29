@@ -13,6 +13,7 @@
     <modules>
         <module>sharding-jdbc-core</module>
         <module>sharding-jdbc-spring</module>
+        <module>sharding-jdbc-api</module>
     </modules>
     <packaging>pom</packaging>
 

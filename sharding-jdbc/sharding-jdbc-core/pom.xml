@@ -18,6 +18,12 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.myz</groupId>
+            <artifactId>sharding-jdbc-api</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.apache.shardingsphere</groupId>
             <artifactId>sharding-jdbc-core</artifactId>
             <version>${sharding-sphere.version}</version>
