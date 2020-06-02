@@ -80,6 +80,7 @@
         <module>springboot2-zookeeper</module>
         <module>springboot2-dubbo</module>
         <module>springboot2-redis</module>
+        <module>project-template</module>
     </modules>
 
     <properties>
