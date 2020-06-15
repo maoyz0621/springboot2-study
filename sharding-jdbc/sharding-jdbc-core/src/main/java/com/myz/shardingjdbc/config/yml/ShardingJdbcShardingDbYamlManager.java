@@ -16,7 +16,7 @@ public class ShardingJdbcShardingDbYamlManager {
     public static void main(String[] args) throws Exception {
 
         // 创建数据源
-        DataSource dataSource = YamlShardingDataSourceFactory.createDataSource(new File(Thread.currentThread().getContextClassLoader().getResource("").getPath() + "sharding-db-jdbc.yml"));
+        DataSource dataSource = YamlShardingDataSourceFactory.createDataSource(new File(Thread.currentThread().getContextClassLoader().getResource("").getPath() + "META-INF/sharding-db-jdbc.yml"));
         // for (int i = 0; i < 20; i++) {
         //     int i1 = ShardingJdbcManager.executeInsertSqlNoId(dataSource);
         //     System.out.println(i1);

@@ -58,6 +58,25 @@ public class ShardingJdbcJavaManager extends ShardingJdbcBaseManager {
         return dataSourceMap;
     }
 
+    protected static Map<String, DataSource> masterSlaveShardingJdbcDataSourceMap() {
+        Map<String, DataSource> dataSourceMap = new HashMap<>();
+        // 数据源
+        DruidDataSource dataSource1 = dataSource("demo_ds_master_0");
+        DruidDataSource dataSource2 = dataSource("demo_ds_master_0_slave_0");
+        DruidDataSource dataSource3 = dataSource("demo_ds_master_0_slave_1");
+        DruidDataSource dataSource4 = dataSource("demo_ds_master_1");
+        DruidDataSource dataSource5 = dataSource("demo_ds_master_1_slave_0");
+        DruidDataSource dataSource6 = dataSource("demo_ds_master_1_slave_1");
+
+        dataSourceMap.put("ds_master_0", dataSource1);
+        dataSourceMap.put("ds_master_0_slave_0", dataSource2);
+        dataSourceMap.put("ds_master_0_slave_1", dataSource3);
+        dataSourceMap.put("ds_master_1", dataSource4);
+        dataSourceMap.put("ds_master_1_slave_0", dataSource5);
+        dataSourceMap.put("ds_master_1_slave_1", dataSource6);
+        return dataSourceMap;
+    }
+
     protected static Properties prop() {
         Properties properties = new Properties();
         properties.setProperty("sql.show", "true");
@@ -71,6 +90,31 @@ public class ShardingJdbcJavaManager extends ShardingJdbcBaseManager {
                 Arrays.asList("ds_slave0", "ds_slave1", "ds_slave2"),
                 // 从库负载均衡算法
                 new LoadBalanceStrategyConfiguration("RANDOM", prop()));
+    }
+
+    protected static ShardingRuleConfiguration masterSlaveShardingJdbcRuleConfiguration() {
+        // 读写分离配置
+        MasterSlaveRuleConfiguration masterSlaveRuleConfiguration0 = new MasterSlaveRuleConfiguration("ms_ds_0",
+                "ds_master_0",
+                Arrays.asList("ds_master_0_slave_0", "ds_master_0_slave_1"),
+                // 从库负载均衡算法
+                new LoadBalanceStrategyConfiguration("RANDOM", prop()));
+
+        MasterSlaveRuleConfiguration masterSlaveRuleConfiguration1 = new MasterSlaveRuleConfiguration("ms_ds_1",
+                "ds_master_1",
+                Arrays.asList("ds_master_1_slave_0", "ds_master_1_slave_1"),
+                // 从库负载均衡算法
+                new LoadBalanceStrategyConfiguration("RANDOM", prop()));
+
+        // 分库分表配置
+        TableRuleConfiguration tableRuleConfiguration = new TableRuleConfiguration();
+
+        // 分片规则
+        ShardingRuleConfiguration shardingRule = new ShardingRuleConfiguration();
+        shardingRule.getTableRuleConfigs().add(tableRuleConfiguration);
+        shardingRule.getMasterSlaveRuleConfigs().add(masterSlaveRuleConfiguration0);
+        shardingRule.getMasterSlaveRuleConfigs().add(masterSlaveRuleConfiguration1);
+        return shardingRule;
     }
 
     protected static ShardingRuleConfiguration shardingRuleConfigurationDb() {

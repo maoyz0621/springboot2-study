@@ -65,13 +65,13 @@ SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
     聚合归并：  
     分页归并：
     
-存在场景：
-    1） 单库分表
-    2） 分库
-    3） 分库分表
-    4） 读写分离
-    4.1） 一主多从
-    4.2） 多主多从
+存在场景：  
+    1） 单库分表  
+    2） 分库  
+    3） 分库分表  
+    4） 读写分离  
+    4.1） 一主多从  
+    4.2） 多主多从  
     
     
 源码解析：https://mp.weixin.qq.com/s?__biz=MzUzMTA2NTU2Ng==&mid=2247484360&idx=1&sn=0dae84944d2c388fdc1bbed868ac5b99&chksm=fa497c79cd3ef56f8487dda6d53e3772e0aa9812ee66376993c3445bc94920c01a03dd4a4b8f&scene=21#wechat_redirect
