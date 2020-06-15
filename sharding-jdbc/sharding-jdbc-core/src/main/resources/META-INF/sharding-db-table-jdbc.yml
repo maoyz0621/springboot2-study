@@ -14,11 +14,14 @@ dataSources:
 shardingRule:
   tables:
     t_order:
+      # 笛卡尔积
       actualDataNodes: ds${0..1}.t_order_${0..1}
+      # 分库策略
       databaseStrategy:
         inline:
           shardingColumn: user_id
           algorithmExpression: ds${user_id % 2}
+      # 分表策略
       tableStrategy:
         inline:
           shardingColumn: order_id

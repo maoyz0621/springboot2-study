@@ -11,7 +11,7 @@ shardingRule:
     t_order:
       # 由数据源名 + 表名组成，以小数点分隔
       actualDataNodes: ds.t_order_$->{0..1}
-      # 分表策略
+      # 分表策略， order_id % 2 -> 分配 t_order_0  t_order_1
       tableStrategy:
         inline:
           shardingColumn: order_id

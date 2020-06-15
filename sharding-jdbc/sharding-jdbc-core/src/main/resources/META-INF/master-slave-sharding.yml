@@ -1,0 +1,81 @@
+# 读写分离、分库分表
+dataSources:  # 数据源配置
+  ds_master_0: !!com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/demo_ds_master_0?useSSL=false&useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=UTC
+    username: root
+    password: root
+  ds_master_0_slave_0: !!com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/demo_ds_master_0_slave_0?useSSL=false&useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=UTC
+    username: root
+    password: root
+  ds_master_0_slave_1: !!com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/demo_ds_master_0_slave_1?useSSL=false&useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=UTC
+    username: root
+    password: root
+  ds_master_1: !!com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/demo_ds_master_1?useSSL=false&useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=UTC
+    username: root
+    password: root
+  ds_master_1_slave_0: !!com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/demo_ds_master_1_slave_0?useSSL=false&useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=UTC
+    username: root
+    password: root
+  ds_master_1_slave_1: !!com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/demo_ds_master_1_slave_1?useSSL=false&useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=UTC
+    username: root
+    password: root
+
+
+shardingRule:
+  # 读写分离配置(多个)
+  masterSlaveRules:
+    # 读写分离分组
+    ms_ds_0:
+      masterDataSourceName: ds_master_0
+      slaveDataSourceNames:
+        - ds_master_0_slave_0
+        - ds_master_0_slave_1
+      #从库负载均衡算法类型，可选值：ROUND_ROBIN，RANDOM。若`loadBalanceAlgorithmClassName`存在则忽略该配置
+      loadBalanceAlgorithmType: RANDOM
+    ms_ds_1:
+      masterDataSourceName: ds_master_1
+      slaveDataSourceNames: [ds_master_1_slave_0, ds_master_1_slave_1]
+      #从库负载均衡算法类型，可选值：ROUND_ROBIN，RANDOM。若`loadBalanceAlgorithmClassName`存在则忽略该配置
+      loadBalanceAlgorithmType: RANDOM
+
+  tables:
+    t_order:
+      # ms_ds -> 对应读写分离分组id
+      actualDataNodes: ms_ds_${0..1}.t_order_${0..1}
+      # 分库策略
+      databaseStrategy:
+        inline:
+          shardingColumn: user_id
+          algorithmExpression: ms_ds_${user_id % 2}
+      # 分表策略
+      tableStrategy:
+        inline:
+          shardingColumn: order_id
+          algorithmExpression: t_order_${order_id % 2}
+      keyGenerator:
+        type: SNOWFLAKE
+        column: order_id
+    t_order_item:
+      actualDataNodes: ms_ds_${0..1}.t_order_item_${0..1}
+      databaseStrategy:
+        inline:
+          shardingColumn: user_id
+          algorithmExpression: ms_ds_${user_id % 2}
+      tableStrategy:
+        inline:
+          shardingColumn: order_id
+          algorithmExpression: t_order_item_${order_id % 2}
+
+props:
+  sql.show: true
