@@ -4,18 +4,21 @@
 package com.myz.springboot2validation.common.exception;
 
 import com.myz.springboot2validation.common.Result;
+import com.myz.springboot2validation.common.annotation.ExceptionCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import java.lang.reflect.Field;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,7 +26,7 @@ import java.util.stream.Collectors;
  * Rest异常捕获，处理数据检验validation异常
  *
  * @author maoyz0621 on 19-1-11
- * @version: v1.0
+ * @version v1.0
  */
 @ControllerAdvice
 public class BindExceptionHandler {
@@ -34,17 +37,59 @@ public class BindExceptionHandler {
     @ResponseBody
     public Result handleException(Exception ex) {
         Result errorResult = new Result();
-        if (ex instanceof BindException) {
-            return handleBindException((BindException) ex, errorResult);
-        } else if (ex instanceof ConstraintViolationException) {
+        if (ex instanceof ConstraintViolationException) {
             return handleConstraintViolationException((ConstraintViolationException) ex, errorResult);
+        } else {
+            errorResult.setMessage(ex.getMessage());
         }
 
         return errorResult;
     }
 
     /**
+     * 当入参是form表单形式时，抛出BindException，处理BindException异常，@Validated 和 @Valid
+     */
+    @ExceptionHandler(BindException.class)
+    @ResponseBody
+    public Result handleException(BindException ex) {
+        Result errorResult = new Result();
+        return handleBindException(ex, errorResult);
+    }
+
+    /**
+     * 当入参是json时，抛出MethodArgumentNotValidException，处理BindException异常，@Validated 和 @Valid
+     * 提示其中一个错误，并非所有参数错误信息
+     */
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseBody
+    public Result handleException(MethodArgumentNotValidException ex) throws NoSuchFieldException {
+        Result errorResult = new Result();
+        String field = ex.getBindingResult().getFieldErrors().get(0).getField();
+        String message = ex.getBindingResult().getFieldErrors().get(0).getDefaultMessage();
+        errorResult.setCode(200001);
+        errorResult.setMessage(field + " : " + message);
+
+        annoError(ex, errorResult);
+
+        return errorResult;
+    }
+
+    private void annoError(MethodArgumentNotValidException ex, Result errorResult) throws NoSuchFieldException {
+        // 参数的Class对象，等下好通过字段名称获取Field对象
+        Class<?> parameterType = ex.getParameter().getParameterType();
+        // 拿到错误的字段名称
+        String fieldName = ex.getBindingResult().getFieldErrors().get(0).getField();
+        Field field0 = parameterType.getDeclaredField(fieldName);
+        ExceptionCode annotation = field0.getAnnotation(ExceptionCode.class);
+        if (annotation != null) {
+            errorResult.setCode(annotation.value());
+            errorResult.setMessage(annotation.message());
+        }
+    }
+
+    /**
      * ConstraintViolationException
+     *
      * @param ex
      * @param errorResult
      * @return
@@ -84,7 +129,7 @@ public class BindExceptionHandler {
                     .append(" ; ");
         });
 
-        logger.error("*********** 数据校验错误量 = {} , 错误信息[{}]*************", bindingResult.getErrorCount(), sb);
+        logger.error("数据校验错误量 = {} , 错误信息[{}]", bindingResult.getErrorCount(), sb);
 
         // 生成返回结果
         errorResult.setCode(400);

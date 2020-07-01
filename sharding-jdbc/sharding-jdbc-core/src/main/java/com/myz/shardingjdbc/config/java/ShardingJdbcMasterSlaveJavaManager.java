@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.Properties;
 
 /**
- * java 编程式
+ * 读写分离： ds_master    ds_slave0    ds_slave1   ds_slave2
  *
  * @author maoyz
  */

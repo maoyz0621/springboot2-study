@@ -49,6 +49,9 @@ public class CustomerDto {
     @PhoneValidation
     private String phone;
 
+    /**
+     * 枚举类型
+     */
     @NotNull
     private Gender gender;
 

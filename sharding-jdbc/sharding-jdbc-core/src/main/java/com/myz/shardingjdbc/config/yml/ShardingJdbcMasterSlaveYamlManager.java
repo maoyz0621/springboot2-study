@@ -7,7 +7,7 @@ import javax.sql.DataSource;
 import java.io.File;
 
 /**
- * yml文件配置
+ * 读写分离： ds_master    ds_slave0    ds_slave1   ds_slave2
  *
  * @author maoyz
  */

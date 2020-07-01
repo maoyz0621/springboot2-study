@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Properties;
 
 /**
- * 分库 分表
+ * 分库、分表 demo_ds_0.t_order   demo_ds_1.t_order
  *
  * @author maoyz
  */

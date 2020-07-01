@@ -11,17 +11,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Date;
 
 /**
  * @author maoyz0621 on 19-1-11
- * @version: v1.0
+ * @version v1.0
  */
 @RestController
 public class ValidationController {
@@ -30,10 +27,13 @@ public class ValidationController {
 
     /**
      * 开启校验 @Validated,抛出BindException, 执行@ExceptionHandler
+     * 入参：json，异常类型：MethodArgumentNotValidException
+     * 1. @RequestBody -> MethodArgumentNotValidException
+     * 2. 无@RequestBody -> BindException
      */
     @RequestMapping(value = "/validated/save1", method = RequestMethod.POST)
-    public Result saveCustomerPageValidated(@Validated CustomerDto model) {
-        logger.debug("birthday = {}",model.getBirthday());
+    public Result saveCustomerPageValidated(/*@RequestBody*/ @Validated CustomerDto model) {
+        logger.debug("birthday = {}", model.getBirthday());
 
         Result okResult = new Result();
         okResult.setCode(200);
@@ -42,22 +42,12 @@ public class ValidationController {
     }
 
     /**
-     * 开启校验 @Validated, 同时绑定BindingResult
+     * 开启校验 @Validated, 同时绑定BindingResult，不走ExceptionHandler
      */
     @RequestMapping(value = "/validated/save2", method = RequestMethod.POST)
-    public Result saveCustomerPageValidated(@Validated CustomerDto model, BindingResult bindingResult) {
-        logger.debug("birthday = {}" , model.getBirthday());
-
+    public Result saveCustomerPageValidated(@RequestBody @Validated CustomerDto model, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            StringBuilder sb = new StringBuilder();
-            bindingResult.getFieldErrors().forEach((error) -> {
-                sb.append(error.getField()).append(": ").append(error.getDefaultMessage()).append(" ;");
-            });
-            logger.error("************ {} *************", sb);
-            Result errorResult = new Result();
-            errorResult.setCode(400);
-            errorResult.setMessage(sb.toString());
-            return errorResult;
+            return errorResult(bindingResult);
         }
 
         Result okResult = new Result();
@@ -68,10 +58,13 @@ public class ValidationController {
 
     /**
      * 开启校验 @Valid,抛出BindException, 执行@ExceptionHandler
+     * 入参：form，异常类型：BindException
+     * 1. @RequestBody -> MethodArgumentNotValidException
+     * 2. 无@RequestBody -> BindException
      */
     @RequestMapping(value = "/valid/save1", method = RequestMethod.POST)
-    public Result saveCustomerPageValid(@Valid CustomerDto model) {
-        logger.debug("birthday = {}" ,model.getBirthday());
+    public Result saveCustomerPageValid(@RequestBody @Valid CustomerDto model) {
+        logger.debug("birthday = {}", model.getBirthday());
 
         Result okResult = new Result();
         okResult.setCode(200);
@@ -83,19 +76,11 @@ public class ValidationController {
      * 开启校验 @Valid,同时绑定BindingResult
      */
     @RequestMapping(value = "/valid/save2", method = RequestMethod.POST)
-    public Result saveCustomerPageValid(@Valid CustomerDto model, BindingResult bindingResult) {
-        logger.debug("birthday = {}" ,model.getBirthday());
+    public Result saveCustomerPageValid(@RequestBody @Valid CustomerDto model, BindingResult bindingResult) {
+        logger.debug("birthday = {}", model.getBirthday());
 
         if (bindingResult.hasErrors()) {
-            StringBuilder sb = new StringBuilder();
-            bindingResult.getFieldErrors().forEach((error) -> {
-                sb.append(error.getField()).append(": ").append(error.getDefaultMessage()).append(" ;");
-            });
-            logger.error("************ {} *************", sb);
-            Result errorResult = new Result();
-            errorResult.setCode(400);
-            errorResult.setMessage(sb.toString());
-            return errorResult;
+            return errorResult(bindingResult);
         }
 
         Result okResult = new Result();
@@ -103,6 +88,7 @@ public class ValidationController {
         okResult.setMessage(JSONObject.toJSON(model).toString());
         return okResult;
     }
+
 
     /**
      * 自行校验不通过
@@ -114,7 +100,7 @@ public class ValidationController {
         dto.setAge(80);
         dto.setGender(CustomerDto.Gender.MALE);
         Result validator = ValidatorUtils.validator(dto);
-        if (validator != null){
+        if (validator != null) {
             return validator;
         }
         return null;
@@ -132,7 +118,7 @@ public class ValidationController {
         dto.setGender(CustomerDto.Gender.MALE);
         dto.setBirthday(new Date());
         Result validator = ValidatorUtils.validator(dto);
-        if (validator != null){
+        if (validator != null) {
             return validator;
         }
         return null;
@@ -145,5 +131,18 @@ public class ValidationController {
         okResult.setCode(200);
         okResult.setMessage("ok");
         return okResult;
+    }
+
+    private Result errorResult(BindingResult bindingResult) {
+        StringBuilder sb = new StringBuilder();
+        bindingResult.getFieldErrors().forEach((error) -> {
+            sb.append(error.getField()).append(": ").append(error.getDefaultMessage()).append(" ;");
+        });
+
+        logger.error("{}", sb);
+        Result errorResult = new Result();
+        errorResult.setCode(400);
+        errorResult.setMessage(sb.toString());
+        return errorResult;
     }
 }

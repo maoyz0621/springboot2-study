@@ -3,7 +3,7 @@
  **/
 package com.myz.springboot2error.service;
 
-import com.myz.springboot2error.error.BusinessException;
+import com.myz.springboot2.common.exception.BusinessException;
 import org.springframework.stereotype.Service;
 
 /**

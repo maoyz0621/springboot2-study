@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
  * AbstractHandlerExceptionResolver处理异常, 一般用于页面较多, 如果处理application/json, 就要使用response
  *
  * @author maoyz0621 on 19-1-11
- * @version: v1.0
+ * @version v1.0
  */
 @Slf4j
 @Component

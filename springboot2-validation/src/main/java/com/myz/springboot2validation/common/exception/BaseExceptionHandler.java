@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
  * 通过实现异常捕获接口,处理Controller中的异常
  *
  * @author maoyz0621 on 19-1-11
- * @version: v1.0
+ * @version v1.0
  */
 @Component
 public class BaseExceptionHandler implements HandlerExceptionResolver {

@@ -7,7 +7,7 @@ import javax.sql.DataSource;
 import java.io.File;
 
 /**
- * yml文件配置
+ *分库、分表 demo_ds_0.t_order   demo_ds_1.t_order
  *
  * @author maoyz
  */

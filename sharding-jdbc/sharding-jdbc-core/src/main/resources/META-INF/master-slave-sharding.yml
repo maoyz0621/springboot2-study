@@ -49,6 +49,7 @@ shardingRule:
       #从库负载均衡算法类型，可选值：ROUND_ROBIN，RANDOM。若`loadBalanceAlgorithmClassName`存在则忽略该配置
       loadBalanceAlgorithmType: RANDOM
 
+  # 分片
   tables:
     t_order:
       # ms_ds -> 对应读写分离分组id

@@ -33,7 +33,7 @@ public class ShardingJdbcShardingDbJavaManager extends ShardingJdbcJavaManager {
         // ShardingJdbcManager.executeQuerySqlShardingTableSingleTable(dataSource);
         ShardingJdbcManager.executeQuerySqlShardingDb(dataSource);
 
-        System.out.println("分頁查詢");
+        System.out.println("分页查询");
         // ShardingJdbcManager.executeQuerySqlShardingTablePageSingleTable(dataSource, 2, 3);
         ShardingJdbcManager.executeQuerySqlShardingDbPage(dataSource, 2, 3);
     }

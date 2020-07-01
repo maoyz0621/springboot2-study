@@ -3,6 +3,7 @@
  **/
 package com.myz.springboot2error.error;
 
+import com.myz.springboot2.common.exception.BusinessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;

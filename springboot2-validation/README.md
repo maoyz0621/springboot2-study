@@ -8,7 +8,7 @@
 
 ## @Validated和@Valid
 
-两者作用基本相等
+两者作用基本相等，当入参以JSON格式：@RequestBody，校验：MethodArgumentNotValidException；当入参以FORM表单形式，校验：BindException
 
 ## @Validated和@Valid注解附带BindingResult
 
@@ -36,15 +36,41 @@
 public class BindExceptionHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(BindExceptionHandler.class);
-
+    
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public Result handleException(Exception ex) {
         Result errorResult = new Result();
-        if (ex instanceof BindException) {
-            handleBindException((BindException) ex, errorResult);
+        if (ex instanceof ConstraintViolationException) {
+            return handleConstraintViolationException((ConstraintViolationException) ex, errorResult);
+        } else {
+            errorResult.setMessage(ex.getMessage());
         }
 
+        return errorResult;
+    }
+
+    /**
+     * 当入参是form表单形式时，抛出BindException，处理BindException异常，@Validated 和 @Valid
+     */
+    @ExceptionHandler(BindException.class)
+    @ResponseBody
+    public Result handleException(BindException ex) {
+        ...
+        return handleBindException(ex, errorResult);
+    }
+
+    /**
+     * 当入参是json时，抛出MethodArgumentNotValidException，处理BindException异常，@Validated 和 @Valid
+     * 提示其中一个错误，并非所有参数错误信息
+     */
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseBody
+    public Result handleException(MethodArgumentNotValidException ex) {
+
+        String field = ex.getBindingResult().getFieldErrors().get(0).getField();
+        String message = ex.getBindingResult().getFieldErrors().get(0).getDefaultMessage();
+        ...
         return errorResult;
     }
 

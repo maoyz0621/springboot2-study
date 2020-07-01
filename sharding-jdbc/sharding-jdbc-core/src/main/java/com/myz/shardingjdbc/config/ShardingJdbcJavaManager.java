@@ -1,20 +1,17 @@
 package com.myz.shardingjdbc.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
-import com.myz.shardingjdbc.api.ShardingJdbcManager;
+import com.myz.shardingjdbc.algorithm.PreciseModuloShardingDbAlgorithm;
+import com.myz.shardingjdbc.algorithm.PreciseModuloShardingTableAlgorithm;
 import org.apache.shardingsphere.api.config.masterslave.LoadBalanceStrategyConfiguration;
 import org.apache.shardingsphere.api.config.masterslave.MasterSlaveRuleConfiguration;
 import org.apache.shardingsphere.api.config.sharding.KeyGeneratorConfiguration;
 import org.apache.shardingsphere.api.config.sharding.ShardingRuleConfiguration;
 import org.apache.shardingsphere.api.config.sharding.TableRuleConfiguration;
 import org.apache.shardingsphere.api.config.sharding.strategy.InlineShardingStrategyConfiguration;
-import org.apache.shardingsphere.shardingjdbc.api.ShardingDataSourceFactory;
+import org.apache.shardingsphere.api.config.sharding.strategy.StandardShardingStrategyConfiguration;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -58,7 +55,7 @@ public class ShardingJdbcJavaManager extends ShardingJdbcBaseManager {
         return dataSourceMap;
     }
 
-    protected static Map<String, DataSource> masterSlaveShardingJdbcDataSourceMap() {
+    protected static Map<String, DataSource> masterSlaveShardingDbTableDataSourceMap() {
         Map<String, DataSource> dataSourceMap = new HashMap<>();
         // 数据源
         DruidDataSource dataSource1 = dataSource("demo_ds_master_0");
@@ -92,8 +89,11 @@ public class ShardingJdbcJavaManager extends ShardingJdbcBaseManager {
                 new LoadBalanceStrategyConfiguration("RANDOM", prop()));
     }
 
-    protected static ShardingRuleConfiguration masterSlaveShardingJdbcRuleConfiguration() {
-        // 读写分离配置
+    /**
+     * 读写分离配置 和 分库分表配置
+     */
+    protected static ShardingRuleConfiguration masterSlaveShardingDbTableRuleConfiguration() {
+        // 1. 读写分离配置
         MasterSlaveRuleConfiguration masterSlaveRuleConfiguration0 = new MasterSlaveRuleConfiguration("ms_ds_0",
                 "ds_master_0",
                 Arrays.asList("ds_master_0_slave_0", "ds_master_0_slave_1"),
@@ -106,14 +106,22 @@ public class ShardingJdbcJavaManager extends ShardingJdbcBaseManager {
                 // 从库负载均衡算法
                 new LoadBalanceStrategyConfiguration("RANDOM", prop()));
 
-        // 分库分表配置
-        TableRuleConfiguration tableRuleConfiguration = new TableRuleConfiguration();
+        // 2. 分库分表配置
+        TableRuleConfiguration tableRuleConfiguration = new TableRuleConfiguration("t_order", "ms_ds_${0..1}.t_order_$->{0..1}");
+        // key生成
+        tableRuleConfiguration.setKeyGeneratorConfig(getKeyGeneratorConfig());
 
-        // 分片规则
+
+        // 3. 分片规则
         ShardingRuleConfiguration shardingRule = new ShardingRuleConfiguration();
+        // 添加分库分表Rule
         shardingRule.getTableRuleConfigs().add(tableRuleConfiguration);
-        shardingRule.getMasterSlaveRuleConfigs().add(masterSlaveRuleConfiguration0);
-        shardingRule.getMasterSlaveRuleConfigs().add(masterSlaveRuleConfiguration1);
+        // user_id标准分片分库
+        shardingRule.setDefaultDatabaseShardingStrategyConfig(new StandardShardingStrategyConfiguration("user_id", new PreciseModuloShardingDbAlgorithm()));
+        // 分表策略 order_id取模分表，标准分片算法
+        shardingRule.setDefaultTableShardingStrategyConfig(new StandardShardingStrategyConfiguration("order_id", new PreciseModuloShardingTableAlgorithm()));
+        // 添加读写分离Rule
+        shardingRule.setMasterSlaveRuleConfigs(Arrays.asList(masterSlaveRuleConfiguration0, masterSlaveRuleConfiguration1));
         return shardingRule;
     }
 

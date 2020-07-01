@@ -1,7 +1,7 @@
 # 分表
 CREATE SCHEMA IF NOT EXISTS demo_ds;
 
-# 分库
+# 分库、分库分表
 CREATE SCHEMA IF NOT EXISTS demo_ds_0;
 CREATE SCHEMA IF NOT EXISTS demo_ds_1;
 
