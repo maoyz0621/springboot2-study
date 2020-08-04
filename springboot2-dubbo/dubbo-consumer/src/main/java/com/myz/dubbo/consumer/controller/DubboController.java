@@ -72,6 +72,6 @@ public class DubboController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "error";
+        return "buildFailure";
     }
 }

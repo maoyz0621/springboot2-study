@@ -47,7 +47,7 @@ public class BindExceptionHandler {
     }
 
     /**
-     * 当入参是form表单形式时，抛出BindException，处理BindException异常，@Validated 和 @Valid
+     * 当入参是form表单形式时，参数绑定异常，抛出BindException，处理BindException异常，@Validated 和 @Valid
      */
     @ExceptionHandler(BindException.class)
     @ResponseBody
@@ -57,7 +57,7 @@ public class BindExceptionHandler {
     }
 
     /**
-     * 当入参是json时，抛出MethodArgumentNotValidException，处理BindException异常，@Validated 和 @Valid
+     * 当入参是json时，参数校验异常，抛出MethodArgumentNotValidException，处理BindException异常，@Validated 和 @Valid
      * 提示其中一个错误，并非所有参数错误信息
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)

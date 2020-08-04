@@ -60,7 +60,7 @@ public class AsyncTask {
             TimeUnit.SECONDS.sleep(6);
             future = new AsyncResult<String>("success: " + i);
         } catch (InterruptedException e) {
-            future = new AsyncResult<String>("error: " + i);
+            future = new AsyncResult<String>("buildFailure: " + i);
         }
         return future;
     }

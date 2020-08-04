@@ -1,7 +1,7 @@
 package com.myz.exception;
 
 
-import com.example.dto.ResultEnum;
+import com.myz.dto.ResultEnum;
 
 /**
  * 自定义异常

@@ -86,7 +86,7 @@ import org.slf4j.LoggerFactory;
  * process if they need to hit a specific SLA.</li>
  * <li>The library makes a "best effort" to detect catastrophic failures of the
  * process. It is possible that an unforeseen event results in (for instance) an
- * unchecked exception that propagates passed normal error handling code. This
+ * unchecked exception that propagates passed normal buildFailure handling code. This
  * normally doesn't matter as the same exception would almost certain destroy
  * the entire process and thus the connection to ZK and the leader offer
  * resulting in another round of leader determination.</li>

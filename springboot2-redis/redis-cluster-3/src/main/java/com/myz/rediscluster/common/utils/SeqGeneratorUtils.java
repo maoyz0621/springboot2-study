@@ -48,7 +48,7 @@ public class SeqGeneratorUtils {
                 throw new RuntimeException("Cannot find property file: " + propertyFileName);
             }
         } catch (IOException e) {
-            logger.error("error = {}", e);
+            logger.error("buildFailure = {}", e);
         }
         return null;
     }

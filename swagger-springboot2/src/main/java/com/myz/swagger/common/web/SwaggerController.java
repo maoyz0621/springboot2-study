@@ -75,7 +75,7 @@ public class SwaggerController {
             result.setStatus("ok");
         } catch (Exception e) {
             result.setMessage(e.getClass().getName() + ":" + e.getMessage());
-            result.setStatus("error");
+            result.setStatus("buildFailure");
             e.printStackTrace();
         }
         return ResponseEntity.ok(result);
@@ -94,7 +94,7 @@ public class SwaggerController {
             result.setStatus("ok");
         } catch (Exception e) {
             result.setMessage(e.getClass().getName() + ":" + e.getMessage());
-            result.setStatus("error");
+            result.setStatus("buildFailure");
             e.printStackTrace();
         }
         return ResponseEntity.ok(result);
@@ -116,7 +116,7 @@ public class SwaggerController {
             result.setStatus("ok");
         } catch (Exception e) {
             result.setMessage(e.getClass().getName() + ":" + e.getMessage());
-            result.setStatus("error");
+            result.setStatus("buildFailure");
 
             e.printStackTrace();
         }
@@ -137,7 +137,7 @@ public class SwaggerController {
             result.setStatus("ok");
         } catch (Exception e) {
             result.setMessage(e.getClass().getName() + ":" + e.getMessage());
-            result.setStatus("error");
+            result.setStatus("buildFailure");
 
             e.printStackTrace();
         }
@@ -166,7 +166,7 @@ public class SwaggerController {
             result.setStatus("ok");
         } catch (Exception e) {
             result.setMessage(e.getClass().getName() + ":" + e.getMessage());
-            result.setStatus("error");
+            result.setStatus("buildFailure");
 
             e.printStackTrace();
         }

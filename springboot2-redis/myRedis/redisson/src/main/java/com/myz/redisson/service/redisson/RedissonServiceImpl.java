@@ -53,7 +53,7 @@ public class RedissonServiceImpl implements RedissonService {
             lock.tryLock(waitTime, leaseTime, TimeUnit.SECONDS);
             return callBackService.exec();
         } catch (InterruptedException e) {
-            logger.error("redisson lock error: {}", e);
+            logger.error("redisson lock buildFailure: {}", e);
         } catch (RedisTimeoutException e) {
             logger.error("redisson connect timeout: {}", e);
             return callBackService.exec();

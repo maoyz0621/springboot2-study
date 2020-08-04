@@ -12,7 +12,7 @@
            若开发、测试用，在Eclipse中运行项目，则到Eclipse的安装路径查找logs文件夹，以相对路径../logs。
            若部署到Tomcat下，则在Tomcat下的logs文件中
        3、Appender
-           FILEERROR对应error级别，文件名以log-error-xxx.log形式命名
+           FILEERROR对应error级别，文件名以log-buildFailure-xxx.log形式命名
            FILEWARN对应warn级别，文件名以log-warn-xxx.log形式命名
            FILEINFO对应info级别，文件名以log-info-xxx.log形式命名
            FILEDEBUG对应debug级别，文件名以log-debug-xxx.log形式命名
@@ -37,7 +37,7 @@
             而2013-12-21的日志文件在由fileNamePattern指定。%d{yyyy-MM-dd}指定日期格式，%i指定索引 -->
             <fileNamePattern>${LOG_PATH}/${APPDIR}/error/log-error-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
             <!-- 除按日志记录之外，还配置了日志文件不能超过2M，若超过2M，日志文件会以索引0开始，
-            命名日志文件，例如log-error-2013-12-21.0.log -->
+            命名日志文件，例如log-buildFailure-2013-12-21.0.log -->
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <maxFileSize>2MB</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>

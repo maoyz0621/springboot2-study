@@ -68,7 +68,7 @@ public class ZookeeperLock implements Lock, Watcher {
                 zooKeeper.create(ROOT_LOCK, new byte[0], ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
             }
         } catch (IOException | KeeperException | InterruptedException e) {
-            logger.error("error  = {}", e.getStackTrace());
+            logger.error("buildFailure  = {}", e.getStackTrace());
         }
     }
 

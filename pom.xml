@@ -81,6 +81,8 @@
         <module>springboot2-dubbo</module>
         <module>springboot2-redis</module>
         <module>project-template</module>
+        <module>springboot2-common</module>
+        <module>springboot2-jdbcdoc</module>
     </modules>
 
     <properties>
@@ -90,7 +92,7 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <spring.boot.version>2.2.6.RELEASE</spring.boot.version>
-        <mysql.version>8.0.12</mysql.version>
+        <mysql.version>8.0.20</mysql.version>
         <hutool.version>5.3.3</hutool.version>
         <guava.version>28.1-jre</guava.version>
         <fastjosn.version>1.2.68</fastjosn.version>
@@ -110,6 +112,11 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.myz</groupId>
+            <artifactId>springboot2-common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
 

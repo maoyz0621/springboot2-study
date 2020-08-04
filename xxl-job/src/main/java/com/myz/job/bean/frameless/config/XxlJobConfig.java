@@ -78,7 +78,7 @@ public class XxlJobConfig {
             properties.load(reader);
             return properties;
         } catch (IOException e) {
-            log.error("加载xxlJob属性配置文件{}　error", propertyFileName, e);
+            log.error("加载xxlJob属性配置文件{}　buildFailure", propertyFileName, e);
         }
         return null;
     }

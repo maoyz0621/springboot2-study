@@ -34,6 +34,6 @@ public class RedisController {
 
             }
         }
-        return "init redis error";
+        return "init redis buildFailure";
     }
 }

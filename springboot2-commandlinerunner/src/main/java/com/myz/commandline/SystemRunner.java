@@ -16,6 +16,9 @@ import org.springframework.stereotype.Component;
 public class SystemRunner implements CommandLineRunner {
 
     public void run(String... args) throws Exception {
+        // 启动参数：-Dmyz=1
+        String myz = System.getProperty("myz", "123");
+        System.out.println(myz);
         log.info("***************** CommandLineRunner *******************");
     }
 }

@@ -1,9 +1,10 @@
 /**
  * Copyright 2020 Inc.
  **/
-package com.myz.springboot2error.error;
+package com.myz.springboot2.common.exception;
 
 /**
+ * 业务逻辑错误
  * @author maoyz0621 on 20-4-22
  * @version v1.0
  */

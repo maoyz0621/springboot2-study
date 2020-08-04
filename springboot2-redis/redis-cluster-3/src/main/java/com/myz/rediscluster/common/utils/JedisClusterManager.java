@@ -95,7 +95,7 @@ public class JedisClusterManager {
             LOGGER.info("Init redis cluster server finished.");
         } catch (Exception e) {
             e.printStackTrace();
-            LOGGER.error("An error occurred when initialize redis cluster server : {}", e.getMessage());
+            LOGGER.error("An buildFailure occurred when initialize redis cluster server : {}", e.getMessage());
         }
     }
 

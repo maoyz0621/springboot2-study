@@ -49,7 +49,7 @@ public class ContextClosedHandler implements ApplicationListener<ContextClosedEv
             if (!pool.awaitTermination(WAIT_TIME, TimeUnit.SECONDS)) {
                 pool.shutdownNow();
                 if (!pool.awaitTermination(WAIT_TIME, TimeUnit.SECONDS)) {
-                    logger.error("********************** shutDown pool error *****************************");
+                    logger.error("********************** shutDown pool buildFailure *****************************");
                 }
             }
         } catch (InterruptedException e) {
