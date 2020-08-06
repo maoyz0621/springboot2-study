@@ -27,9 +27,9 @@ public class JdbcDocMain {
         //数据源
         HikariConfig hikariConfig = new HikariConfig();
         hikariConfig.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        hikariConfig.setJdbcUrl("jdbc:mysql://10.13.31.139:3306/homestead");
-        hikariConfig.setUsername("homestead");
-        hikariConfig.setPassword("secret");
+        hikariConfig.setJdbcUrl("jdbc:mysql://127.0.0.1:3306/test");
+        hikariConfig.setUsername("root");
+        hikariConfig.setPassword("root");
         //设置可以获取tables remarks信息
         hikariConfig.addDataSourceProperty("useInformationSchema", "true");
         hikariConfig.setMinimumIdle(2);

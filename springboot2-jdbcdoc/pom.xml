@@ -73,14 +73,13 @@
                 </dependencies>
                 <configuration>
                     <!--username-->
-                    <username>homestead</username>
+                    <username>root</username>
                     <!--password-->
-                    <password>secret</password>
+                    <password>root</password>
                     <!--driver-->
                     <driverClassName>com.mysql.cj.jdbc.Driver</driverClassName>
                     <!--jdbc url-->
-                    <!--<jdbcUrl>jdbc:mysql://127.0.0.1:3306/test</jdbcUrl>-->
-                    <jdbcUrl>jdbc:mysql://10.13.31.139:3306/homestead</jdbcUrl>
+                    <jdbcUrl>jdbc:mysql://127.0.0.1:3306/test</jdbcUrl>
                     <!--生成文件类型-->
                     <fileType>HTML</fileType>
                     <!--文件输出目录-->
