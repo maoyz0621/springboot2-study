@@ -17,7 +17,7 @@ import java.util.Set;
  * 验证校验器
  *
  * @author maoyz0621 on 19-6-21
- * @version: v1.0
+ * @version v1.0
  */
 public class ValidatorUtils {
 

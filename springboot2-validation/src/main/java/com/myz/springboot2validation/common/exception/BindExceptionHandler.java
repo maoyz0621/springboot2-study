@@ -4,21 +4,17 @@
 package com.myz.springboot2validation.common.exception;
 
 import com.myz.springboot2validation.common.Result;
-import com.myz.springboot2validation.common.annotation.ExceptionCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
-import java.lang.reflect.Field;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,12 +33,7 @@ public class BindExceptionHandler {
     @ResponseBody
     public Result handleException(Exception ex) {
         Result errorResult = new Result();
-        if (ex instanceof ConstraintViolationException) {
-            return handleConstraintViolationException((ConstraintViolationException) ex, errorResult);
-        } else {
-            errorResult.setMessage(ex.getMessage());
-        }
-
+        errorResult.setMessage(ex.getMessage());
         return errorResult;
     }
 
@@ -62,42 +53,61 @@ public class BindExceptionHandler {
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseBody
-    public Result handleException(MethodArgumentNotValidException ex) throws NoSuchFieldException {
+    public Result handleException(MethodArgumentNotValidException ex) {
         Result errorResult = new Result();
-        String field = ex.getBindingResult().getFieldErrors().get(0).getField();
-        String message = ex.getBindingResult().getFieldErrors().get(0).getDefaultMessage();
+        List<FieldError> fieldErrors = ex.getBindingResult().getFieldErrors();
+        StringBuilder sb = new StringBuilder();
         errorResult.setCode(200001);
-        errorResult.setMessage(field + " : " + message);
-
-        annoError(ex, errorResult);
-
+        for (FieldError fieldError : fieldErrors) {
+            String field = fieldError.getField();
+            String message = fieldError.getDefaultMessage();
+            sb.append(field).append(":").append(message).append(";");
+        }
+        errorResult.setMessage(sb.toString());
+        // analysisError(ex, errorResult);
         return errorResult;
     }
 
-    private void annoError(MethodArgumentNotValidException ex, Result errorResult) throws NoSuchFieldException {
-        // 参数的Class对象，等下好通过字段名称获取Field对象
-        Class<?> parameterType = ex.getParameter().getParameterType();
-        // 拿到错误的字段名称
-        String fieldName = ex.getBindingResult().getFieldErrors().get(0).getField();
-        Field field0 = parameterType.getDeclaredField(fieldName);
-        ExceptionCode annotation = field0.getAnnotation(ExceptionCode.class);
-        if (annotation != null) {
-            errorResult.setCode(annotation.value());
-            errorResult.setMessage(annotation.message());
-        }
+    // private void analysisError(MethodArgumentNotValidException ex, Result errorResult) throws NoSuchFieldException {
+    //     // 参数的Class对象，等下好通过字段名称获取Field对象
+    //     Class<?> parameterType = ex.getParameter().getParameterType();
+    //     // 拿到错误的字段名称
+    //     String fieldName = ex.getBindingResult().getFieldErrors().get(0).getField();
+    //
+    //     Field[] fields = parameterType.getDeclaredFields();
+    //     for (Field field : fields) {
+    //         System.out.println(field.getName());
+    //         ExceptionCode annotation = field.getAnnotation(ExceptionCode.class);
+    //         if (annotation != null) {
+    //             errorResult.setCode(annotation.value());
+    //             errorResult.setMessage(annotation.message());
+    //         }
+    //     }
+    //     // Field field0 = parameterType.getDeclaredField(fieldName);
+    //
+    // }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    @ResponseBody
+    public Result handleException(ConstraintViolationException ex) {
+        return handleConstraintViolationException(ex);
     }
 
     /**
-     * ConstraintViolationException
+     * ConstraintViolationException -> @Valid
      *
      * @param ex
-     * @param errorResult
      * @return
      */
-    private Result handleConstraintViolationException(ConstraintViolationException ex, Result errorResult) {
+    private Result handleConstraintViolationException(ConstraintViolationException ex) {
         List<String> list = ex.getConstraintViolations().stream()
-                .map(ConstraintViolation::getMessage)
+                .map(violation -> {
+                    return "参数非法:" +
+                            violation.getPropertyPath().toString().split("[.]")[1]
+                            + violation.getMessage();
+                })
                 .collect(Collectors.toList());
+        Result errorResult = new Result();
         errorResult.setCode(1000001);
         errorResult.setMessage(list.toString());
         return errorResult;
