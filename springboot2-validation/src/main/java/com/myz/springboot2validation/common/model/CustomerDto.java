@@ -52,7 +52,7 @@ public class CustomerDto {
     /**
      * 枚举类型
      */
-    @NotNull
+    @NotNull(groups = Save.class)
     private Gender gender;
 
     public enum Gender {
@@ -65,5 +65,17 @@ public class CustomerDto {
          * 女
          */
         FEMALE
+    }
+
+    /**
+     * 保存的时候校验分组
+     */
+    public interface Save {
+    }
+
+    /**
+     * 更新的时候校验分组
+     */
+    public interface Update {
     }
 }

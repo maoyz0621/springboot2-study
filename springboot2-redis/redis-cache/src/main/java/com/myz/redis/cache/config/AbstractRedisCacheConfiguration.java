@@ -3,9 +3,8 @@
  **/
 package com.myz.redis.cache.config;
 
-import com.alibaba.fastjson.parser.ParserConfig;
-import com.alibaba.fastjson.support.spring.FastJsonRedisSerializer;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.util.CollectionUtils;
 
@@ -47,9 +46,18 @@ public abstract class AbstractRedisCacheConfiguration {
     /**
      * 获取通用的RedisCacheConfiguration
      */
+    // private RedisCacheConfiguration fastJsonRedisCacheConfigurationWithTtl(long seconds) {
+    //     FastJsonRedisSerializer<Object> fastJsonRedisSerializer = new FastJsonRedisSerializer<>(Object.class);
+    //     ParserConfig.getGlobalInstance().setAutoTypeSupport(true);
+    //     RedisCacheConfiguration configuration = RedisCacheConfiguration.defaultCacheConfig()
+    //             .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(fastJsonRedisSerializer))
+    //             .entryTtl(Duration.ofSeconds(seconds));
+    //     return configuration;
+    // }
+
     private RedisCacheConfiguration fastJsonRedisCacheConfigurationWithTtl(long seconds) {
-        FastJsonRedisSerializer<Object> fastJsonRedisSerializer = new FastJsonRedisSerializer<>(Object.class);
-        ParserConfig.getGlobalInstance().setAutoTypeSupport(true);
+        Jackson2JsonRedisSerializer<Object> fastJsonRedisSerializer = new Jackson2JsonRedisSerializer<>(Object.class);
+        // ParserConfig.getGlobalInstance().setAutoTypeSupport(true);
         RedisCacheConfiguration configuration = RedisCacheConfiguration.defaultCacheConfig()
                 .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(fastJsonRedisSerializer))
                 .entryTtl(Duration.ofSeconds(seconds));

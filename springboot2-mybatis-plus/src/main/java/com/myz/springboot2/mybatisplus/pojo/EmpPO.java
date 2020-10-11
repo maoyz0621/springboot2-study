@@ -5,7 +5,6 @@ package com.myz.springboot2.mybatisplus.pojo;
 
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.Version;
 import lombok.Data;
 
 /**
@@ -28,8 +27,8 @@ public class EmpPO extends BasePO {
      *
      * update tbl_user set name = 'update',version = 3 where id = 100 and version = 2
      */
-    @Version
-    private Integer version;
+    // @Version
+    // private Integer version;
 
 
 }

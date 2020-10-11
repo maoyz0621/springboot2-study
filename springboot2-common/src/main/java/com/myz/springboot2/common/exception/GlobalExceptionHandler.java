@@ -46,7 +46,7 @@
 //      * @return
 //      */
 //     @ExceptionHandler(BusinessException.class)
-//     public Result handleBusinessException(BaseException ex) {
+//     public Result handleBusinessException(BusinessException ex) {
 //         return Result.buildFailure();
 //     }
 //

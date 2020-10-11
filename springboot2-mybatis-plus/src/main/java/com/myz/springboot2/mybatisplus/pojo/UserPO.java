@@ -3,12 +3,12 @@
  **/
 package com.myz.springboot2.mybatisplus.pojo;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.myz.springboot2.mybatisplus.enums.GenderEnum;
 import com.myz.springboot2.mybatisplus.enums.AgeEnum;
+import com.myz.springboot2.mybatisplus.enums.GenderEnum;
 import com.myz.springboot2.mybatisplus.enums.GradeEnum;
 import lombok.Data;
 
@@ -20,7 +20,7 @@ import lombok.Data;
  */
 @Data
 @TableName("user")
-public class UserPO extends BasePO{
+public class UserPO extends BasePO {
 
     private String name;
 
@@ -52,12 +52,12 @@ public class UserPO extends BasePO{
      * logic-delete-value: 1 # 逻辑已删除值(默认为 1)
      * logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
      */
-    @TableLogic
+    // @TableLogic
     private Integer isDelete;
 
     /**
      * 生成器策略部分
-     *
+     * <p>
      * 1 字段必须声明TableField注解，属性fill选择对应策略，该申明告知 Mybatis-Plus 需要预留注入 SQL 字段
      * 2 填充处理器 MetaObjectHandler
      * 3 必须使用父类的setFieldValByName()或者setInsertFieldValByName/setUpdateFieldValByName方法，否则不会根据注解FieldFill.xxx来区分
@@ -65,4 +65,8 @@ public class UserPO extends BasePO{
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private String operator;
 
+    @Override
+    public String toString() {
+        return JSON.toJSONString(this);
+    }
 }
