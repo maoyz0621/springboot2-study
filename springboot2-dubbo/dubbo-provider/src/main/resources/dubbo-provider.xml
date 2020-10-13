@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xmlns:context="http://www.springframework.org/schema/context"
+       default-init-method="init" default-destroy-method="destory"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+ http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+ http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- 加载配置文件 -->
+    <context:property-placeholder ignore-resource-not-found="true" location="classpath:application.yml"
+                                  file-encoding="UTF-8"/>
+
+    <!--定义了提供方应用信息，用于计算依赖关系；在 dubbo-admin 或 dubbo-monitor 会显示这个名字，方便辨识-->
+    <dubbo:application name="dubbo-provider" owner="" organization="dubbox" logger="log4j"/>
+
+    <!--使用 zookeeper 注册中心暴露服务，注意要先开启 zookeeper-->
+    <dubbo:registry address="${zookeeper.address}" file="${user.home}/output/dubbo.cache"/>
+
+    <!-- 用dubbo协议在20880端口暴露服务
+     id:可以在<dubbo:service protocol="">中引用此ID，如果ID不填，缺省和name属性值一样，重复则在name后加序号。
+     -->
+    <dubbo:protocol id="dubbo" name="dubbo" port="20880" dispatcher="all" threadpool="fixed" threads="100"/>
+
+    <!-- 全局生产者配置 org.apache.dubbo.config.ProviderConfig -->
+    <dubbo:provider protocol="dubbo" delay="-1" timeout="60000" retries="0" threads="200" executes="20"/>
+
+
+    <!--
+    一、建议在 Provider 端配置的 Consumer 端属性有：
+    1. timeout：方法调用的超时时间
+    2. retries：失败重试次数，缺省是 2
+    3. loadbalance：负载均衡算法，缺省是随机 random。还可以配置轮询 roundrobin、最不活跃优先 [4] leastactive 和一致性哈希 consistenthash 等
+    4. actives：消费者端的最大并发调用限制，即当 Consumer 对一个服务的并发调用到上限后，新调用会阻塞直到超时，在方法上配置 dubbo:method 则针对该方法进行并发限制，在接口上配置 dubbo:service，则针对该服务进行并发限制
+
+    二、建议在 Provider 端配置的 Provider 端属性有：
+    1. threads：服务线程池大小
+    2. executes：一个服务提供者并行执行请求上限，即当 Provider 对一个服务的并发调用达到上限后，新调用会阻塞，此时 Consumer 可能会超时。在方法上配置 dubbo:method 则针对该方法进行并发限制，在接口上配置 dubbo:service，则针对该服务进行并发限制
+    -->
+
+
+    <!-- 服务提供者暴露服务配置;
+        protocol:使用指定的协议暴露服务，在多协议时使用，值为<dubbo:protocol>的id属性，多个协议ID用逗号分隔
+        ref:服务对象实现引用
+        retries="2" 来设置重试次数
+        Failover Failfast  Failsafe  Failback  Forking
+        分组:group
+        版本控制:version
+        -->
+    <dubbo:service interface="com.myz.dubbo.base.interfaces.DemoService" protocol="dubbo" ref="demoService" retries="2"
+                   cluster="failsafe" group="*" version="*" timeout="3000" loadbalance="random" actives="0" executes="200">
+        <dubbo:method name="retry" retries="1"/>
+    </dubbo:service>
+
+</beans>

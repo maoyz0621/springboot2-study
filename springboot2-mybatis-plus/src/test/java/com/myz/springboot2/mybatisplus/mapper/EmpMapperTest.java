@@ -33,18 +33,6 @@ public class EmpMapperTest extends Springboot2MybatisPlusApplicationTests {
         EmpPO empPO = empMapper.selectById(id);
         // EmpPO(name=a, email=null, version=1)
         System.out.println(empPO);
-
-        System.out.println("=========================");
-
-        EmpPO userUpdate = new EmpPO();
-        userUpdate.setId(id);
-        userUpdate.setName("b");
-        // version保持一致
-        userUpdate.setVersion(1);
-        empMapper.updateById(userUpdate);
-        EmpPO empPO1 = empMapper.selectById(id);
-        // EmpPO(name=b, email=null, version=2)
-        System.out.println(empPO1);
     }
 
     @Test
