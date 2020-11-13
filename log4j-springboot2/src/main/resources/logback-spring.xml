@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+
+    <!-- 从spring中获取配置，如获取不到会使用默认值 -->
+    <springProperty scope="context" name="LOG_SERVICE_NAME" source="spring.application.name"/>
+    <springProperty scope="context" name="LOG_HOME" source="myz_logging_path"/>
+    <springProperty scope="context" name="LOG_LEVEL" source="myz_logging_output_level"/>
+    <springProperty scope="context" name="LOG_MAX_SIZE" source="myz_logging_filemaxsize"/>
+    <springProperty scope="context" name="LOG_TOTAL_SIZE_CAP" source="myz_logging_file_totalsizecap"/>
+    <springProperty scope="context" name="LOG_MAX_HISTORY" source="myz_logging_file_maxhistory"/>
+    <!-- 输出样式 -->
+    <property name="pattern"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%X{traceId}][%thread] %level %logger{80} [%file:%line] - %msg%n"/>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>zhanglei-----%date{yyyy-MM-dd HH:mm:ss}[%yellow(%thread)]%highlight(%-5level) %magenta(%-4relative) -
+                [%-40.40logger{39}:%line]:%msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <appender name="MainLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>./${LOG_HOME:-logs}/${LOG_SERVICE_NAME:-app}-MAIN.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <FileNamePattern>./${LOG_HOME:-logs}/${LOG_SERVICE_NAME:-app}-MAIN-%d{yyyy-MM-dd}_%i.log</FileNamePattern>
+            <MaxHistory>${LOG_MAX_HISTORY:-30}</MaxHistory>
+            <MaxFileSize>${LOG_MAX_SIZE:-200MB}</MaxFileSize>
+            <totalSizeCap>${LOG_TOTAL_SIZE_CAP:-10GB}</totalSizeCap>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="ErrorLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME:-logs}/${LOG_SERVICE_NAME:-app}-ERROR.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <FileNamePattern>${LOG_HOME:-logs}/${LOG_SERVICE_NAME:-app}-ERROR-%d{yyyy-MM-dd}_%i.log</FileNamePattern>
+            <MaxHistory>${LOG_MAX_HISTORY:-30}</MaxHistory>
+            <MaxFileSize>${LOG_MAX_SIZE:-200MB}</MaxFileSize>
+            <totalSizeCap>${LOG_TOTAL_SIZE_CAP:-10GB}</totalSizeCap>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${pattern}</pattern>
+        </encoder>
+
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <appender name="WarnLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME:-logs}/${LOG_SERVICE_NAME:-app}-WARN.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <FileNamePattern>${LOG_HOME:-logs}/${LOG_SERVICE_NAME:-app}-WARN-%d{yyyy-MM-dd}_%i.log</FileNamePattern>
+            <MaxHistory>${LOG_MAX_HISTORY:-30}</MaxHistory>
+            <MaxFileSize>${LOG_MAX_SIZE:-200MB}</MaxFileSize>
+            <totalSizeCap>${LOG_TOTAL_SIZE_CAP:-10GB}</totalSizeCap>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${pattern}</pattern>
+        </encoder>
+        <!-- log filter -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>WARN</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- 关闭类中某个级别的输出 OFF全部关闭 , INFO,DEBUG ...
+    <logger name="x.x.Constants">
+        <level value="OFF"/>
+    </logger>
+    -->
+
+    <logger name="org.apache" level="ERROR"/>
+    <logger name="org.apache.http.wire" level="WARN"/>
+    <logger name="org.apache.http.headers" level="WARN"/>
+    <logger name="com.google" level="INFO"/>
+    <logger name="net.rubyeye" level="INFO"/>
+    <logger name="org.springframework" level="INFO"/>
+    
+
+    <!-- log output level -->
+    <springProfile name="dev">
+        <root level="${LOG_LEVEL:-INFO}">
+            <appender-ref ref="STDOUT"/>
+            <appender-ref ref="MainLog"/>
+            <appender-ref ref="WarnLog"/>
+            <appender-ref ref="ErrorLog"/>
+        </root>
+    </springProfile>
+    <springProfile name="test">
+        <root level="${LOG_LEVEL:-INFO}">
+            <appender-ref ref="MainLog"/>
+            <appender-ref ref="WarnLog"/>
+            <appender-ref ref="ErrorLog"/>
+        </root>
+    </springProfile>
+   
+
+</configuration>

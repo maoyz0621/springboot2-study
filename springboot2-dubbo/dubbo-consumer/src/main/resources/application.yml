@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: dubbo-auto-configure-provider-sample
+    name: dubbo-auto-configure-ProviderContextFilter-sample
 
   profiles:
 #    active: base
