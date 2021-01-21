@@ -29,7 +29,7 @@ public interface UserMapper {
     /**
      * 查询结果返回一条map
      */
-    Map<String, User> selectReturnMap(Integer id) throws SQLException;
+    Map<String, User> selectReturnMap(Long id) throws SQLException;
 
     /**
      * 查询结果返回多条map
@@ -42,18 +42,18 @@ public interface UserMapper {
     /**
      * 　根据id查询
      */
-    User selectById(Integer id) throws SQLException;
+    User selectById(Long id) throws SQLException;
 
     /**
      * 参数不同的同名方法
      */
-    User selectById(Integer id, String lastName) throws SQLException;
+    User selectById(Long id, String lastName) throws SQLException;
 
     /**
      * 　根据id和gender查询
      * 多参数查询@Param("")
      */
-    User selectByIdAndGender(@Param("id") Integer id, @Param("gender") String gender) throws SQLException;
+    User selectByIdAndGender(@Param("id") Long id, @Param("gender") String gender) throws SQLException;
 
     /**
      * 根据pojo属性查询
@@ -80,5 +80,5 @@ public interface UserMapper {
     /*
      * 删除
      */
-    void deleteUser(Integer id) throws SQLException;
+    void deleteUser(Long id) throws SQLException;
 }

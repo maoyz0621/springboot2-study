@@ -3,7 +3,6 @@
  **/
 package com.myz.springboot2.mybatis.page.service;
 
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.myz.springboot2.mybatis.page.model.dao.UserMapper;
@@ -28,12 +27,17 @@ public class PageServiceImpl implements IPageService {
 
     @Override
     public List<User> selectAllPage() throws SQLException {
-        Page<List<User>> page = PageHelper.startPage(1, 1);
+        PageInfo<List<User>> page = PageHelper.startPage(1, 1).doSelectPageInfo(() -> {
+            try {
+                userMapper.selectAll();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        });
         log.info("page = {}", page);
-        List<User> users = userMapper.selectAll();
 
-        log.info("pageResult = {}", page.getResult());
-        log.info("PageInfo = {}", new PageInfo<>(users));
-        return null;
+        List<List<User>> list = page.getList();
+        log.info("pageResult = {}", page.getList());
+        return list.get(0);
     }
 }

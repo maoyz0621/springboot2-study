@@ -11,7 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author maoyz0621 on 2020/9/29
  * @version v1.0
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"com.myz.springboot2"})
 @Slf4j
 public class I18nApplication {
 

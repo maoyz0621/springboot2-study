@@ -5,6 +5,7 @@
  */
 package com.myz.dubbo.core.dubbo.filter;
 
+import org.apache.dubbo.common.constants.CommonConstants;
 import org.apache.dubbo.common.extension.Activate;
 import org.apache.dubbo.rpc.*;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -15,15 +16,18 @@ import java.util.Objects;
 /**
  * @author maoyz
  */
-@Activate(group = {"PROVIDER"})
+@Activate(group = {CommonConstants.PROVIDER})
 public class LocaleProviderFilter implements Filter {
+
     private static final String LOCALE = "locale";
 
     public LocaleProviderFilter() {
     }
+
     @Override
     public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
         String localeStr = "";
+
         Locale locale = LocaleContextHolder.getLocale();
         if (Objects.nonNull(locale)) {
             localeStr = locale.toString();

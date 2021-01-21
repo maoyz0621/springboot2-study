@@ -4,7 +4,7 @@
 
     <parent>
         <groupId>com.myz</groupId>
-        <artifactId>depend</artifactId>
+        <artifactId>project-depend</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
@@ -91,6 +91,8 @@
         <module>springboot2-jdbcdoc</module>
         <module>springboot2-mybatis-page</module>
         <module>springboot2-i18n</module>
+        <module>redis-springboot-starter</module>
+        <module>springboot2-jackson</module>
     </modules>
 
     <!--<properties>-->

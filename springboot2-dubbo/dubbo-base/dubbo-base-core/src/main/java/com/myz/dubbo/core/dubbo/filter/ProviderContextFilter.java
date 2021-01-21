@@ -5,13 +5,14 @@
  */
 package com.myz.dubbo.core.dubbo.filter;
 
+import org.apache.dubbo.common.constants.CommonConstants;
 import org.apache.dubbo.common.extension.Activate;
 import org.apache.dubbo.rpc.*;
 
 /**
  * @author maoyz
  */
-@Activate(group = {"PROVIDER"})
+@Activate(group = {CommonConstants.PROVIDER})
 public class ProviderContextFilter implements Filter {
 
     @Override

@@ -35,6 +35,10 @@ public class InitializeBean {
 
     private static final Logger logger = LoggerFactory.getLogger(InitializeBean.class);
 
+    public static final String EXCEPTION_MESSAGES_PATH = "i18n.exceptionMessages";
+    public static final String VALIDATION_MESSAGES_PATH = "i18n/validationMessages";
+    public static final String COMMON_MESSAGES_PATH = "i18n.commonMessages";
+
     /**
      * 国际化配置信息
      */
@@ -43,11 +47,11 @@ public class InitializeBean {
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
         // 国际化文件
         Set<String> messagePackages = messageSource.getBasenameSet();
-        messagePackages.add("i18n.exceptionMessages");
+        messagePackages.add(EXCEPTION_MESSAGES_PATH);
         // MyConfig中指定了参数验证国际化文件
-        // messagePackages.add("i18n.validationMessages");
+        // messagePackages.add(VALIDATION_MESSAGES_PATH);
         messagePackages.add("i18n.commonMessages");
-        messagePackages.add("i18n.messages");
+        messagePackages.add(COMMON_MESSAGES_PATH);
         // 设置国际化文件
         messageSource.setBasenames(messagePackages.toArray(new String[0]));
         messageSource.setDefaultEncoding("UTF-8");
@@ -59,7 +63,6 @@ public class InitializeBean {
 
     private List<HttpMessageConverter<?>> getDefaultMessageConverter() {
         List<HttpMessageConverter<?>> messageConverters = new LinkedList<>();
-
         messageConverters.add(new ByteArrayHttpMessageConverter());
         messageConverters.add(new StringHttpMessageConverter(StandardCharsets.UTF_8));
         messageConverters.add(new ResourceHttpMessageConverter(false));

@@ -9,6 +9,7 @@ package com.myz.springboot2.common.data;
  * @author maoyz
  */
 public enum ResultStatusEnum {
+
     SUCCESS(200, "成功", "result.status.success"),
     NODATA(204, "无数据", "result.status.nodata"),
     DATA_EXISTED(400, "资源已存在", "result.status.data_exists"),

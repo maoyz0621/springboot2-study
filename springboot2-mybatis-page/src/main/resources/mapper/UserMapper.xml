@@ -80,8 +80,9 @@
     </select>
 
     <!--　调用自增主键useGeneratedKeys,keyProperty主键属性　-->
-    <insert id="insertUser" parameterType="com.myz.springboot2.mybatis.page.model.entity.User" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO t_user last_name, gender, email VALUES (#{lastName},#{gender},#{email})
+    <insert id="insertUser" parameterType="com.myz.springboot2.mybatis.page.model.entity.User" useGeneratedKeys="true"
+            keyProperty="id">
+        INSERT INTO t_user (last_name, gender, email) VALUES (#{lastName},#{gender},#{email})
     </insert>
 
     <update id="updateUser" useGeneratedKeys="true" keyProperty="id">

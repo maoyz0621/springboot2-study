@@ -9,12 +9,11 @@ package com.myz.springboot2.common.data;
  * @author maoyz
  */
 public abstract class BaseResult extends DTO {
-
     // 状态码：1成功，其他为失败
-    private int code;
+    protected int code = 200;
 
     // 成功为success，其他为失败原因
-    private String message;
+    protected String message;
 
     public int getCode() {
         return code;

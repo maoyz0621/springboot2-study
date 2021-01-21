@@ -4,6 +4,7 @@
 package com.myz.springboot2.i18n.config;
 
 import com.myz.springboot2.common.data.Result;
+import com.myz.springboot2.common.data.ResultStatusEnum;
 import com.myz.springboot2.common.exception.BaseException;
 import com.myz.springboot2.common.exception.BusinessException;
 import org.springframework.beans.ConversionNotSupportedException;
@@ -45,6 +46,9 @@ import java.util.stream.Collectors;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    public static final String MESSAGE_PREFIX = "{";
+    public static final String MESSAGE_SUFFIX = "}";
+
     /**
      * 业务异常，满足国际化处理
      * 返回的status:@ResponseStatus(HttpStatus.OK)
@@ -54,12 +58,15 @@ public class GlobalExceptionHandler {
      */
     @ResponseStatus(HttpStatus.OK)
     @ExceptionHandler(BusinessException.class)
-    public Result handleBusinessException(BusinessException ex) {
-        String message = I18nMessageUtil.getMessage(ex.getMessage(), LocaleContextHolder.getLocale());
-        if (StringUtils.isEmpty(message)) {
-            return Result.buildFailure();
+    public <T> Result<T> handleBusinessException(BusinessException ex) {
+        if (ex.getMessage().startsWith(MESSAGE_PREFIX) && ex.getMessage().endsWith(MESSAGE_SUFFIX)) {
+            String message = I18nMessageUtil.getMessage(ex.getMessage().replace(MESSAGE_PREFIX, "").replace(MESSAGE_SUFFIX, ""), LocaleContextHolder.getLocale());
+            if (StringUtils.isEmpty(message)) {
+                return Result.fail();
+            }
+            return Result.fail(message);
         }
-        return Result.buildFailure(1000, message);
+        return Result.fail(ex.getMessage());
     }
 
     /**
@@ -69,8 +76,8 @@ public class GlobalExceptionHandler {
      * @return
      */
     @ExceptionHandler(BaseException.class)
-    public Result handleBaseException(BaseException ex) {
-        return Result.buildFailure(ex.getErrorCodeI().getCode(), ex.getErrorCodeI().getMessage());
+    public <T> Result<T> handleBaseException(BaseException ex) {
+        return Result.fail(ex.getErrorCodeI().getCode(), ex.getErrorCodeI().getMessage());
     }
 
     /**
@@ -102,8 +109,8 @@ public class GlobalExceptionHandler {
             MissingServletRequestPartException.class,
             AsyncRequestTimeoutException.class
     })
-    public Result handleServletException(Exception ex) {
-        return Result.buildFailure();
+    public <T> Result<T> handleServletException(Exception ex) {
+        return Result.fail(ResultStatusEnum.PARAM_ERR);
     }
 
 
@@ -112,13 +119,11 @@ public class GlobalExceptionHandler {
      */
     @ResponseStatus(HttpStatus.OK)
     @ExceptionHandler(BindException.class)
-    public Result handleBindException(final BindException ex) {
-        String errorMsgs = ex.getBindingResult().getFieldErrors().stream().map(
-                param -> {
-                    return "参数:" + param.getField() + ",值[" + param.getRejectedValue() + "]:" + param.getDefaultMessage();
-                }).collect(Collectors.joining("; "));
-
-        return Result.buildFailure(1000, errorMsgs);
+    public <T> Result<T> handleBindException(final BindException ex) {
+        String errorMessages = ex.getBindingResult().getFieldErrors().stream().map(
+                param -> "参数:" + param.getField() + ",值[" + param.getRejectedValue() + "]:" + param.getDefaultMessage())
+                .collect(Collectors.joining("; "));
+        return Result.fail(1000, errorMessages);
     }
 
     /**
@@ -127,26 +132,22 @@ public class GlobalExceptionHandler {
      */
     @ResponseStatus(HttpStatus.OK)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public Result handleException(MethodArgumentNotValidException ex) throws NoSuchFieldException {
-        Result errorResult = new Result();
-        String field = ex.getBindingResult().getFieldErrors().get(0).getField();
-        String message = ex.getBindingResult().getFieldErrors().get(0).getDefaultMessage();
-        errorResult.setCode(200001);
-        errorResult.setMessage(field + " : " + message);
-
-        annoError(ex, errorResult);
-
-        return errorResult;
+    public <T> Result<T> handleMethodArgumentNotValidException(final MethodArgumentNotValidException ex) throws NoSuchFieldException {
+        String errorMessages = ex.getBindingResult().getFieldErrors().stream().map(
+                param -> "参数:" + param.getField() + ",值[" + param.getRejectedValue() + "]:" + param.getDefaultMessage())
+                .collect(Collectors.joining("; "));
+        return Result.fail(1000, errorMessages);
     }
 
-    @ExceptionHandler(ConstraintViolationException.class)
+
     @ResponseStatus(HttpStatus.OK)
-    public Result handleException(ConstraintViolationException ex) {
+    @ExceptionHandler(ConstraintViolationException.class)
+    public <T> Result<T> handleConstraintViolationException(final ConstraintViolationException ex) {
         Result errorResult = new Result();
 
         handleConstraintViolationException(ex, errorResult);
 
-        return Result.buildFailure();
+        return Result.fail();
     }
 
     /**
@@ -157,15 +158,8 @@ public class GlobalExceptionHandler {
      */
     @ResponseStatus(HttpStatus.OK)
     @ExceptionHandler(Exception.class)
-    public Result handleException(Exception ex) {
-        Result errorResult = new Result();
-        if (ex instanceof ConstraintViolationException) {
-            return handleConstraintViolationException((ConstraintViolationException) ex, errorResult);
-        } else {
-            errorResult.setMessage(ex.getMessage());
-        }
-
-        return errorResult;
+    public <T> Result<T> handleException(Exception ex) {
+        return Result.fail();
     }
 
     private void annoError(MethodArgumentNotValidException ex, Result errorResult) throws NoSuchFieldException {
@@ -188,7 +182,7 @@ public class GlobalExceptionHandler {
      * @param errorResult
      * @return
      */
-    private Result handleConstraintViolationException(ConstraintViolationException ex, Result errorResult) {
+    private <T> Result<T> handleConstraintViolationException(ConstraintViolationException ex, Result errorResult) {
         List<String> list = ex.getConstraintViolations().stream()
                 .map(ConstraintViolation::getMessage)
                 .collect(Collectors.toList());
@@ -200,7 +194,7 @@ public class GlobalExceptionHandler {
     /**
      * BindException专门用来处理数据检验validation异常
      */
-    private Result handleBindException(BindException ex, Result errorResult) {
+    private <T> Result<T> handleBindException(BindException ex, Result errorResult) {
         // ex.getFieldError():随机返回一个对象属性的异常信息
         // 如果要一次性返回所有对象属性异常信息，则调用ex.getAllErrors()
 
