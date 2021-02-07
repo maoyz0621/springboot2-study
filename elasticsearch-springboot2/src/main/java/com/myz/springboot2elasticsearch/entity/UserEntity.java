@@ -16,7 +16,7 @@ import java.io.Serializable;
  * @author maoyz0621 on 19-1-30
  * @version v1.0
  */
-@Document(indexName = "user", type = "_doc", createIndex = true)
+@Document(indexName = "user", createIndex = true)
 @Data
 public class UserEntity implements Serializable {
     private static final long serialVersionUID = 3217448931285622026L;

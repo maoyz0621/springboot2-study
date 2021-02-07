@@ -93,6 +93,8 @@
         <module>springboot2-i18n</module>
         <module>redis-springboot-starter</module>
         <module>springboot2-jackson</module>
+        <module>springboot2-enableConfig</module>
+        <module>springboot2-encrypt</module>
     </modules>
 
     <!--<properties>-->

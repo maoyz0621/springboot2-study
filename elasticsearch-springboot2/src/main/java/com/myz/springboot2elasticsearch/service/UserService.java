@@ -5,6 +5,8 @@ package com.myz.springboot2elasticsearch.service;
 
 import com.myz.springboot2elasticsearch.dao.UserRepository;
 import com.myz.springboot2elasticsearch.entity.UserEntity;
+import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
 import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +31,7 @@ public class UserService {
     public void insert(UserEntity userEntity){
         UserEntity save = userRepository.save(userEntity);
 
-        // QueryBuilder queryBuilder = QueryBuilders.matchAllQuery();
+        QueryBuilder queryBuilder = QueryBuilders.matchAllQuery();
         // SearchQuery searchQuery = new NativeSearchQuery(queryBuilder)
         //         .setPageable(PageRequest.of(1,2, SortOrder.DESC));  // 分页
         //
