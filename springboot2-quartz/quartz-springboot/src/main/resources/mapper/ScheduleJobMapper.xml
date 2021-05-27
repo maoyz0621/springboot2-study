@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myz.quartz.mapper.ScheduleJobMapper">
+    <resultMap id="BaseResultMap" type="com.myz.quartz.entity.ScheduleJob">
+        <id column="schedule_job_id" jdbcType="BIGINT" property="scheduleJobId"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="job_name" jdbcType="VARCHAR" property="jobName"/>
+        <result column="job_group" jdbcType="VARCHAR" property="jobGroup"/>
+        <result column="job_status" jdbcType="VARCHAR" property="jobStatus"/>
+        <result column="cron_expression" jdbcType="VARCHAR" property="cronExpression"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
+        <result column="bean_class" jdbcType="VARCHAR" property="beanClass"/>
+        <result column="is_concurrent" jdbcType="VARCHAR" property="isConcurrent"/>
+        <result column="spring_id" jdbcType="VARCHAR" property="springId"/>
+        <result column="method_name" jdbcType="VARCHAR" property="methodName"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        schedule_job_id, create_time, update_time, job_name, job_group, job_status, cron_expression,
+        description, bean_class, is_concurrent, spring_id, method_name
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from task_schedule_job
+        where schedule_job_id = #{scheduleJobId,jdbcType=BIGINT}
+        limit 1
+    </select>
+    <select id="getAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from task_schedule_job
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from task_schedule_job
+        where schedule_job_id = #{scheduleJobId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.myz.quartz.entity.ScheduleJob">
+        insert into task_schedule_job (schedule_job_id, create_time, update_time,
+        job_name, job_group, job_status,
+        cron_expression, description, bean_class,
+        is_concurrent, spring_id, method_name
+        )
+        values (#{scheduleJobId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+        #{jobName,jdbcType=VARCHAR}, #{jobGroup,jdbcType=VARCHAR}, #{jobStatus,jdbcType=VARCHAR},
+        #{cronExpression,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{beanClass,jdbcType=VARCHAR},
+        #{isConcurrent,jdbcType=VARCHAR}, #{springId,jdbcType=VARCHAR}, #{methodName,jdbcType=VARCHAR}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.myz.quartz.entity.ScheduleJob">
+        insert into task_schedule_job
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="scheduleJobId != null">
+                schedule_job_id,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="jobName != null">
+                job_name,
+            </if>
+            <if test="jobGroup != null">
+                job_group,
+            </if>
+            <if test="jobStatus != null">
+                job_status,
+            </if>
+            <if test="cronExpression != null">
+                cron_expression,
+            </if>
+            <if test="description != null">
+                description,
+            </if>
+            <if test="beanClass != null">
+                bean_class,
+            </if>
+            <if test="isConcurrent != null">
+                is_concurrent,
+            </if>
+            <if test="springId != null">
+                spring_id,
+            </if>
+            <if test="methodName != null">
+                method_name,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="scheduleJobId != null">
+                #{scheduleJobId,jdbcType=BIGINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="jobName != null">
+                #{jobName,jdbcType=VARCHAR},
+            </if>
+            <if test="jobGroup != null">
+                #{jobGroup,jdbcType=VARCHAR},
+            </if>
+            <if test="jobStatus != null">
+                #{jobStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="cronExpression != null">
+                #{cronExpression,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="beanClass != null">
+                #{beanClass,jdbcType=VARCHAR},
+            </if>
+            <if test="isConcurrent != null">
+                #{isConcurrent,jdbcType=VARCHAR},
+            </if>
+            <if test="springId != null">
+                #{springId,jdbcType=VARCHAR},
+            </if>
+            <if test="methodName != null">
+                #{methodName,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.myz.quartz.entity.ScheduleJob">
+        update task_schedule_job
+        <set>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="jobName != null">
+                job_name = #{jobName,jdbcType=VARCHAR},
+            </if>
+            <if test="jobGroup != null">
+                job_group = #{jobGroup,jdbcType=VARCHAR},
+            </if>
+            <if test="jobStatus != null">
+                job_status = #{jobStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="cronExpression != null">
+                cron_expression = #{cronExpression,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                description = #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="beanClass != null">
+                bean_class = #{beanClass,jdbcType=VARCHAR},
+            </if>
+            <if test="isConcurrent != null">
+                is_concurrent = #{isConcurrent,jdbcType=VARCHAR},
+            </if>
+            <if test="springId != null">
+                spring_id = #{springId,jdbcType=VARCHAR},
+            </if>
+            <if test="methodName != null">
+                method_name = #{methodName,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where schedule_job_id = #{scheduleJobId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.myz.quartz.entity.ScheduleJob">
+        update task_schedule_job
+        set create_time = #{createTime,jdbcType=TIMESTAMP},
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+        job_name = #{jobName,jdbcType=VARCHAR},
+        job_group = #{jobGroup,jdbcType=VARCHAR},
+        job_status = #{jobStatus,jdbcType=VARCHAR},
+        cron_expression = #{cronExpression,jdbcType=VARCHAR},
+        description = #{description,jdbcType=VARCHAR},
+        bean_class = #{beanClass,jdbcType=VARCHAR},
+        is_concurrent = #{isConcurrent,jdbcType=VARCHAR},
+        spring_id = #{springId,jdbcType=VARCHAR},
+        method_name = #{methodName,jdbcType=VARCHAR}
+        where schedule_job_id = #{scheduleJobId,jdbcType=BIGINT}
+    </update>
+</mapper>

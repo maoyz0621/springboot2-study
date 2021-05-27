@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="com.myz.timer"/>
+    <context:annotation-config/>
+
+    <!-- 1：定义任务的bean ，这里使用JobDetailFactoryBean,也可以使用MethodInvokingJobDetailFactoryBean ，配置类似 -->
+    <bean id="firstJobDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <!-- 任务中断重启后会恢复 -->
+        <property name="requestsRecovery" value="true"/>
+        <property name="group" value="group-first-job"/>
+        <property name="name" value="firstJob"/>
+        <property name="jobClass" value="com.myz.timer.spring.DetailQuartzJobBean"/>
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="targetObject" value="firstTask"/>
+                <entry key="targetMethod" value="task"/>
+            </map>
+        </property>
+        <!-- 必须设置为true，如果为false，当没有活动的触发器与之关联时会在调度器中会删除该任务  -->
+        <property name="durability" value="true"/>
+    </bean>
+
+    <!-- 2：定义触发器的bean，定义一个Cron的Trigger，一个触发器只能和一个任务进行绑定 -->
+    <bean id="firstCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="group" value="group-first-trigger"/>
+        <property name="name" value="firstTrigger"/>
+        <property name="jobDetail" ref="firstJobDetail"/>
+        <property name="startDelay" value="1000"/>
+        <property name="cronExpression" value="0/2 * * * * ?"/>
+    </bean>
+
+    <!-- 1：定义任务的bean ，这里使用JobDetailFactoryBean,也可以使用MethodInvokingJobDetailFactoryBean ，配置类似 -->
+    <bean id="secondJobDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <!-- 任务中断重启后会恢复 -->
+        <property name="requestsRecovery" value="true"/>
+        <property name="group" value="group-second-job"/>
+        <property name="name" value="secondJob"/>
+        <property name="jobClass" value="com.myz.timer.spring.DetailQuartzJobBean"/>
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="targetObject" value="secondTask"/>
+                <entry key="targetMethod" value="task"/>
+            </map>
+        </property>
+        <!-- 必须设置为true，如果为false，当没有活动的触发器与之关联时会在调度器中会删除该任务  -->
+        <property name="durability" value="true"/>
+    </bean>
+
+    <!-- 2：定义触发器的bean，定义一个Cron的Trigger，一个触发器只能和一个任务进行绑定 -->
+    <bean id="secondCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="group" value="group-second-trigger"/>
+        <property name="name" value="secondTrigger"/>
+        <property name="jobDetail" ref="secondJobDetail"/>
+        <property name="startDelay" value="1000"/>
+        <property name="cronExpression" value="0/2 * * * * ?"/>
+    </bean>
+
+    <!-- 3.定义调度器，并将Trigger注册到调度器中 -->
+    <bean id="scheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean" lazy-init="false"
+          autowire="no" destroy-method="destroy">
+        <!--可选，QuartzScheduler 启动时更新己存在的Job，这样就不用每次修改targetObject后删除qrtz_job_details表对应记录了 -->
+        <property name="overwriteExistingJobs" value="true"/>
+        <!--必须的，QuartzScheduler 延时启动，应用启动完后 QuartzScheduler 再启动 -->
+        <property name="startupDelay" value="3"/>
+        <property name="autoStartup" value="true"/>
+        <property name="waitForJobsToCompleteOnShutdown" value="true"/>
+        <property name="triggers">
+            <list>
+                <ref bean="firstCronTrigger"/>
+                <ref bean="secondCronTrigger"/>
+            </list>
+        </property>
+        <property name="configLocation" value="classpath:quartz.properties"/>
+        <!-- 指定spring容器的key，如果不设定在job中的jobmap中是获取不到spring容器的 -->
+        <property name="applicationContextSchedulerContextKey" value="applicationContext"/>
+    </bean>
+
+    <!-- 4.定时任务管理器 -->
+    <bean id="quartzManager" class="com.myz.timer.spring.manager.QuartzManager">
+        <property name="scheduler" ref="scheduler"/>
+    </bean>
+
+</beans>

@@ -95,6 +95,8 @@
         <module>springboot2-jackson</module>
         <module>springboot2-enableConfig</module>
         <module>springboot2-encrypt</module>
+        <module>springboot2-quartz</module>
+        <module>springboot2-quartz/quartz-spring</module>
     </modules>
 
     <!--<properties>-->
