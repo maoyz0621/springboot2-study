@@ -87,7 +87,7 @@
         <module>springboot2-dubbo</module>
         <module>springboot2-redis</module>
         <module>project-template</module>
-        <module>springboot2-common</module>
+        <!--<module>springboot2-common</module>-->
         <module>springboot2-jdbcdoc</module>
         <module>springboot2-mybatis-page</module>
         <module>springboot2-i18n</module>
@@ -99,22 +99,22 @@
         <module>springboot2-quartz/quartz-spring</module>
     </modules>
 
-    <!--<properties>-->
-    <!--    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>-->
-    <!--    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>-->
-    <!--    <java.version>1.8</java.version>-->
-    <!--    <maven.compiler.source>1.8</maven.compiler.source>-->
-    <!--    <maven.compiler.target>1.8</maven.compiler.target>-->
-    <!--    <spring.boot.version>2.2.6.RELEASE</spring.boot.version>-->
-    <!--    <mysql.version>8.0.20</mysql.version>-->
-    <!--    <hutool.version>5.3.3</hutool.version>-->
-    <!--    <guava.version>28.1-jre</guava.version>-->
-    <!--    <fastjosn.version>1.2.68</fastjosn.version>-->
-    <!--    <mybatis.version>2.1.2</mybatis.version>-->
-    <!--    <druid.version>1.1.22</druid.version>-->
-    <!--    <pagehelper.version>1.2.13</pagehelper.version>-->
-    <!--    <version.swagger>2.9.2</version.swagger>-->
-    <!--</properties>-->
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <spring.boot.version>2.2.6.RELEASE</spring.boot.version>
+        <mysql.version>8.0.20</mysql.version>
+        <hutool.version>5.3.3</hutool.version>
+        <guava.version>28.1-jre</guava.version>
+        <fastjosn.version>1.2.68</fastjosn.version>
+        <mybatis.version>2.1.2</mybatis.version>
+        <druid.version>1.1.22</druid.version>
+        <pagehelper.version>1.2.13</pagehelper.version>
+        <version.swagger>2.9.2</version.swagger>
+    </properties>
 
     <!--<dependencies>-->
     <!--    <dependency>-->
