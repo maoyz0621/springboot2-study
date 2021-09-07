@@ -7,8 +7,6 @@ import com.fasterxml.jackson.databind.util.StdConverter;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 /**
@@ -24,7 +22,7 @@ public class LongToDateStrStdConverter extends StdConverter<Long, String> {
 
     @Override
     public String convert(Long value) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withZone(ZoneId.of("+8"));
+        // DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withZone(ZoneId.of("+8"));
         // return LocalDate.now().format(formatter);
         return threadLocal.get().format(new Date(value));
     }

@@ -5,8 +5,8 @@ package com.myz.springboot2.jackson.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.myz.springboot2.jackson.config.serial.MyNumberJsonSerializer;
-import com.myz.springboot2.jackson.config.serial.MyStatusJsonSerializer;
+import com.myz.springboot2.jackson.config.serial.MyNumberJackJsonSerializer;
+import com.myz.springboot2.jackson.config.serial.MyStatusJackJsonSerializer;
 import lombok.Data;
 import lombok.ToString;
 
@@ -36,15 +36,15 @@ public class UserRBean {
     /**
      * 转义 **
      */
-    @JsonSerialize(using = MyNumberJsonSerializer.class)
+    @JsonSerialize(using = MyNumberJackJsonSerializer.class)
     private BigDecimal feePrice;
 
     /**
      * 保留2位小数
      */
-    @JsonSerialize(using = MyNumberJsonSerializer.class)
+    @JsonSerialize(using = MyNumberJackJsonSerializer.class)
     private BigDecimal preferentialPrice;
 
-    @JsonSerialize(using = MyStatusJsonSerializer.class)
+    @JsonSerialize(using = MyStatusJackJsonSerializer.class)
     private int status;
 }

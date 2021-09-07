@@ -18,7 +18,7 @@ import java.text.DecimalFormat;
  * @author maoyz0621 on 2020/10/26
  * @version v1.0
  */
-public class MyNumberJsonSerializer extends JsonSerializer<BigDecimal> {
+public class MyNumberJackJsonSerializer extends JsonSerializer<BigDecimal> {
     /**
      * 保留2位小数 #.00 表示两位小数 #.0000四位小数
      */

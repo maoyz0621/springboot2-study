@@ -4,6 +4,7 @@
 package com.myz.springboot2.jackson.controller;
 
 import com.myz.springboot2.jackson.domain.UserBean;
+import com.myz.springboot2.jackson.domain.UserFormBean;
 import com.myz.springboot2.jackson.domain.UserRBean;
 import com.myz.springboot2.jackson.domain.UserStdConverterBean;
 import lombok.extern.slf4j.Slf4j;
@@ -34,16 +35,19 @@ public class JacksonController {
     }
 
     @PostMapping("/post")
-    public UserRBean post(UserBean userBean) {
+    public UserFormBean post(UserFormBean userBean) {
         log.info("post {}", userBean);
-        UserRBean userRBean = new UserRBean();
+        UserFormBean userRBean = new UserFormBean();
+        userRBean.setDate(userBean.getDate());
+        userRBean.setDateTime(userBean.getDateTime());
         return userRBean;
     }
 
     @PostMapping("/postJson")
-    public UserRBean postJson(@RequestBody UserBean userBean) {
+    public UserBean postJson(@RequestBody UserBean userBean) {
         log.info("postJson {}", userBean);
-        UserRBean userRBean = new UserRBean();
+        UserBean userRBean = new UserBean();
+        userRBean.setDate(new Date());
         return userRBean;
     }
 
@@ -62,10 +66,10 @@ public class JacksonController {
         bean.setDateTimeToLong(System.currentTimeMillis());
         /**
          {
-         "date": 1630682213145,
-         "dateTime": 1630682213145,
-         "dateToLong": 1630682213145,
-         "dateTimeToLong": "2021-09-03 23:16:53"
+             "date": 1630682213145,
+             "dateTime": 1630682213145,
+             "dateToLong": 1630682213145,
+             "dateTimeToLong": "2021-09-03 23:16:53"
          }
          */
         return bean;

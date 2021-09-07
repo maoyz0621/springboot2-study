@@ -8,23 +8,25 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.myz.springboot2.jackson.config.format.DateToLongFormat;
 import lombok.Data;
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
 /**
- * 反序列化@JsonDeserialize()
+ * 接收Form表单数据
  *
  * @author maoyz0621 on 2021/2/6
  * @version v1.0
  */
 @Data
 @ToString
-public class UserBean {
+public class UserFormBean {
 
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date date;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date dateTime;
 
     @DateToLongFormat(pattern = "yyyy-MM-dd")

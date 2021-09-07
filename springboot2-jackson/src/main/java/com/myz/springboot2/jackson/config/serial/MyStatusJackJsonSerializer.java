@@ -16,7 +16,7 @@ import java.io.IOException;
  * @author maoyz0621 on 2020/10/26
  * @version v1.0
  */
-public class MyStatusJsonSerializer extends JsonSerializer<Integer> {
+public class MyStatusJackJsonSerializer extends JsonSerializer<Integer> {
 
     @Override
     public void serialize(Integer status, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
