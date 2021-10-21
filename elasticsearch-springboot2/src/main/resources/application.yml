@@ -1,3 +1,5 @@
 spring:
   profiles:
-    active: dev
+    active: dev-1
+  file:
+    path: logback.xml

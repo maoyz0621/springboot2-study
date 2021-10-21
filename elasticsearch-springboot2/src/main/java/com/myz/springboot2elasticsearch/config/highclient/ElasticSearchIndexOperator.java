@@ -14,6 +14,9 @@ import org.elasticsearch.client.indices.CreateIndexRequest;
 import org.elasticsearch.client.indices.CreateIndexResponse;
 import org.elasticsearch.client.indices.GetIndexRequest;
 import org.elasticsearch.common.settings.Settings;
+import org.elasticsearch.index.reindex.ReindexRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 
 import javax.annotation.Resource;
 import java.io.IOException;
@@ -26,6 +29,9 @@ import java.io.IOException;
  */
 @Slf4j
 public abstract class ElasticSearchIndexOperator {
+
+    @Autowired
+    private ElasticsearchRestTemplate elasticsearchRestTemplate;
 
     @Resource
     protected RestHighLevelClient restHighLevelClient;
@@ -61,6 +67,9 @@ public abstract class ElasticSearchIndexOperator {
 
         // 创建索引
         CreateIndexRequest createIndexRequest = new CreateIndexRequest(index);
+        // 配置别名
+        // createIndexRequest.alias()；
+// createIndexRequest.mapping()
 
         createIndexRequest.settings(Settings.builder()
                 .put("index.number_of_shards", 5)
@@ -108,6 +117,11 @@ public abstract class ElasticSearchIndexOperator {
         boolean acknowledged = acknowledgedResponse.isAcknowledged();
         log.info("删除索引【{}】,结果：{}", index, acknowledged);
         return acknowledged;
+    }
+
+    public void refreshIndex(){
+        ReindexRequest reindexRequest = new ReindexRequest();
+        // this.restHighLevelClient.reindex(reindexRequest,RequestOptions.DEFAULT);
     }
 
 }

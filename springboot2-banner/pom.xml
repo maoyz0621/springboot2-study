@@ -12,10 +12,8 @@
     <artifactId>springboot2-banner</artifactId>
     <name>springboot2-banner</name>
 
-
     <properties>
         <main.class>com.myz.banner.BannerApplication</main.class>
-
     </properties>
 
     <dependencies>

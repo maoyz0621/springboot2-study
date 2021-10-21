@@ -12,6 +12,7 @@ import java.util.Objects;
 
 /**
  * 加解密工具类
+ *
  * @author maoyz0621 on 2020/11/2
  * @version v1.0
  */

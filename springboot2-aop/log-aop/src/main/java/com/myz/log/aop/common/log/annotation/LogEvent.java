@@ -3,7 +3,15 @@
  **/
 package com.myz.log.aop.common.log.annotation;
 
-import java.lang.annotation.*;
+import com.myz.log.aop.common.log.enums.LogEventType;
+import com.myz.log.aop.common.log.enums.LogModuleType;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Inherited;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  * 这里定义日志的详细内容。如果此注解注解在类上，则这个参数做为类全部方法的默认值。如果注解在方法上，则只对这个方法启作用

@@ -2,12 +2,12 @@ package com.myz.log.aop.common.log.aspect;
 
 import com.myz.log.aop.common.log.annotation.Log;
 import com.myz.log.aop.common.log.annotation.LogEvent;
-import com.myz.log.aop.common.log.annotation.LogEventType;
-import com.myz.log.aop.common.log.annotation.LogModuleType;
+import com.myz.log.aop.common.log.enums.LogEventType;
+import com.myz.log.aop.common.log.enums.LogModuleType;
+import com.myz.log.aop.common.log.manager.ILogManager;
 import com.myz.log.aop.common.log.manager.model.LogModel;
 import com.myz.log.aop.common.utils.HttpContextUtils;
 import com.myz.log.aop.common.utils.IpUtils;
-import com.myz.log.aop.common.log.manager.ILogManager;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;

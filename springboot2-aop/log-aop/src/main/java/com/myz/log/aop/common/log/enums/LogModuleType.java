@@ -1,7 +1,7 @@
 /**
  * Copyright 2018 asiainfo Inc.
  **/
-package com.myz.log.aop.common.log.annotation;
+package com.myz.log.aop.common.log.enums;
 
 /**
  * 日志功能模块

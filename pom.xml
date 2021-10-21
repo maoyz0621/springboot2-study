@@ -4,7 +4,7 @@
 
     <parent>
         <groupId>com.myz</groupId>
-        <artifactId>project-depend</artifactId>
+        <artifactId>project-boot</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
@@ -15,43 +15,43 @@
     <name>springboot2-study</name>
     <packaging>pom</packaging>
 
-    <!--<repositories>-->
-    <!--    <repository>-->
-    <!--        <id>nexus-aliyun</id>-->
-    <!--        <name>Nexus aliyun</name>-->
-    <!--        <url>https://maven.aliyun.com/repository/public</url>-->
-    <!--        <releases>-->
-    <!--            <enabled>true</enabled>-->
-    <!--        </releases>-->
-    <!--        <snapshots>-->
-    <!--            <enabled>false</enabled>-->
-    <!--        </snapshots>-->
-    <!--    </repository>-->
+    <repositories>
+        <repository>
+            <id>nexus-aliyun</id>
+            <name>Nexus aliyun</name>
+            <url>https://maven.aliyun.com/repository/public</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
 
-    <!--    &lt;!&ndash; Spring Boot 官方 Maven 仓库 &ndash;&gt;-->
-    <!--    <repository>-->
-    <!--        <id>spring-milestones</id>-->
-    <!--        <name>Spring Milestones</name>-->
-    <!--        <url>https://maven.aliyun.com/repository/spring</url>-->
-    <!--        <snapshots>-->
-    <!--            <enabled>false</enabled>-->
-    <!--        </snapshots>-->
-    <!--    </repository>-->
-    <!--</repositories>-->
+        <!-- Spring Boot 官方 Maven 仓库 -->
+        <repository>
+            <id>spring-milestones</id>
+            <name>Spring Milestones</name>
+            <url>https://maven.aliyun.com/repository/spring</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 
-    <!--<pluginRepositories>-->
-    <!--    <pluginRepository>-->
-    <!--        <id>nexus-aliyun</id>-->
-    <!--        <name>Nexus aliyun</name>-->
-    <!--        <url>https://maven.aliyun.com/repository/public</url>-->
-    <!--        <releases>-->
-    <!--            <enabled>true</enabled>-->
-    <!--        </releases>-->
-    <!--        <snapshots>-->
-    <!--            <enabled>false</enabled>-->
-    <!--        </snapshots>-->
-    <!--    </pluginRepository>-->
-    <!--</pluginRepositories>-->
+    <pluginRepositories>
+        <pluginRepository>
+            <id>nexus-aliyun</id>
+            <name>Nexus aliyun</name>
+            <url>https://maven.aliyun.com/repository/public</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
 
 
     <modules>
@@ -97,6 +97,8 @@
         <module>springboot2-encrypt</module>
         <module>springboot2-quartz</module>
         <module>springboot2-quartz/quartz-spring</module>
+        <module>springboot2-binlog</module>
+        <module>springboot2-canal</module>
     </modules>
 
     <properties>
@@ -114,101 +116,8 @@
         <druid.version>1.1.22</druid.version>
         <pagehelper.version>1.2.13</pagehelper.version>
         <version.swagger>2.9.2</version.swagger>
+        <mybatis-plus.version>3.4.3</mybatis-plus.version>
     </properties>
-
-    <!--<dependencies>-->
-    <!--    <dependency>-->
-    <!--        <groupId>org.apache.commons</groupId>-->
-    <!--        <artifactId>commons-lang3</artifactId>-->
-    <!--        <version>3.7</version>-->
-    <!--    </dependency>-->
-
-    <!--    <dependency>-->
-    <!--        <groupId>org.projectlombok</groupId>-->
-    <!--        <artifactId>lombok</artifactId>-->
-    <!--    </dependency>-->
-    <!--    <dependency>-->
-    <!--        <groupId>com.myz</groupId>-->
-    <!--        <artifactId>springboot2-common</artifactId>-->
-    <!--        <version>0.0.1-SNAPSHOT</version>-->
-    <!--    </dependency>-->
-    <!--</dependencies>-->
-
-    <!--<dependencyManagement>-->
-    <!--    <dependencies>-->
-    <!--        <dependency>-->
-    <!--            <groupId>org.springframework.boot</groupId>-->
-    <!--            <artifactId>spring-boot-starter-parent</artifactId>-->
-    <!--            <version>${spring.boot.version}</version>-->
-    <!--            <type>pom</type>-->
-    <!--            <scope>import</scope>-->
-    <!--        </dependency>-->
-
-    <!--        <dependency>-->
-    <!--            <groupId>org.projectlombok</groupId>-->
-    <!--            <artifactId>lombok</artifactId>-->
-    <!--            <version>1.18.6</version>-->
-    <!--        </dependency>-->
-
-    <!--        <dependency>-->
-    <!--            <groupId>com.alibaba</groupId>-->
-    <!--            <artifactId>fastjson</artifactId>-->
-    <!--            <version>${fastjosn.version}</version>-->
-    <!--        </dependency>-->
-
-    <!--        <dependency>-->
-    <!--            <groupId>mysql</groupId>-->
-    <!--            <artifactId>mysql-connector-java</artifactId>-->
-    <!--            <version>${mysql.version}</version>-->
-    <!--        </dependency>-->
-    <!--        &lt;!&ndash; hutool工具类 &ndash;&gt;-->
-    <!--        <dependency>-->
-    <!--            <groupId>cn.hutool</groupId>-->
-    <!--            <artifactId>hutool-all</artifactId>-->
-    <!--            <version>${hutool.version}</version>-->
-    <!--        </dependency>-->
-    <!--        &lt;!&ndash; guava工具类 &ndash;&gt;-->
-    <!--        <dependency>-->
-    <!--            <groupId>com.google.guava</groupId>-->
-    <!--            <artifactId>guava</artifactId>-->
-    <!--            <version>${guava.version}</version>-->
-    <!--        </dependency>-->
-    <!--        <dependency>-->
-    <!--            <groupId>com.alibaba</groupId>-->
-    <!--            <artifactId>druid-spring-boot-starter</artifactId>-->
-    <!--            <version>${druid.version}</version>-->
-    <!--        </dependency>-->
-    <!--        <dependency>-->
-    <!--            <groupId>com.alibaba</groupId>-->
-    <!--            <artifactId>druid</artifactId>-->
-    <!--            <version>${druid.version}</version>-->
-    <!--        </dependency>-->
-
-    <!--        <dependency>-->
-    <!--            <groupId>org.mybatis.spring.boot</groupId>-->
-    <!--            <artifactId>mybatis-spring-boot-starter</artifactId>-->
-    <!--            <version>${mybatis.version}</version>-->
-    <!--        </dependency>-->
-
-    <!--        <dependency>-->
-    <!--            <groupId>com.github.pagehelper</groupId>-->
-    <!--            <artifactId>pagehelper-spring-boot-starter</artifactId>-->
-    <!--            <version>${pagehelper.version}</version>-->
-    <!--        </dependency>-->
-
-    <!--        <dependency>-->
-    <!--            <groupId>io.springfox</groupId>-->
-    <!--            <artifactId>springfox-swagger-ui</artifactId>-->
-    <!--            <version>${version.swagger}</version>-->
-    <!--        </dependency>-->
-    <!--        <dependency>-->
-    <!--            <groupId>io.springfox</groupId>-->
-    <!--            <artifactId>springfox-swagger2</artifactId>-->
-    <!--            <version>${version.swagger}</version>-->
-    <!--        </dependency>-->
-    <!--    </dependencies>-->
-    <!--</dependencyManagement>-->
-
 
     <build>
         <finalName>${project.artifactId}-${project.version}</finalName>

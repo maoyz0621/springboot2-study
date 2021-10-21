@@ -3,7 +3,12 @@
  **/
 package com.myz.log.aop.common.log.annotation;
 
-import java.lang.annotation.*;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Inherited;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  * @author maoyz0621 on 2018/12/27
@@ -15,17 +20,19 @@ import java.lang.annotation.*;
 @Inherited
 public @interface Log {
 
+    String level() default "info";
+
     String value() default "";
 
     /**
      * 是否记录传递参数
      */
-    boolean param() default false;
+    boolean printArgument() default true;
 
     /**
      * 记录执行结果
      */
-    boolean result() default false;
+    boolean printResult() default true;
 
     /**
      * 如果为true，则类下面的LogEvent启作用，否则忽略

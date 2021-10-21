@@ -98,6 +98,8 @@ public class ElasticSearchQueryOperator extends ElasticSearchOperator {
 
         SearchResponse searchResponse = this.restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
 
+        log.info(searchRequest.toString());
+        log.info(searchResponse.toString());
         if (RestStatus.OK.getStatus() == searchResponse.status().getStatus()) {
             // 包含了总点击次数、最大得分等信息：
             SearchHits hits = searchResponse.getHits();
