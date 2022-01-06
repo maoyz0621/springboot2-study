@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--　
+    namespace:命名空间,为接口全类名 -->
+<mapper namespace="com.myz.springboot2.mybatis.encrypt.domain.UserMapper">
+    <!-- id:唯一标示，为接口中的方法名
+         resultType：返回值类型,依然使用实体类型 -->
+    <select id="selectAll" resultType="com.myz.springboot2.mybatis.encrypt.domain.entity.User">
+        SELECT *
+        FROM t_user
+    </select>
+
+    <select id="selectById" resultType="com.myz.springboot2.mybatis.encrypt.domain.entity.User">
+        SELECT id, last_name, gender, email
+        from t_user
+        <where>
+            id = #{id}
+        </where>
+    </select>
+
+    <!--    <select id="selectById" resultType="com.myz.entity.User">-->
+    <!--        SELECT id, last_name, gender, email from t_user-->
+    <!--        <where>-->
+    <!--            last_name = #{lastName}-->
+    <!--        </where>-->
+    <!--    </select>-->
+
+    <!--　多参数查询　,使用if 条件判断的参数需要加上 @Param注解 -->
+    <select id="selectByIdAndGender" resultType="com.myz.springboot2.mybatis.encrypt.domain.entity.User">
+        SELECT *
+        FROM t_user
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+            <if test="gender != null and gender.trim() != ''">
+                and gender = #{gender}
+            </if>
+        </where>
+    </select>
+
+    <!-- 多参数查询 ,根据pojo-->
+    <select id="selectByPOJO" resultType="com.myz.springboot2.mybatis.encrypt.domain.entity.User">
+        SELECT *
+        FROM t_user
+        <where>
+            id = #{id}
+                    and last_name = #{lastName}
+        </where>
+    </select>
+
+    <!-- 多参数查询 ,根据map-->
+    <select id="selectByMap" resultType="com.myz.springboot2.mybatis.encrypt.domain.entity.User">
+        SELECT *
+        FROM t_user
+        <where>
+            id = #{id}
+                    and last_name = #{lastName}
+        </where>
+    </select>
+
+    <!-- 结果返回一条map -->
+    <select id="selectReturnMap" resultType="map">
+        SELECT *
+        FROM t_user
+        <where>
+            id = #{id}
+        </where>
+    </select>
+
+    <!--　查询结果返回多条User记录，封装在map中　-->
+    <select id="selectReturnMaps" resultType="map">
+        SELECT *
+        FROM t_user
+        <where>
+            last_name LIKE CONCAT('%', #{lastName}, '%')
+        </where>
+    </select>
+
+    <select id="selectAllByName" resultType="com.myz.springboot2.mybatis.encrypt.domain.entity.User">
+        SELECT *
+        FROM t_user
+        <where>
+            last_name LIKE CONCAT('%', #{lastName}, '%')
+        </where>
+    </select>
+
+    <!--　调用自增主键useGeneratedKeys,keyProperty主键属性　-->
+    <insert id="insertUser" parameterType="com.myz.springboot2.mybatis.encrypt.domain.entity.User"
+            useGeneratedKeys="true"
+            keyProperty="id">
+        INSERT INTO t_user (last_name, gender, email)
+        VALUES (#{lastName}, #{gender}, #{email})
+    </insert>
+
+    <insert id="batchInsert" parameterType="com.myz.springboot2.mybatis.encrypt.domain.entity.User">
+        INSERT INTO t_user (last_name, gender, email)
+                VALUES
+        <foreach collection="users" item="item" separator=",">
+            (#{lastName}, #{gender}, #{email})
+        </foreach>
+    </insert>
+
+    <update id="updateUser" useGeneratedKeys="true" keyProperty="id">
+        UPDATE t_user
+        SET last_name=#{lastName},
+            gender=#{gender},
+            email=#{email}
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <delete id="deleteUser">
+        DELETE
+        FROM t_user
+        <where>
+            id = #{id}
+        </where>
+    </delete>
+</mapper>

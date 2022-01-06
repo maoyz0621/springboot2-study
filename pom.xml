@@ -99,6 +99,9 @@
         <module>springboot2-quartz/quartz-spring</module>
         <module>springboot2-binlog</module>
         <module>springboot2-canal</module>
+        <module>springboot2-mybatis-encrypt</module>
+        <module>springboot2-mybatis-mysql-encrypt</module>
+        <module>springboot2-mybatis-plus-3.4</module>
     </modules>
 
     <properties>
