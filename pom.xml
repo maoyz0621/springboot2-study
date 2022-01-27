@@ -102,6 +102,8 @@
         <module>springboot2-mybatis-encrypt</module>
         <module>springboot2-mybatis-mysql-encrypt</module>
         <module>springboot2-mybatis-plus-3.4</module>
+        <module>springboot2-event</module>
+        <module>health-check-client</module>
     </modules>
 
     <properties>
