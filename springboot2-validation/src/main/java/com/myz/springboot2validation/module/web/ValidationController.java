@@ -11,7 +11,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.Date;
@@ -100,7 +104,7 @@ public class ValidationController {
         dto.setAge(80);
         dto.setGender(CustomerDto.Gender.MALE);
         Result validator = ValidatorUtils.validator(dto);
-        if (validator != null) {
+        if (!validator.isSuccess()) {
             return validator;
         }
         return null;
@@ -118,7 +122,7 @@ public class ValidationController {
         dto.setGender(CustomerDto.Gender.MALE);
         dto.setBirthday(new Date());
         Result validator = ValidatorUtils.validator(dto);
-        if (validator != null) {
+        if (!validator.isSuccess()) {
             return validator;
         }
         return null;

@@ -33,6 +33,7 @@ public class BindExceptionHandler {
     @ResponseBody
     public Result handleException(Exception ex) {
         Result errorResult = new Result();
+        errorResult.setSuccess(false);
         errorResult.setMessage(ex.getMessage());
         return errorResult;
     }
@@ -57,6 +58,7 @@ public class BindExceptionHandler {
         Result errorResult = new Result();
         List<FieldError> fieldErrors = ex.getBindingResult().getFieldErrors();
         StringBuilder sb = new StringBuilder();
+        errorResult.setSuccess(false);
         errorResult.setCode(200001);
         for (FieldError fieldError : fieldErrors) {
             String field = fieldError.getField();
@@ -110,6 +112,7 @@ public class BindExceptionHandler {
         Result errorResult = new Result();
         errorResult.setCode(1000001);
         errorResult.setMessage(list.toString());
+        errorResult.setSuccess(false);
         return errorResult;
     }
 
@@ -143,6 +146,7 @@ public class BindExceptionHandler {
 
         // 生成返回结果
         errorResult.setCode(400);
+            errorResult.setSuccess(false);
         errorResult.setMessage(sb.toString());
         return errorResult;
     }

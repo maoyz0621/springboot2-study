@@ -22,6 +22,7 @@ public class Result<T> implements Serializable {
 
     private static final long serialVersionUID = -7676953430588237941L;
 
+    private boolean success;
     private int code;
     private String message;
     private T content;

@@ -28,7 +28,11 @@ public class ValidatorUtils {
     public static <T> Result validator(T t) {
         Set<ConstraintViolation<T>> constraintViolations = validator.validate(t);
         if (constraintViolations.isEmpty()) {
-            return null;
+            // TODO 可以优化，返回成功
+            Result success = new Result();
+            success.setCode(10000);
+            success.setSuccess(true);
+            return success;
         }
 
         StringBuilder sb = new StringBuilder();
@@ -40,9 +44,11 @@ public class ValidatorUtils {
                         .append(" ;"));
 
         logger.error("************************ {} *************************", sb);
+        // TODO 返回错误信息
         Result errorResult = new Result();
         errorResult.setCode(10000);
         errorResult.setMessage(JSONObject.toJSONString(sb));
+        errorResult.setSuccess(false);
         return errorResult;
     }
 }
