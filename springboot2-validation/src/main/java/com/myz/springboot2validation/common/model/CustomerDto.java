@@ -4,12 +4,20 @@
 package com.myz.springboot2validation.common.model;
 
 import com.myz.springboot2validation.common.annotation.PhoneValidation;
+import com.myz.springboot2validation.common.groups.Insert;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
+import javax.validation.groups.Default;
 import java.util.Date;
 
 /**
@@ -52,7 +60,7 @@ public class CustomerDto {
     /**
      * 枚举类型
      */
-    @NotNull(groups = Save.class)
+    @NotNull(groups = {Default.class, Insert.class}, message = "性别不能为空")
     private Gender gender;
 
     public enum Gender {
@@ -65,17 +73,5 @@ public class CustomerDto {
          * 女
          */
         FEMALE
-    }
-
-    /**
-     * 保存的时候校验分组
-     */
-    public interface Save {
-    }
-
-    /**
-     * 更新的时候校验分组
-     */
-    public interface Update {
     }
 }

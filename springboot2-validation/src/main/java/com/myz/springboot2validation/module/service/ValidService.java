@@ -4,6 +4,7 @@
 package com.myz.springboot2validation.module.service;
 
 import com.myz.springboot2validation.common.Result;
+import com.myz.springboot2validation.common.groups.Insert;
 import com.myz.springboot2validation.common.model.CustomerDto;
 import com.myz.springboot2validation.utils.ValidatorUtils;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,19 @@ public class ValidService {
         if (!validator.isSuccess()) {
             return validator;
         }
+        return null;
+    }
+
+    /**
+     * 针对service，分组检验
+     * 1、方法上@Validated(Update.class)
+     * 2、参数上加@Valid
+     *
+     * @param dto
+     * @return
+     */
+    @Validated(Insert.class)
+    public Result validGroup(@Valid CustomerDto dto) {
         return null;
     }
 }

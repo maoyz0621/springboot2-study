@@ -43,8 +43,18 @@ public class ValidatorController {
         CustomerDto dto = new CustomerDto();
         dto.setUsername("a");
         dto.setAge(80);
-        dto.setGender(CustomerDto.Gender.MALE);
+        // dto.setGender(CustomerDto.Gender.MALE);
         return validService.valid2(dto);
+    }
+
+    @GetMapping(value = "/validGroup")
+    public Result validGroup() {
+        logger.info("开始校验service中的分组校验");
+        CustomerDto dto = new CustomerDto();
+        dto.setUsername("a");
+        dto.setAge(80);
+        dto.setGender(CustomerDto.Gender.MALE);
+        return validService.validGroup(dto);
     }
 
 }

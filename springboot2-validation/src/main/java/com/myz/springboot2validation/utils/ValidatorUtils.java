@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
+import javax.validation.groups.Default;
 import java.util.Set;
 
 /**
@@ -26,7 +27,11 @@ public class ValidatorUtils {
     private static final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
     public static <T> Result validator(T t) {
-        Set<ConstraintViolation<T>> constraintViolations = validator.validate(t);
+        return validator(t, Default.class);
+    }
+
+    public static <T> Result validator(T t, Class<?>... groups) {
+        Set<ConstraintViolation<T>> constraintViolations = validator.validate(t, groups);
         if (constraintViolations.isEmpty()) {
             // TODO 可以优化，返回成功
             Result success = new Result();
@@ -39,9 +44,9 @@ public class ValidatorUtils {
         // constraintViolation.getPropertyPath()获取属性名, constraintViolation.getMessage()获取错误信息
         constraintViolations.forEach((constraintViolation) ->
                 sb.append(constraintViolation.getPropertyPath())
-                        .append(" : ")
+                        .append(":")
                         .append(constraintViolation.getMessage())
-                        .append(" ;"));
+                        .append(";"));
 
         logger.error("************************ {} *************************", sb);
         // TODO 返回错误信息
