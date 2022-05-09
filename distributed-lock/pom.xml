@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.myz</groupId>
+    <artifactId>distributed-lock</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <modules>
+        <module>distributed-lock-core</module>
+        <module>distributed-lock-redis</module>
+        <module>distributed-lock-redisson</module>
+        <module>distributed-lock-zookeeper</module>
+    </modules>
+    <packaging>pom</packaging>
+
+    <name>distributed-lock</name>
+
+
+    <properties>
+        <lock.core.version>0.0.1-SNAPSHOT</lock.core.version>
+        <redis.spring.version>2.2.6.RELEASE</redis.spring.version>
+        <redisson.spring.version>3.11.0</redisson.spring.version>
+        <zookeeper.version>3.5</zookeeper.version>
+        <zookeeper.curator.version>2.12.0</zookeeper.curator.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.16</version>
+        </dependency>
+
+    </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.myz</groupId>
+                <artifactId>distributed-lock-core</artifactId>
+                <version>${lock.core.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-redis</artifactId>
+                <version>${redis.spring.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.redisson</groupId>
+                <artifactId>redisson-spring-boot-starter</artifactId>
+                <version>${redisson.spring.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-starter-data-redis</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <!-- 支持 ZooKeeper 3.4.x and ZooKeeper 3.5.x -->
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-recipes</artifactId>
+                <version>${zookeeper.curator.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-framework</artifactId>
+                <version>${zookeeper.curator.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+
+</project>
