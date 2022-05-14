@@ -2,6 +2,7 @@ package com.myz.config; /**
  * Copyright 2021 Inc.
  **/
 
+import com.myz.config.enable.lock.config.EnableDistributedLock;
 import com.myz.config.enable.monitor.config.EnableServerLoadMonitor;
 import com.myz.config.enable.validate.ValidateType;
 import com.myz.config.enable.validate.config.EnableValidate;
@@ -17,9 +18,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 @EnableValidate(isOpen = true, policy = ValidateType.CORE)
 @EnableServerLoadMonitor
+@EnableDistributedLock
 public class EnableConfigApplication {
     private static final Logger LOGGER = LoggerFactory.getLogger(EnableConfigApplication.class);
-
 
     public static void main(String[] args) {
         LOGGER.info("EnableConfigApplication Start ");

@@ -47,7 +47,7 @@ public class ServerLoadMonitorRunner implements CommandLineRunner {
             long freeSpace = File.listRoots()[0].getFreeSpace();
             scheduledThreadPool.scheduleAtFixedRate(() -> {
                 log.info("Collect System info: freePhysicalMemorySize={},\r\nsystemCpuLoad={},\r\nhostName={},\r\nfreePhysicalMemorySize={}\r\n", freePhysicalMemorySize, systemCpuLoad, hostName, freePhysicalMemorySize);
-            }, 10, 2, TimeUnit.SECONDS);
+            }, 10, 5, TimeUnit.SECONDS);
         } catch (Exception e) {
             log.error("collectSystemInfo error:", e);
         }

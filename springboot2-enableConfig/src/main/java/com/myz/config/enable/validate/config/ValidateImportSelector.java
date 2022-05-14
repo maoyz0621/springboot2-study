@@ -6,6 +6,8 @@ package com.myz.config.enable.validate.config;
 import com.myz.config.enable.validate.SimpleValidateService;
 import com.myz.config.enable.validate.ValidateService;
 import com.myz.config.enable.validate.ValidateType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.ImportSelector;
 import org.springframework.core.GenericTypeResolver;
 import org.springframework.core.annotation.AnnotationAttributes;
@@ -21,6 +23,8 @@ import java.lang.annotation.Annotation;
  */
 public abstract class ValidateImportSelector<A extends Annotation> implements ImportSelector {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(ValidateImportSelector.class);
+
     public static final String DEFAULT_VALIDATE_TYPE_ATTRIBUTE_NAME = "policy";
 
     protected String getValidateTypeAttributeName() {
@@ -33,6 +37,7 @@ public abstract class ValidateImportSelector<A extends Annotation> implements Im
     @SuppressWarnings("NullableProblems")
     @Override
     public String[] selectImports(AnnotationMetadata importingClassMetadata) {
+        LOGGER.info("======================= ValidateImportSelector selectImports =======================");
         // 解析当前类使用的泛型
         // interface com.myz.config.enable.validate.config.EnableValidate
         Class<?> annType = GenericTypeResolver.resolveTypeArgument(getClass(), ValidateImportSelector.class);

@@ -9,5 +9,6 @@ package com.myz.config.enable.validate;
  */
 public interface ValidateService {
 
+
     boolean valid();
 }
