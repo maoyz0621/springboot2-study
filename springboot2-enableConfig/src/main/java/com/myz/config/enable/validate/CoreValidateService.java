@@ -8,4 +8,10 @@ package com.myz.config.enable.validate;
  * @version v1.0
  */
 public class CoreValidateService implements ValidateService {
+
+    @Override
+    public boolean valid() {
+        System.out.println("============= CoreValidateService valid =============");
+        return false;
+    }
 }

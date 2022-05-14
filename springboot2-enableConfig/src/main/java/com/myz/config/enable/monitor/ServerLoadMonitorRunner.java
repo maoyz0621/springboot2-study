@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 
+import javax.annotation.PreDestroy;
 import java.io.File;
 import java.lang.management.ManagementFactory;
 import java.net.InetAddress;
@@ -25,9 +26,11 @@ public class ServerLoadMonitorRunner implements CommandLineRunner {
 
     private static final OperatingSystemMXBean systemMXBean = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
 
+    final ScheduledExecutorService scheduledThreadPool = Executors.newSingleThreadScheduledExecutor();
+
     @Override
     public void run(String... args) throws Exception {
-        log.info("ServerLoadMonitorRunner run ..........");
+        log.info("================== ServerLoadMonitorRunner run ==================");
         try {
             collectSystemInfo();
         } catch (Exception e) {
@@ -42,15 +45,17 @@ public class ServerLoadMonitorRunner implements CommandLineRunner {
             double systemCpuLoad = systemMXBean.getSystemCpuLoad();
             String hostName = InetAddress.getLocalHost().getHostName();
             long freeSpace = File.listRoots()[0].getFreeSpace();
-
-            ScheduledExecutorService scheduledThreadPool = Executors.newSingleThreadScheduledExecutor();
             scheduledThreadPool.scheduleAtFixedRate(() -> {
                 log.info("Collect System info: freePhysicalMemorySize={},\r\nsystemCpuLoad={},\r\nhostName={},\r\nfreePhysicalMemorySize={}\r\n", freePhysicalMemorySize, systemCpuLoad, hostName, freePhysicalMemorySize);
             }, 10, 2, TimeUnit.SECONDS);
         } catch (Exception e) {
             log.error("collectSystemInfo error:", e);
         }
+    }
 
-        // scheduledThreadPool.shutdown();
+    @PreDestroy
+    public void destroy() {
+        log.info("================== ServerLoadMonitorRunner destroy ==================");
+        scheduledThreadPool.shutdown();
     }
 }

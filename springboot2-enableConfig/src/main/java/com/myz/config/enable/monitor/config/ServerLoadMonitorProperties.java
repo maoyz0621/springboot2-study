@@ -1,7 +1,7 @@
 /**
  * Copyright 2021 Inc.
  **/
-package com.myz.config.enable.monitor;
+package com.myz.config.enable.monitor.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

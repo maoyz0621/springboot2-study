@@ -8,4 +8,6 @@ package com.myz.config.enable.validate;
  * @version v1.0
  */
 public interface ValidateService {
+
+    boolean valid();
 }
