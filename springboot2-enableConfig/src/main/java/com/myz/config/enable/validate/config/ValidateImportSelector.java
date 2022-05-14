@@ -33,6 +33,7 @@ public abstract class ValidateImportSelector<A extends Annotation> implements Im
     @SuppressWarnings("NullableProblems")
     @Override
     public String[] selectImports(AnnotationMetadata importingClassMetadata) {
+        // 解析当前类使用的泛型
         // interface com.myz.config.enable.validate.config.EnableValidate
         Class<?> annType = GenericTypeResolver.resolveTypeArgument(getClass(), ValidateImportSelector.class);
         Assert.state(annType != null, "Unresolvable type argument for ValidateImportSelector");
