@@ -18,6 +18,14 @@ public interface DistributedLockExecutor<T> {
         return false;
     }
 
+    default T acquire(String lockKey, String lockVal) {
+        return acquire(lockKey, lockVal, 10);
+    }
+
+    default T acquire(String lockKey, String lockVal, long acquireTimeout) {
+        return acquire(lockKey, lockVal, 30, 10);
+    }
+
     /**
      * 加锁
      *
@@ -28,6 +36,17 @@ public interface DistributedLockExecutor<T> {
      * @return 锁信息
      */
     T acquire(String lockKey, String lockVal, long expire, long acquireTimeout);
+
+    /**
+     * 释放锁
+     *
+     * @param lockKey      锁key
+     * @param lockInstance 锁实例
+     * @return 是否是否锁
+     */
+    default boolean releaseLock(String lockKey, T lockInstance) {
+        return releaseLock(lockKey, "1", lockInstance);
+    }
 
     /**
      * 释放锁

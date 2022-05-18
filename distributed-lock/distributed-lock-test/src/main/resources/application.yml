@@ -1,0 +1,6 @@
+spring:
+  coordinate:
+    zookeeper:
+      servers: 127.0.0.1:2181
+  redis:
+    host: 192.168.107.100

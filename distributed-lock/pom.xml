@@ -4,6 +4,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <groupId>com.myz</groupId>
+        <artifactId>springboot2-study</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
     <groupId>com.myz</groupId>
     <artifactId>distributed-lock</artifactId>
     <version>0.0.1-SNAPSHOT</version>
@@ -12,6 +18,8 @@
         <module>distributed-lock-redis</module>
         <module>distributed-lock-redisson</module>
         <module>distributed-lock-zookeeper</module>
+        <module>distribute-lock-spring</module>
+        <module>distributed-lock-test</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -23,7 +31,7 @@
         <redis.spring.version>2.2.6.RELEASE</redis.spring.version>
         <redisson.spring.version>3.11.0</redisson.spring.version>
         <zookeeper.version>3.5</zookeeper.version>
-        <zookeeper.curator.version>2.12.0</zookeeper.curator.version>
+        <zookeeper.curator.version>4.1.0</zookeeper.curator.version>
     </properties>
 
     <dependencies>
@@ -40,6 +48,30 @@
             <dependency>
                 <groupId>com.myz</groupId>
                 <artifactId>distributed-lock-core</artifactId>
+                <version>${lock.core.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.myz</groupId>
+                <artifactId>distribute-lock-spring</artifactId>
+                <version>${lock.core.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.myz</groupId>
+                <artifactId>distributed-lock-redis</artifactId>
+                <version>${lock.core.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.myz</groupId>
+                <artifactId>distributed-lock-redisson</artifactId>
+                <version>${lock.core.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.myz</groupId>
+                <artifactId>distributed-lock-zookeeper</artifactId>
                 <version>${lock.core.version}</version>
             </dependency>
 
@@ -71,6 +103,14 @@
                 <groupId>org.apache.curator</groupId>
                 <artifactId>curator-framework</artifactId>
                 <version>${zookeeper.curator.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-parent</artifactId>
+                <version>${spring.boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
