@@ -4,6 +4,8 @@
 package com.myz.distribute.lock.spring.annotation;
 
 import com.myz.distributed.lock.core.config.DistributedLockProperties;
+import com.myz.distributed.lock.core.config.LockType;
+import com.myz.distributed.lock.core.exception.LockFailureStrategy;
 import com.myz.distributed.lock.core.executor.DistributedLockExecutor;
 
 import java.lang.annotation.Documented;
@@ -29,11 +31,6 @@ public @interface DistributedLock {
      * @return 名称
      */
     String name() default "";
-
-    /**
-     * @return lock 执行器
-     */
-    Class<? extends DistributedLockExecutor> executor() default DistributedLockExecutor.class;
 
     /**
      * support SPEL expresion 锁的key = name + keys
@@ -62,4 +59,37 @@ public @interface DistributedLock {
      * @return 是否自动释放锁
      */
     boolean autoRelease() default true;
+
+    /**
+     * 锁类型
+     */
+    LockType lockType() default LockType.Fair;
+
+    /**
+     * @return lock 执行器
+     */
+    Class<? extends DistributedLockExecutor> executor() default DistributedLockExecutor.class;
+
+
+    //////////////////////////// 失败策略模式 ///////////////////////////
+
+    /**
+     * 加锁超时处理器
+     */
+    LockFailureStrategy timeOutStrategy() default LockFailureStrategy.FAIL_FAST;
+
+    /**
+     * 自定义加锁超时处理器
+     */
+    String customerTimeOutStrategy() default "";
+
+    /**
+     * 释放锁处理器
+     */
+    LockFailureStrategy releaseTimeoutStrategy() default LockFailureStrategy.FAIL_FAST;
+
+    /**
+     * 自定义加锁超时处理器
+     */
+    String customerReleaseTimeoutStrategy() default "";
 }

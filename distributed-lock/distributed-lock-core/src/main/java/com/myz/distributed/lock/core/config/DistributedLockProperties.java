@@ -30,14 +30,14 @@ public class DistributedLockProperties {
     private Long retryInterval = 100L;
 
     /**
-     * 默认执行器，不设置默认取容器第一个(默认注入顺序，redisson>redisTemplate>zookeeper)
+     * 默认执行器，不设置默认取容器第一个(默认注入顺序，redisson > redisTemplate > zookeeper)
      */
     private Class<? extends DistributedLockExecutor> primaryExecutor;
 
     /**
      * 锁key前缀
      */
-    private String lockKeyPrefix = "distributedLock";
+    private String keyPrefix = "distributedLock";
 
     public Long getExpire() {
         return expire;
@@ -71,11 +71,11 @@ public class DistributedLockProperties {
         this.primaryExecutor = primaryExecutor;
     }
 
-    public String getLockKeyPrefix() {
-        return lockKeyPrefix;
+    public String getKeyPrefix() {
+        return keyPrefix;
     }
 
-    public void setLockKeyPrefix(String lockKeyPrefix) {
-        this.lockKeyPrefix = lockKeyPrefix;
+    public void setKeyPrefix(String keyPrefix) {
+        this.keyPrefix = keyPrefix;
     }
 }

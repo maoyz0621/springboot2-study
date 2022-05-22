@@ -8,16 +8,11 @@ import com.myz.distributed.lock.core.exception.LockException;
 import com.myz.distributed.lock.core.executor.DistributedLockExecutor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.util.Assert;
-import org.springframework.util.CollectionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 /**
  * @author maoyz0621 on 2022/5/12
@@ -25,36 +20,10 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @RequiredArgsConstructor
-public class DistributedLockServer implements InitializingBean {
-
-    private Map<Class<? extends DistributedLockExecutor>, DistributedLockExecutor> distributedLockExecutorMap = new ConcurrentHashMap<>();
-    private final List<DistributedLockExecutor> distributedLockExecutors;
-
+public class DistributedLockServer {
+    private static final Logger LOGGER = LoggerFactory.getLogger(DistributedLockServer.class);
+    private final DistributeLockFactory lockFactory;
     private final DistributedLockProperties distributedLockProperties;
-
-    private DistributedLockExecutor primaryExecutor;
-
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        if (CollectionUtils.isEmpty(distributedLockExecutors)) {
-            log.warn("DistributedLockServer has no DistributedLockExecutor");
-            return;
-        }
-        distributedLockExecutorMap = distributedLockExecutors.stream()
-                .collect(Collectors.toConcurrentMap(DistributedLockExecutor::getClass, Function.identity(), (k1, k2) -> k2));
-        // for (DistributedLockExecutor distributedLockExecutor : distributedLockExecutors) {
-        //     distributedLockExecutorMap.put(distributedLockExecutor.getClass(), distributedLockExecutor);
-        // }
-
-        final Class<? extends DistributedLockExecutor> primaryExecutorClass = distributedLockProperties.getPrimaryExecutor();
-        if (primaryExecutorClass == null) {
-            this.primaryExecutor = distributedLockExecutors.get(0);
-        } else {
-            this.primaryExecutor = distributedLockExecutorMap.get(primaryExecutorClass);
-            Assert.notNull(this.primaryExecutor, "primaryExecutor must be not null");
-        }
-
-    }
 
     public DistributedLockInfo acquire(String lockKey) {
         return acquire(lockKey, 0, -1);
@@ -64,22 +33,25 @@ public class DistributedLockServer implements InitializingBean {
         return acquire(lockKey, expire, acquireTimeout, null);
     }
 
+    public DistributedLockInfo acquire(String lockKey, long expire, long acquireTimeout, Class<? extends DistributedLockExecutor> distributedLockExecutor) {
+        return acquire(lockKey, expire, acquireTimeout, null, false);
+    }
+
+    public DistributedLockInfo acquire(String lockKey, long expire, long acquireTimeout, boolean reentrant) {
+        return acquire(lockKey, expire, acquireTimeout, null, reentrant);
+    }
+
     /**
      * 加锁
      *
      * @param lockKey        锁key
      * @param expire         锁有效时间
      * @param acquireTimeout 获取锁超时时间
+     * @param reentrant      是否可重入
      * @return 锁信息
      */
-    public DistributedLockInfo acquire(String lockKey, long expire, long acquireTimeout, Class<? extends DistributedLockExecutor> distributedLockExecutor) {
-        DistributedLockExecutor executor = null;
-        if (distributedLockExecutor == null || distributedLockExecutor == DistributedLockExecutor.class) {
-            executor = this.primaryExecutor;
-        } else {
-            executor = distributedLockExecutorMap.get(distributedLockExecutor);
-        }
-
+    public DistributedLockInfo acquire(String lockKey, long expire, long acquireTimeout, Class<? extends DistributedLockExecutor> distributedLockExecutor, boolean reentrant) {
+        DistributedLockExecutor executor = lockFactory.getExecutor(distributedLockExecutor);
         if (executor == null) {
             return null;
         }
@@ -89,15 +61,18 @@ public class DistributedLockServer implements InitializingBean {
         expire = (!executor.renewal() && expire <= 0) ? distributedLockProperties.getExpire() : expire;
         // 获取锁次数
         int acquireCount = 0;
-        String lockVal = "1";
+        String lockVal = UUID.randomUUID().toString();
         long start = System.currentTimeMillis();
-
+        // todo 可重入key 完善 ，instanceId ...
+        if (reentrant) {
+            lockKey += "-" + Thread.currentThread().getId();
+        }
         try {
             do {
                 acquireCount++;
-                lockKey += "-" + Thread.currentThread().getId();
                 Object lockInstance = executor.acquire(lockKey, lockVal, expire, acquireTimeout);
                 if (lockInstance != null) {
+                    LOGGER.info("====================== DistributedLockServer acquire success,key=[{}],acquireCount={} =========================", lockKey, acquireCount);
                     return new DistributedLockInfo()
                             .setLockKey(lockKey)
                             .setLockValue(lockVal)
@@ -111,10 +86,10 @@ public class DistributedLockServer implements InitializingBean {
                 // 间隔时间
                 TimeUnit.MILLISECONDS.sleep(distributedLockProperties.getRetryInterval());
             } while ((System.currentTimeMillis() - start) < acquireTimeout);
-        } catch (InterruptedException e) {
-            throw new LockException();
+        } catch (Exception e) {
+            throw new LockException("acquire error");
         }
-
+        LOGGER.warn("====================== DistributedLockServer acquire fail,key=[{}],acquireCount={} =========================", lockKey, acquireCount);
         return null;
     }
 

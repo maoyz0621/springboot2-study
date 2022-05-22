@@ -36,6 +36,11 @@ public class DefaultLockKeyGenerator implements LockKeyGenerator {
         if (definitionKeys.length == 0) {
             return "";
         }
+        List<String> definitionKeyList = getDefinitionKeyList(method, arguments, definitionKeys);
+        return StringUtils.collectionToDelimitedString(definitionKeyList, ".", "", "");
+    }
+
+    private List<String> getDefinitionKeyList(Method method, Object[] arguments, String[] definitionKeys) {
         EvaluationContext evaluationContext = new MethodBasedEvaluationContext(null, method, arguments, NAME_DISCOVERER);
         List<String> definitionKeyList = new ArrayList<>(definitionKeys.length);
         for (String definitionKey : definitionKeys) {
@@ -45,7 +50,6 @@ public class DefaultLockKeyGenerator implements LockKeyGenerator {
             String key = PARSER.parseExpression(definitionKey).getValue(evaluationContext, String.class);
             definitionKeyList.add(key);
         }
-
-        return StringUtils.collectionToDelimitedString(definitionKeyList, ".", "", "");
+        return definitionKeyList;
     }
 }

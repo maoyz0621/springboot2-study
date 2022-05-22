@@ -35,6 +35,12 @@ public class DistributedLockTest {
 
     @Test
     public void test2() {
-        lockService.test1(new Addr().setId(2L).setType("a"));
+        for (int i = 0; i < 3; i++) {
+            new Thread(() -> {
+                lockService.test1(new Addr().setId(2L).setType("a"));
+            }).start();
+        }
+
+        while (true);
     }
 }
