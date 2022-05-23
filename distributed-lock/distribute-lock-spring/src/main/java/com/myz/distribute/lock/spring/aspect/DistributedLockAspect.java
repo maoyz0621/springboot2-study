@@ -59,7 +59,7 @@ public class DistributedLockAspect {
 
             String key = keyPrefix + "#" + lockKeyGenerator.generateKey(method, pjp.getArgs(), annotation.keys());
 
-            distributedLockInfo = distributedLockServer.acquire(key, annotation.expire(), annotation.acquireTimeout(), LockType.Reentrant == annotation.lockType());
+            distributedLockInfo = distributedLockServer.acquire(key, annotation.expire(), annotation.acquireTimeout(), annotation.executor(), LockType.Reentrant == annotation.lockType());
             if (distributedLockInfo != null) {
                 LOGGER.info("============= acquire key=[{}] success =================", key);
                 return pjp.proceed();
