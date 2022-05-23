@@ -3,6 +3,7 @@
  **/
 package com.myz.distribute.lock.spring.annotation;
 
+import com.myz.distribute.lock.spring.config.DistributedLockInterceptorAutoConfiguration;
 import com.myz.distributed.lock.core.config.DistributedLockAutoConfiguration;
 import org.springframework.context.annotation.Import;
 
@@ -25,6 +26,6 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Import({DistributedLockRegistrar.class, DistributedLockAutoConfiguration.class})
+@Import({/*DistributedLockRegistrar.class,*/ DistributedLockInterceptorAutoConfiguration.class, DistributedLockAutoConfiguration.class})
 public @interface EnableDistributedLock {
 }
