@@ -10,6 +10,8 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.data.redis.core.script.RedisScript;
 
+import java.util.Collections;
+
 /**
  * @author maoyz0621 on 2022/5/9
  * @version v1.0
@@ -30,11 +32,23 @@ public class RedisDistributedLockExecutor extends AbstractDistributedLockExecuto
 
     @Override
     public String acquire(String lockKey, String lockVal, long expire, long acquireTimeout) {
-        return null;
+        String lock = redisTemplate.execute(SCRIPT_LOCK,
+                redisTemplate.getStringSerializer(),
+                redisTemplate.getStringSerializer(),
+                Collections.singletonList(lockKey),
+                lockVal,
+                String.valueOf(expire));
+        final boolean locked = LOCK_SUCCESS.equals(lock);
+        return obtainLockInstance(locked, lock);
     }
 
     @Override
     public boolean releaseLock(String lockKey, String lockVal, String lockInstance) {
-        return false;
+        String releaseResult = redisTemplate.execute(SCRIPT_UNLOCK,
+                redisTemplate.getStringSerializer(),
+                redisTemplate.getStringSerializer(),
+                Collections.singletonList(lockKey),
+                lockVal);
+        return Boolean.parseBoolean(releaseResult);
     }
 }

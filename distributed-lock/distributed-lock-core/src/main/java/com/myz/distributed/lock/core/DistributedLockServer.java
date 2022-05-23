@@ -7,7 +7,6 @@ import com.myz.distributed.lock.core.config.DistributedLockProperties;
 import com.myz.distributed.lock.core.exception.LockException;
 import com.myz.distributed.lock.core.executor.DistributedLockExecutor;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,7 +17,6 @@ import java.util.concurrent.TimeUnit;
  * @author maoyz0621 on 2022/5/12
  * @version v1.0
  */
-@Slf4j
 @RequiredArgsConstructor
 public class DistributedLockServer {
     private static final Logger LOGGER = LoggerFactory.getLogger(DistributedLockServer.class);

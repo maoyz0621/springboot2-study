@@ -4,6 +4,7 @@
 package com.myz.distributed.lock.test;
 
 import com.myz.distribute.lock.spring.annotation.DistributedLock;
+import com.myz.distributed.lock.executor.RedisDistributedLockExecutor;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.TimeUnit;
@@ -21,7 +22,7 @@ public class LockService {
     }
 
     // @DistributedLock(keys = {"#addr.id", "#addr.type"}, lockType = LockType.Reentrant)
-    @DistributedLock(keys = {"#addr.id", "#addr.type"}, expire = 2000L, acquireTimeout = 5000L)
+    @DistributedLock(keys = {"#addr.id", "#addr.type"}, expire = 2000L, acquireTimeout = 5000L, executor = RedisDistributedLockExecutor.class)
     public void test1(Addr addr) {
         try {
             TimeUnit.MILLISECONDS.sleep(3000L);

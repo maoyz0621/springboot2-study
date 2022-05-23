@@ -48,7 +48,7 @@ public class DistributedLockInterceptor implements MethodInterceptor {
                     invocation.getMethod().getDeclaringClass().getName() + "." + invocation.getMethod().getName();
 
             String key = keyPrefix + "#" + lockKeyGenerator.generateKey(invocation.getMethod(), arguments, annotation.keys());
-            distributedLockInfo = distributedLockServer.acquire(key, annotation.expire(), annotation.acquireTimeout(), LockType.Reentrant == annotation.lockType());
+            distributedLockInfo = distributedLockServer.acquire(key, annotation.expire(), annotation.acquireTimeout(), annotation.executor(), LockType.Reentrant == annotation.lockType());
             if (distributedLockInfo != null) {
                 return invocation.proceed();
             }
