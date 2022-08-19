@@ -3,13 +3,11 @@
  **/
 package com.myz.springboot2error.error;
 
-import com.myz.springboot2.common.exception.BusinessException;
+import com.myz.springboot2error.common.BizException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
@@ -25,7 +23,7 @@ public class GlobalExceptionHandler {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
         } else if (e instanceof BindException) {
             return null;
-        } else if (e instanceof BusinessException) {
+        } else if (e instanceof BizException) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
         }
         return null;

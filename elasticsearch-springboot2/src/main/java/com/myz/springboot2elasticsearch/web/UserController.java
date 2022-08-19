@@ -4,7 +4,7 @@
 package com.myz.springboot2elasticsearch.web;
 
 import com.myz.springboot2elasticsearch.entity.UserEntity;
-import com.myz.springboot2elasticsearch.service.UserService;
+import com.myz.springboot2elasticsearch.service.RepoUserService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,7 +24,7 @@ import java.util.Optional;
 public class UserController {
 
     @Resource
-    private UserService userService;
+    private RepoUserService userService;
 
     @PostMapping("/save")
     public void insert(@RequestBody UserEntity userEntity) {

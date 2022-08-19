@@ -2,7 +2,9 @@ package com.myz.springboot2.mybatisplus34.service;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.myz.springboot2.mybatisplus34.entity.UserEntity;
 import com.myz.springboot2.mybatisplus34.mapper.UserMapper;
 import org.junit.Test;
@@ -51,6 +53,25 @@ public class UserMapperSelectTest {
         queryWrapper.eq(UserEntity::getAge, 10).eq(UserEntity::getEmail, "a");
         List<UserEntity> userEntities = userMapper.selectList(queryWrapper);
         System.out.println(userEntities);
+    }
+
+    /**
+     * 分页查询
+     * SELECT COUNT(*)
+     *
+     * 	SELECT id, name, age, age_enum, gender
+     * LIMIT 2
+     */
+    @Test
+    public void testSelectListPage() {
+        UserEntity entity = new UserEntity().setAge(11);
+        Wrapper<UserEntity> queryWrapper = Wrappers.lambdaQuery(entity);
+        queryWrapper.l
+        IPage<UserEntity> page = new Page<>();
+        page.setCurrent(1L);
+        page.setSize(2L);
+        IPage<UserEntity> page1 = userMapper.selectPage(page, queryWrapper);
+        System.out.println(page1.getRecords()+"/r/n"+page1.getTotal());
     }
 
 }

@@ -3,7 +3,7 @@
  **/
 package com.myz.springboot2error.service;
 
-import com.myz.springboot2.common.exception.BusinessException;
+import com.myz.springboot2error.common.BizException;
 import org.springframework.stereotype.Service;
 
 /**
@@ -18,7 +18,7 @@ public class ErrorService {
         try {
             return 1 / i;
         } catch (Exception e) {
-            throw new BusinessException(e.getMessage());
+            throw new BizException(e.getMessage());
         }
     }
 }

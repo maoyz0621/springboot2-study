@@ -104,6 +104,13 @@
         <module>springboot2-mybatis-plus-3.4</module>
         <module>springboot2-event</module>
         <module>health-check-client</module>
+        <module>elasticsearch-springboot2-plugin</module>
+        <module>springboot2-interceptor</module>
+        <module>distributed-lock</module>
+        <module>distribute-lock-spring</module>
+        <module>springboot2-mongodb</module>
+        <module>collapser</module>
+        <module>springboot2-advice</module>
     </modules>
 
     <properties>

@@ -4,7 +4,7 @@
 package com.myz.springboot2elasticsearch.config.highclient;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.myz.springboot2.common.utils.JsonUtils;
+import com.google.gson.Gson;
 import com.myz.springboot2elasticsearch.entity.UserEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -249,7 +249,7 @@ public class ElasticSearchOperator extends ElasticSearchIndexOperator {
      */
     public boolean update(String index, String id, final Map<String, Object> updateData) throws IOException {
         // map -> json
-        return update(index, id, JsonUtils.toJson(updateData));
+        return update(index, id, new Gson().toJson(updateData));
     }
 
     public boolean update(String index, String id, String updateData) throws IOException {

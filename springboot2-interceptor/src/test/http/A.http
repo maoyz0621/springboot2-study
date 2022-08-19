@@ -1,0 +1,3 @@
+###
+GET {{local}}/a
+Accept: application/json

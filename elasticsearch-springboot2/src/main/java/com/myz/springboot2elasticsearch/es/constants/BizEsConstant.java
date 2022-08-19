@@ -10,4 +10,6 @@ package com.myz.springboot2elasticsearch.es.constants;
 public interface BizEsConstant {
 
     static final String PRE = "biz_";
+
+    public static final String INDEX_USER = "biz_user";
 }

@@ -39,6 +39,8 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
         // 执行认证
         String token = request.getHeader("token");  // 从 http 请求头中取出 token
         if (StringUtils.isEmpty(token)) {
+            // 解决乱码
+            response.setContentType("text/html; charset=UTF-8");
             response.getWriter().print("无token，请重新登录");
             // throw new RuntimeException("无token，请重新登录");
             return false;

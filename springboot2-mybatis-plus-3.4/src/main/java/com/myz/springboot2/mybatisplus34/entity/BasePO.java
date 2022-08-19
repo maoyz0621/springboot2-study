@@ -25,6 +25,7 @@ public class BasePO implements Serializable {
 
     private String remarks;
 
+    // @TableLogic
     private Integer enabled;
 
     /**

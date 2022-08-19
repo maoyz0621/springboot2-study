@@ -3,6 +3,7 @@
  **/
 package com.myz.springboot2error.error;
 
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.servlet.error.DefaultErrorAttributes;
 import org.springframework.stereotype.Component;
@@ -23,8 +24,6 @@ public class MyCustomErrorAttributes extends DefaultErrorAttributes {
 
     @Override
     public Map<String, Object> getErrorAttributes(WebRequest webRequest, boolean includeStackTrace) {
-        log.info("MyCustomErrorAttributes getErrorAttributes()");
-
         Map<String, Object> errorAttributes = super.getErrorAttributes(webRequest, includeStackTrace);
         errorAttributes.put("local", webRequest.getLocale().toString());
         errorAttributes.put("status", "100000");

@@ -4,6 +4,7 @@
 package com.myz.springboot2.mybatisplus34.service;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -16,7 +17,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -124,6 +128,8 @@ public class IUserServiceTest {
         userService.update(null, updateWrapper);
     }
 
+    /////////////////////////////// remove start /////////////////////////////
+
     /**
      * DELETE FROM user
      */
@@ -131,5 +137,31 @@ public class IUserServiceTest {
     public void testRemoveById() {
         userService.removeById(17198);
     }
+
+    /**
+     * DELETE FROM user WHERE tenant_id = 65231313678678678 AND id IN (?, ?)
+     */
+    @Test
+    public void testRemoveByIds() {
+        userService.removeByIds(Arrays.asList(17198, 17199));
+    }
+
+    @Test
+    public void testRemoveByMap() {
+        Map<String, Object> param = new HashMap<>();
+        param.put("id", 17190L);
+        userService.removeByMap(param);
+    }
+
+    /**
+     * DELETE FROM user WHERE tenant_id = 65231313678678678 AND (age = ? AND email = ?)
+     */
+    @Test
+    public void testRemove() {
+        LambdaQueryWrapper<UserEntity> queryWrapper = Wrappers.lambdaQuery();
+        queryWrapper.eq(UserEntity::getAge, 10).eq(UserEntity::getEmail, "a");
+        userService.remove(queryWrapper);
+    }
+    /////////////////////////////// remove start /////////////////////////////
 
 }

@@ -32,7 +32,7 @@ public class ElasticSearchIndexOperatorTest {
 
     @Test
     public void createIndex() throws IOException {
-        elasticsearchOperator.createIndex("asd", 2, 3);
+        elasticsearchOperator.createIndex("asd1", 2, 3);
     }
 
     @Test
@@ -50,12 +50,15 @@ public class ElasticSearchIndexOperatorTest {
     @Test
     public void createObject() throws IOException {
         UserEntity userEntity = new UserEntity();
-        userEntity.setId(1L);
+        userEntity.setId(2L);
         userEntity.setAddress("anhui");
+        userEntity.setAge(11);
+        userEntity.setAddress("江苏");
         userEntity.setBirth(new Date());
-        userEntity.setFamilyMembers(new FamilyMembersEntity());
+        userEntity.setBirth1(new Date());
+        userEntity.setFamilyMembers(new FamilyMembersEntity("爸爸", "妈妈", "妻子"));
         userEntity.setUsername("abc");
-        elasticsearchOperator.create("asd1", userEntity);
+        // elasticsearchOperator.create(BizEsConstant.INDEX_USER, userEntity);
         userRepository.save(userEntity);
         userRepository.refresh();
     }
