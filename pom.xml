@@ -111,6 +111,9 @@
         <module>springboot2-mongodb</module>
         <module>collapser</module>
         <module>springboot2-advice</module>
+        <module>springboot2-cycle</module>
+        <module>springboot2-doris</module>
+        <module>springboot2-clickhouse</module>
     </modules>
 
     <properties>

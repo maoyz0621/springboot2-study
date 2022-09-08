@@ -1,22 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <packaging>pom</packaging>
-    <modules>
-        <module>swagger-auto</module>
-        <module>log-aspect</module>
-        <module>log-aop</module>
-        <module>log-example</module>
-    </modules>
+
     <parent>
         <artifactId>springboot2-study</artifactId>
         <groupId>com.myz</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>springboot2-aop</artifactId>
+    <groupId>com.myz</groupId>
+    <artifactId>springboot2-clickhouse</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>springboot2-aop</name>
+
+    <name>springboot2-clickhouse</name>
+
+    <properties>
+
+    </properties>
+
+    <dependencies>
+
+    </dependencies>
+
 
 </project>
