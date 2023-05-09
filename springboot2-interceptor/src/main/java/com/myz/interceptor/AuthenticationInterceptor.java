@@ -23,7 +23,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        System.out.println("preHandle()...");
+        System.out.println("AuthenticationInterceptor preHandle()...");
         if (!(handler instanceof HandlerMethod)) {
             return true;
         }
@@ -58,7 +58,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
      * */
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        System.out.println("postHandle()...");
+        System.out.println("AuthenticationInterceptor postHandle()...");
     }
 
     /*

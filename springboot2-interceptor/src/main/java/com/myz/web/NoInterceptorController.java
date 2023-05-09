@@ -1,5 +1,5 @@
 /**
- * Copyright 2022 Inc.
+ * Copyright 2023 Inc.
  **/
 package com.myz.web;
 
@@ -8,11 +8,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * @author maoyz0621 on 2022/4/4
+ * @author maoyz0621 on 2023/5/10
  * @version v1.0
  */
 @RestController
-public class MyController {
+public class NoInterceptorController {
+
+    ////////////////////////// 不走任何拦截器 /////////////////////////////////////////
 
     @RequestMapping(value = "/a")
     @NeedLogin
