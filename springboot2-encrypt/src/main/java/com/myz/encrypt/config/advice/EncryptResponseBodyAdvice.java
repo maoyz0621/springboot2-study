@@ -27,14 +27,14 @@ public class EncryptResponseBodyAdvice implements ResponseBodyAdvice<Object> {
 
     @Override
     public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
-        log.info("EncryptResponseBodyAdvice.supports");
+        log.debug("EncryptResponseBodyAdvice.supports");
         return (AbstractEncryptAndDecryptHttpMessageConverter.class.isAssignableFrom(converterType))
                 && returnType.hasMethodAnnotation(EncryptResponse.class);
     }
 
     @Override
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
-        log.info("EncryptResponseBodyAdvice.beforeBodyWrite");
+        log.debug("EncryptResponseBodyAdvice.beforeBodyWrite");
         if (body == null) {
             return null;
         }

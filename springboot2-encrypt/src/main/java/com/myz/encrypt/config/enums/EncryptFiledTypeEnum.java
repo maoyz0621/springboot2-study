@@ -14,9 +14,9 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum EncryptFiledTypeEnum {
 
-    TO_STRING(1, "小学"),
-    TO_LONG(2, "中学"),
-    TO_OBJ(3, "高中"),
+    TO_STRING(1, "to_string"),
+    TO_LONG(2, "to_long"),
+    TO_OBJ(3, "to_obj"),
     ;
 
 

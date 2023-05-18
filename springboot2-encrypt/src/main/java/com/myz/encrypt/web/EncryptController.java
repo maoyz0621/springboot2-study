@@ -1,7 +1,7 @@
 /**
  * Copyright 2021 Inc.
  **/
-package com.myz.encrypt.app;
+package com.myz.encrypt.web;
 
 
 import com.myz.encrypt.common.Result;
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 /**
  * @author maoyz0621 on 2021/2/6
@@ -45,7 +46,11 @@ public class EncryptController {
     public Result<RespParam> encrypt(@RequestBody ReqParam data) throws IOException {
         log.info("data={}", data);
         RespParam respParam = new RespParam()
-                .setAge(12).setUsername("haha");
+                .setAge(12)
+                .setUsername("haha")
+                .setPhone(151000L)
+                .setParent(new RespParam("parent", 50))
+                .setChild(Arrays.asList(new RespParam("child1", 12), new RespParam("child2", 14, 130130L)));
         return Result.of(respParam);
     }
 }

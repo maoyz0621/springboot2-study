@@ -19,6 +19,7 @@ import com.fasterxml.jackson.databind.exc.InvalidDefinitionException;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.myz.encrypt.config.annotation.EncryptFiled;
 import com.myz.encrypt.config.annotation.EncryptResponse;
+import com.myz.encrypt.config.enums.EncryptFiledTypeEnum;
 import com.myz.encrypt.config.strategy.EncryptConverter;
 import org.springframework.core.GenericTypeResolver;
 import org.springframework.http.HttpInputMessage;
@@ -352,33 +353,70 @@ public abstract class AbstractEncryptAndDecryptHttpMessageConverter extends Abst
         List<Field> allFields = getAllFields(value.getClass());
         for (Field field : allFields) {
             EncryptFiled fieldAnnotation = field.getAnnotation(EncryptFiled.class);
-            if (field.isAnnotationPresent(EncryptFiled.class)) {
-                field.setAccessible(true);
-                try {
-                    Object originVal = field.get(value);
-                    Class<?> valClass = originVal.getClass();
-                    Field[] paramClassFields = valClass.getDeclaredFields();
-                    for (Field paramClassField : paramClassFields) {
-                        if (paramClassField.isAnnotationPresent(EncryptFiled.class)) {
-                            paramClassField.setAccessible(true);
-                            Object o = paramClassField.get(originVal);
-                            System.out.println(o);
-
-                            if (o instanceof String) {
-                                System.out.println("str");
-                                String o1 = (String) o;
-                                paramClassField.set(originVal, o1 + "aaaaaaaaaaaa");
-                            } else if (o instanceof Long) {
-
-                            } else if (o instanceof List) {
-
-                            }
-                        }
-                    }
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                }
+            if (fieldAnnotation == null) {
+                continue;
             }
+            field.setAccessible(true);
+            try {
+                Object originVal = field.get(value);
+                if (originVal == null) {
+                    continue;
+                }
+                Field[] paramClassFields = originVal.getClass().getDeclaredFields();
+                for (Field paramClassField : paramClassFields) {
+                    if (paramClassField.isAnnotationPresent(EncryptFiled.class)) {
+                        paramClassField.setAccessible(true);
+                        Object childVal = paramClassField.get(originVal);
+                        if (childVal == null) {
+                            continue;
+                        }
+                        setVal(originVal, paramClassField, fieldAnnotation.type());
+                    }
+                }
+            } catch (IllegalAccessException e) {
+
+            }
+        }
+        return value;
+    }
+
+    private void setVal(Object value, Field field, EncryptFiledTypeEnum type) {
+        field.setAccessible(true);
+        try {
+            Object originVal = field.get(value);
+            if (originVal == null) {
+                return;
+            }
+
+            if (originVal instanceof String) {
+                field.set(value, encryptConverter.convert(originVal, type));
+            } else if (originVal instanceof Long) {
+                field.set(value, encryptConverter.convert(originVal, type));
+            } else if (originVal instanceof List) {
+                field.set(value, convertValNesting((List<Object>) originVal));
+            } else {
+                field.set(value, convertObjVal(originVal));
+            }
+        } catch (Exception e) {
+
+        }
+    }
+
+    private Object convertValNesting(List<Object> list) {
+        for (Object value : list) {
+            convertObjVal(value);
+        }
+        return list;
+    }
+
+    private Object convertObjVal(Object value) {
+        List<Field> allFields = getAllFields(value.getClass());
+        for (Field field : allFields) {
+            EncryptFiled fieldAnnotation = field.getAnnotation(EncryptFiled.class);
+            if (fieldAnnotation == null) {
+                continue;
+            }
+            setVal(value, field, fieldAnnotation.type());
         }
         return value;
     }

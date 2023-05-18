@@ -3,6 +3,7 @@
  **/
 package com.myz.encrypt.config.strategy.impl;
 
+import com.myz.encrypt.config.enums.EncryptFiledTypeEnum;
 import com.myz.encrypt.config.strategy.ConverterStrategy;
 import com.myz.encrypt.config.strategy.EncryptConverter;
 import com.myz.encrypt.config.strategy.EncryptConverterFactory;
@@ -20,8 +21,8 @@ public class EncryptConverterImpl implements EncryptConverter {
     private EncryptConverterFactory encryptConverterFactory;
 
     @Override
-    public <T> T convert(T obj) {
-        ConverterStrategy converterStrategy = encryptConverterFactory.getConverterStrategy();
+    public <T> T convert(T obj, EncryptFiledTypeEnum filedTypeEnum) {
+        ConverterStrategy converterStrategy = encryptConverterFactory.getConverterStrategy(filedTypeEnum);
         return (T) converterStrategy.convert(obj);
     }
 }

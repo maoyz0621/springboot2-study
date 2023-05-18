@@ -4,7 +4,9 @@
 package com.myz.encrypt.entity;
 
 import com.myz.encrypt.config.annotation.EncryptFiled;
+import com.myz.encrypt.config.enums.EncryptFiledTypeEnum;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.util.List;
@@ -15,6 +17,7 @@ import java.util.List;
  */
 @Data
 @Accessors(chain = true)
+@NoArgsConstructor
 public class RespParam {
 
     @EncryptFiled
@@ -22,6 +25,22 @@ public class RespParam {
 
     private Integer age;
 
+    @EncryptFiled(type = EncryptFiledTypeEnum.TO_LONG)
+    private Long phone;
+
     @EncryptFiled
     private List<RespParam> child;
+
+    @EncryptFiled
+    private RespParam parent;
+
+    public RespParam(String username, Integer age) {
+        this.username = username;
+        this.age = age;
+    }
+
+    public RespParam(String username, Integer age, Long phone) {
+        this(username, age);
+        this.phone = phone;
+    }
 }

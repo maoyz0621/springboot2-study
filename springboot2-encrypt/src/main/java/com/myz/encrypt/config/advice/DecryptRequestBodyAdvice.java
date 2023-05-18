@@ -34,7 +34,7 @@ public class DecryptRequestBodyAdvice extends RequestBodyAdviceAdapter {
      */
     @Override
     public boolean supports(MethodParameter methodParameter, Type targetType, Class<? extends HttpMessageConverter<?>> converterType) {
-        log.info("DecryptRequestBodyAdvice.supports");
+        log.debug("DecryptRequestBodyAdvice.supports");
         Parameter parameter = methodParameter.getParameter();
         return (AbstractEncryptAndDecryptHttpMessageConverter.class.isAssignableFrom(converterType) &&
                 methodParameter.getParameterAnnotation(RequestBody.class) != null);
@@ -52,7 +52,7 @@ public class DecryptRequestBodyAdvice extends RequestBodyAdviceAdapter {
      */
     @Override
     public HttpInputMessage beforeBodyRead(HttpInputMessage inputMessage, MethodParameter parameter, Type targetType, Class<? extends HttpMessageConverter<?>> converterType) throws IOException {
-        log.info("DecryptRequestBodyAdvice.beforeBodyRead");
+        log.debug("DecryptRequestBodyAdvice.beforeBodyRead");
         return super.beforeBodyRead(inputMessage, parameter, targetType, converterType);
     }
 
@@ -68,7 +68,7 @@ public class DecryptRequestBodyAdvice extends RequestBodyAdviceAdapter {
      */
     @Override
     public Object afterBodyRead(Object body, HttpInputMessage inputMessage, MethodParameter parameter, Type targetType, Class<? extends HttpMessageConverter<?>> converterType) {
-        log.info("DecryptRequestBodyAdvice.afterBodyRead");
+        log.debug("DecryptRequestBodyAdvice.afterBodyRead");
         return super.afterBodyRead(body, inputMessage, parameter, targetType, converterType);
     }
 
