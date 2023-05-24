@@ -1,4 +1,4 @@
 # DataSource Config
 spring:
   profiles:
-    active: aliyun
+    active: test

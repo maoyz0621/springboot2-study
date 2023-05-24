@@ -45,6 +45,19 @@ public class UserMapperSelectTest {
     }
 
     /**
+     * WHERE (age = ? AND age IS NOT NULL AND FIND_IN_SET(',', age)) AND tenant_id = 65231313678678678
+     */
+    @Test
+    public void testSelectApply() {
+        LambdaQueryWrapper<UserEntity> queryWrapper = Wrappers.lambdaQuery();
+        queryWrapper
+                .apply(true, "age is not null and FIND_IN_SET (',', age)")
+                .eq(UserEntity::getAge, 10);
+        List<UserEntity> userEntities = userMapper.selectList(queryWrapper);
+        System.out.println(userEntities);
+    }
+
+    /**
      * WHERE (age = ? AND email = ?)
      */
     @Test
@@ -58,20 +71,19 @@ public class UserMapperSelectTest {
     /**
      * 分页查询
      * SELECT COUNT(*)
-     *
-     * 	SELECT id, name, age, age_enum, gender
+     * <p>
+     * SELECT id, name, age, age_enum, gender
      * LIMIT 2
      */
     @Test
     public void testSelectListPage() {
         UserEntity entity = new UserEntity().setAge(11);
         Wrapper<UserEntity> queryWrapper = Wrappers.lambdaQuery(entity);
-        queryWrapper.l
         IPage<UserEntity> page = new Page<>();
         page.setCurrent(1L);
         page.setSize(2L);
         IPage<UserEntity> page1 = userMapper.selectPage(page, queryWrapper);
-        System.out.println(page1.getRecords()+"/r/n"+page1.getTotal());
+        System.out.println(page1.getRecords() + "/r/n" + page1.getTotal());
     }
 
 }

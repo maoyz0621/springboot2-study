@@ -1,6 +1,5 @@
 package com.myz.springboot2.mybatisplus34.service;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -25,40 +24,47 @@ public class UserMapperTest {
 
 
     @Test
-    public void testInsert(){
+    public void testInsert() {
         userMapper.insert(new UserEntity().setAge(11).setEmail("a1").setGrade(null));
     }
 
     /**
      * update
+     * UPDATE user SET age = 11, email = "a1", last_modified_by = ?, last_modified_time = ?
+     * WHERE tenant_id = 65231313678678678 AND age = 10 AND email = "a"
      */
     @Test
     public void testUpdate() {
-        // 重新赋值
+        // 重新赋值,null值不更新
         UserEntity entity = new UserEntity().setAge(11).setEmail("a1").setGrade(null);
+
         // where条件
         UserEntity entityWhere = new UserEntity().setAge(10).setEmail("a");
-        Wrapper<UserEntity> updateWrapper = Wrappers.lambdaUpdate(entityWhere);
+        LambdaUpdateWrapper<UserEntity> updateWrapper = Wrappers.lambdaUpdate(entityWhere);
+
         userMapper.update(entity, updateWrapper);
     }
 
     /**
      * 局部更新 UpdateWrapper
-     * UPDATE user SET created_by=? WHERE age=? AND email=?
+     * UPDATE user SET created_by="maoyz",age = 10,email = null WHERE age=10 AND email="a"
      */
     @Test
     public void testUpdateWrapper() {
         // where条件
         UserEntity entityWhere = new UserEntity().setAge(10).setEmail("a");
         UpdateWrapper<UserEntity> updateWrapper = new UpdateWrapper<>(entityWhere);
+
+        // UpdateWrapper赋值set
         updateWrapper.set("created_by", "maoyz");
         updateWrapper.set("age", 10);
+        updateWrapper.set("email", null);
         userMapper.update(null, updateWrapper);
     }
 
     /**
      * 局部更新 LambdaUpdateWrapper
-     * UPDATE user SET company_id=? WHERE age=? AND email=?
+     * UPDATE user SET company_id=100000,email = null WHERE age=10 AND email="a"
      */
     @Test
     public void testLambdaUpdateWrapper() {
@@ -67,8 +73,10 @@ public class UserMapperTest {
         LambdaUpdateWrapper<UserEntity> updateWrapper = Wrappers.lambdaUpdate(entityWhere);
         // 拼接where 条件
         updateWrapper.eq(UserEntity::getEmail, "a");
-        // 设置值
+
+        // LambdaUpdateWrapper设置值set
         updateWrapper.set(UserEntity::getCompanyId, 100000);
+        updateWrapper.set(UserEntity::getEmail, null);
         userMapper.update(null, updateWrapper);
     }
 
