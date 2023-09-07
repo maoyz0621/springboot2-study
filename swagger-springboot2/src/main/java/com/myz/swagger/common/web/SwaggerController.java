@@ -10,10 +10,19 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author maoyz on 2018/8/21
@@ -38,7 +47,7 @@ public class SwaggerController {
     @ApiOperation(value = "首页信息", notes = "首页")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "必传字段", paramType = "path", required = true, dataType = "Integer"),
-            @ApiImplicitParam(name = "name", value = "用户名称", required = false, dataType = "String", paramType = "query")
+            @ApiImplicitParam(name = "name", value = "用户名称", paramType = "query", required = false, dataType = "String")
     })
     @RequestMapping(value = "/get/{id}", method = RequestMethod.GET)
     public String get(@PathVariable Integer id, @RequestParam(required = false) String name) {

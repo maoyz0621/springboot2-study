@@ -1,28 +1,33 @@
 # DataSource Config
 spring:
+  profiles:
+    active: dev
+
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/mybatis?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://localhost:3306/mybatis_plus?useUnicode=true&characterEncoding=UTF-8&rewriteBatchedStatements=true&allowMultiQueries=true&serverTimezone=Asia/Shanghai
     username: root
     password: root
 
-# MP配置
+
+
 mybatis-plus:
   global-config:
     db-config:
-      # 删除时 update user set deleted=1 where id =1 and deleted=0
-      # 查找时 select * from user where deleted=0
-      logic-delete-value: 1 # 逻辑已删除值(默认为 1)
-      logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
-  configuration:
-    # 3.0.8之前版本问题默认将枚举注册为EnumOrdinalTypeHandler,这是错误的方式,默认是 org.apache.ibatis.type.EnumTypeHandler
-    # 如果项目之中实体统一使用IEnum或注解的方式,可配置成 com.baomidou.mybatisplus.extension.handlers.EnumTypeHandler,也可省略上面的type-enums-package配置
-    # 配置type-enums-package只对注解方式的枚举处理能提前加载缓存.
-    default-enum-type-handler: org.apache.ibatis.type.EnumOrdinalTypeHandler
+      logic-delete-field: flag # 全局逻辑删除的实体字段名(since 3.3.0,配置后可以忽略不配置步骤2)
+      logic-delete-value: 1  # 逻辑已删除值(默认为 1)
+      logic-not-delete-value: 0
   # 扫描xml文件配置
   mapper-locations: classpath:mapper/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl # 日志实现
+
 
 # Logger Config
 logging:
   level:
-    com.myz.springboot2mybatisplus: debug
+    com:
+      myz:
+        mybatis:
+          sql:
+            encrypt: debug

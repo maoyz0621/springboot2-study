@@ -3,7 +3,9 @@
  **/
 package com.myz.springboot2value.web;
 
-import com.myz.springboot2value.config.MyProp;
+import com.myz.springboot2value.config.model.MyProp;
+import com.myz.springboot2value.config.model.SecurityConfig;
+import com.myz.springboot2value.config.model.SecurityMaskConfigModel;
 import com.myz.springboot2value.service.IndexService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -54,6 +57,9 @@ public class IndexController {
     @Autowired
     private MyProp prop;
 
+    @Resource
+    private SecurityConfig securityConfig;
+
     @GetMapping("/index")
     public String index() {
         logger.debug("name = {}", name);
@@ -72,5 +78,13 @@ public class IndexController {
     @GetMapping("/get")
     public String get() {
         return indexService.getPath();
+    }
+
+    @GetMapping("/security")
+    public String security() {
+        String securityMaskConfig = securityConfig.getSecurityMaskConfig();
+        List<SecurityMaskConfigModel> maskConfigModelList = securityConfig.getMaskConfig();
+        List<SecurityMaskConfigModel> maskConfigModelList1 = securityConfig.getMaskConfig();
+        return maskConfigModelList.toString();
     }
 }

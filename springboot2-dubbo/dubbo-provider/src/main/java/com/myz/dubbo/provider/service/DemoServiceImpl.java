@@ -7,6 +7,7 @@ package com.myz.dubbo.provider.service;
 
 import com.myz.dubbo.base.interfaces.DemoService;
 import com.myz.dubbo.core.BusinessException;
+import org.apache.dubbo.rpc.RpcContext;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -21,6 +22,8 @@ public class DemoServiceImpl implements DemoService {
 
     @Override
     public String sayHello(String name) {
+        Object userInfo = RpcContext.getContext().getAttachment("userInfo");
+        System.out.println(userInfo);
         return "Hello World";
     }
 

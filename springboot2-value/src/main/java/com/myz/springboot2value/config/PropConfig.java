@@ -21,7 +21,7 @@ public class PropConfig {
     // 使用@ConfigurationProperties注解，只能用于properties文件。
     // 解决方式：可以通过PropertySourcePlaceholderConfigurer来加载yml文件，暴露yml文件到spring environment，如下：
     @Bean
-    public PropertySourcesPlaceholderConfigurer properties() {
+    public PropertySourcesPlaceholderConfigurer properties() throws Exception {
         PropertySourcesPlaceholderConfigurer configurer = new PropertySourcesPlaceholderConfigurer();
         YamlPropertiesFactoryBean yaml = new YamlPropertiesFactoryBean();
         yaml.setResources(new ClassPathResource("myz.yml"));

@@ -5,6 +5,7 @@
  */
 package com.myz.redis.cache.core;
 
+import org.apache.tomcat.util.codec.binary.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.CannotAcquireLockException;
@@ -12,7 +13,11 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.ReflectionUtils;
 
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
@@ -59,6 +64,7 @@ public class RedisLock implements Lock {
         this.tryCount = tryCount;
     }
 
+    @Override
     public void lock() {
         this.localLock.lock();
 
@@ -85,6 +91,7 @@ public class RedisLock implements Lock {
         throw new CannotAcquireLockException("Failed to lock mutex at " + this.lockKey, e);
     }
 
+    @Override
     public void lockInterruptibly() throws InterruptedException {
         this.localLock.lockInterruptibly();
 
@@ -103,6 +110,7 @@ public class RedisLock implements Lock {
 
     }
 
+    @Override
     public boolean tryLock() {
         try {
             return this.tryLock(0L, TimeUnit.MILLISECONDS);
@@ -112,6 +120,7 @@ public class RedisLock implements Lock {
         }
     }
 
+    @Override
     public boolean tryLock(long time, TimeUnit unit) throws InterruptedException {
         long now = System.currentTimeMillis();
         if (!this.localLock.tryLock(time, unit)) {
@@ -149,6 +158,7 @@ public class RedisLock implements Lock {
         return ret != null && ret > 0L;
     }
 
+    @Override
     public void unlock() {
         if (!this.localLock.isHeldByCurrentThread()) {
             throw new IllegalStateException("You do not own lock at " + this.lockKey);
@@ -169,15 +179,17 @@ public class RedisLock implements Lock {
         }
     }
 
+    @Override
     public Condition newCondition() {
         throw new UnsupportedOperationException("Conditions are not supported");
     }
 
+    @Override
     public String toString() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd@HH:mm:ss.SSS");
         return "RedisLock [lockKey=" + this.lockKey + ",lockedAt=" + dateFormat.format(new Date(this.lockedAt)) + ", clientId=" + this.clientId + "]";
     }
-
+    @Override
     public int hashCode() {
         int prime = true;
         int result = 1;
@@ -186,7 +198,7 @@ public class RedisLock implements Lock {
         result = 31 * result + this.clientId.hashCode();
         return result;
     }
-
+    @Override
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;

@@ -31,7 +31,7 @@ public class RedisUtils implements ApplicationContextAware {
 
     public RedisUtils() {
     }
-
+    @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         RedisUtils.applicationContext = applicationContext;
     }
@@ -53,6 +53,7 @@ public class RedisUtils implements ApplicationContextAware {
 
     public boolean add(final String key, final String value) {
         Object obj = this.redisTemplate.execute(new RedisCallback<Object>() {
+            @Override
             public Object doInRedis(RedisConnection connection) throws DataAccessException {
                 connection.set(RedisUtils.this.redisTemplate.getStringSerializer().serialize(key), RedisUtils.this.redisTemplate.getStringSerializer().serialize(value));
                 return true;
@@ -63,6 +64,7 @@ public class RedisUtils implements ApplicationContextAware {
 
     public boolean add(final String key, final Long expires, final String value) {
         Object obj = this.redisTemplate.execute(new RedisCallback<Object>() {
+            @Override
             public Object doInRedis(RedisConnection connection) throws DataAccessException {
                 connection.setEx(RedisUtils.this.redisTemplate.getStringSerializer().serialize(key), expires, RedisUtils.this.redisTemplate.getStringSerializer().serialize(value));
                 return true;
@@ -74,6 +76,7 @@ public class RedisUtils implements ApplicationContextAware {
     public boolean add(final Map<String, String> map) {
         Assert.notEmpty(map);
         boolean result = (Boolean)this.redisTemplate.execute(new RedisCallback<Boolean>() {
+            @Override
             public Boolean doInRedis(RedisConnection connection) throws DataAccessException {
                 RedisSerializer<String> serializer = RedisUtils.this.redisTemplate.getStringSerializer();
                 Iterator var3 = map.entrySet().iterator();
@@ -100,6 +103,7 @@ public class RedisUtils implements ApplicationContextAware {
             throw new NullPointerException("数据行不存在, key = " + key);
         } else {
             boolean result = (Boolean)this.redisTemplate.execute(new RedisCallback<Boolean>() {
+                @Override
                 public Boolean doInRedis(RedisConnection connection) throws DataAccessException {
                     RedisSerializer<String> serializer = RedisUtils.this.redisTemplate.getStringSerializer();
                     connection.set(serializer.serialize(key), serializer.serialize(value));
@@ -112,6 +116,7 @@ public class RedisUtils implements ApplicationContextAware {
 
     public Object get(final String keyId) {
         Object result = this.redisTemplate.execute(new RedisCallback<Object>() {
+            @Override
             public Object doInRedis(RedisConnection connection) throws DataAccessException {
                 RedisSerializer<String> serializer = RedisUtils.this.redisTemplate.getStringSerializer();
                 byte[] key = serializer.serialize(keyId);

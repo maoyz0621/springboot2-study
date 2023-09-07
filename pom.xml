@@ -74,7 +74,6 @@
         <module>springboot2-actuator</module>
         <module>springboot2-commandlinerunner</module>
         <module>swagger-springboot2</module>
-        <module>springboot2-helloworld</module>
         <module>springboot2-flyway</module>
         <module>maoyz-spring-boot</module>
         <module>springboot2-security</module>
@@ -114,6 +113,8 @@
         <module>springboot2-cycle</module>
         <module>springboot2-doris</module>
         <module>springboot2-clickhouse</module>
+        <module>springboot2-mybatis-plugin</module>
+        <module>distributed-id-generater</module>
     </modules>
 
     <properties>

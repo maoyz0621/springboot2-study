@@ -29,7 +29,7 @@
     <properties>
         <lock.core.version>0.0.1-SNAPSHOT</lock.core.version>
         <redis.spring.version>2.2.6.RELEASE</redis.spring.version>
-        <redisson.spring.version>3.11.0</redisson.spring.version>
+        <redisson.spring.version>3.23.3</redisson.spring.version>
         <zookeeper.version>3.5</zookeeper.version>
         <zookeeper.curator.version>4.1.0</zookeeper.curator.version>
     </properties>

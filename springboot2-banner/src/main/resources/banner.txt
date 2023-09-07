@@ -22,5 +22,6 @@ ${AnsiColor.BRIGHT_YELLOW}
 //            佛祖保佑       永不宕机     永无BUG                    //
 ////////////////////////////////////////////////////////////////////
 ${AnsiColor.BRIGHT_RED}
-Application Version: ${application.version}${application.formatted-version}
+Application Version: ${application.version}
+Application Name: ${spring.application.name}
 Spring Boot Version: ${spring-boot.version}${spring-boot.formatted-version}

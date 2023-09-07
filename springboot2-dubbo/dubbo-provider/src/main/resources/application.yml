@@ -6,5 +6,5 @@ spring:
     name: dubbo-auto-configure-consumer-sample
 
   profiles:
-#    active: base
-    active: zk
+    active: base
+#    active: zk

@@ -31,4 +31,10 @@ public class Springboot2CycleApplication {
 
     @Autowired
     private CycleB cycleB;
+
+    @Autowired
+    private CycleC cycleC;
+
+    @Autowired
+    private CycleD cycleD;
 }

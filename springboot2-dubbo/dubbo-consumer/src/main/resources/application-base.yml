@@ -17,3 +17,5 @@ dubbo:
   ## The default value of dubbo.application.name is ${spring.application.name}
   application:
     name: ${spring.application.name}
+  registry:
+    address: N/A

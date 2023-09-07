@@ -6,5 +6,5 @@ spring:
     name: dubbo-auto-configure-ProviderContextFilter-sample
 
   profiles:
-#    active: base
-    active: zk
+    active: base
+#    active: zk

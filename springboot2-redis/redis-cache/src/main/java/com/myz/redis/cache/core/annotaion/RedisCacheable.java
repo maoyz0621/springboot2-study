@@ -38,14 +38,17 @@ public class RedisCacheable implements Cache {
         this.expires = expires;
     }
 
+    @Override
     public String getName() {
         return this.name;
     }
 
+    @Override
     public Object getNativeCache() {
         return this.redisTemplate;
     }
 
+    @Override
     public ValueWrapper get(Object key) {
         Assert.notNull(key, "key is null");
         String keyRef = key.toString();
@@ -54,14 +57,15 @@ public class RedisCacheable implements Cache {
         return value != null ? new SimpleValueWrapper(value) : null;
     }
 
+    @Override
     public <T> T get(Object o, @Nullable Class<T> aClass) {
         return null;
     }
-
+    @Override
     public <T> T get(Object o, Callable<T> callable) {
         return null;
     }
-
+    @Override
     public void put(Object key, Object value) {
         Assert.notNull(key, "key is null");
         Assert.notNull(value, "value is null");
@@ -69,17 +73,17 @@ public class RedisCacheable implements Cache {
         BoundValueOperations<String, Object> operations = this.redisTemplate.boundValueOps(keyRef);
         operations.set(value, this.expires, TimeUnit.SECONDS);
     }
-
+    @Override
     public ValueWrapper putIfAbsent(Object o, @Nullable Object o1) {
         return null;
     }
-
+    @Override
     public void evict(Object key) {
         Assert.notNull(key, "key is null");
         String keyRef = key.toString();
         this.redisTemplate.getConnectionFactory().getConnection().del(new byte[][]{this.redisTemplate.getKeySerializer().serialize(keyRef)});
     }
-
+    @Override
     public void clear() {
         this.redisTemplate.execute((redisConnection) -> {
             redisConnection.flushDb();
