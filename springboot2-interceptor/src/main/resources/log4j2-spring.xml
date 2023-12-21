@@ -2,7 +2,7 @@
 <configuration status="OFF" monitorInterval="5">
     <Properties>
         <property name="LOG_PATH" value="/opt/logs"/>
-        <property name="LOG_NAME" value="log4j2-springboot2"/>
+        <property name="LOG_NAME" value="springboot2-interceptor"/>
         <property name="LOG_LEVEL" value="INFO"/>
 
         <!-- 自定义输出样式 -->

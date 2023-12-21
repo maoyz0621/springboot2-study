@@ -59,13 +59,10 @@
         <module>springboot2-task</module>
         <module>springboot2-value</module>
         <module>springboot2-validation</module>
-        <module>springboot2-mybatis</module>
         <module>springboot2-hikaricp</module>
-        <module>springboot2-mybatis-plus</module>
         <module>springboot2-servlet</module>
         <module>springboot2-jetty</module>
         <module>springboot2-mail</module>
-        <module>elasticsearch-springboot2</module>
         <module>springboot2-admin</module>
         <module>log4j-springboot2</module>
         <module>log4j2-springboot2</module>
@@ -79,42 +76,23 @@
         <module>springboot2-security</module>
         <module>springboot2-retry</module>
         <module>xxl-job</module>
-        <module>sharding-jdbc</module>
         <module>springboot2</module>
         <module>springboot2-aop</module>
-        <module>springboot2-zookeeper</module>
-        <module>springboot2-dubbo</module>
-        <module>springboot2-redis</module>
-        <module>project-template</module>
         <!--<module>springboot2-common</module>-->
         <module>springboot2-jdbcdoc</module>
-        <module>springboot2-mybatis-page</module>
         <module>springboot2-i18n</module>
-        <module>redis-springboot-starter</module>
         <module>springboot2-jackson</module>
         <module>springboot2-enableConfig</module>
         <module>springboot2-encrypt</module>
         <module>springboot2-quartz</module>
         <module>springboot2-quartz/quartz-spring</module>
-        <module>springboot2-binlog</module>
-        <module>springboot2-canal</module>
-        <module>springboot2-mybatis-encrypt</module>
-        <module>springboot2-mybatis-mysql-encrypt</module>
-        <module>springboot2-mybatis-plus-3.4</module>
         <module>springboot2-event</module>
         <module>health-check-client</module>
-        <module>elasticsearch-springboot2-plugin</module>
         <module>springboot2-interceptor</module>
-        <module>distributed-lock</module>
-        <module>distribute-lock-spring</module>
-        <module>springboot2-mongodb</module>
         <module>collapser</module>
         <module>springboot2-advice</module>
         <module>springboot2-cycle</module>
-        <module>springboot2-doris</module>
-        <module>springboot2-clickhouse</module>
-        <module>springboot2-mybatis-plugin</module>
-        <module>distributed-id-generater</module>
+        <module>springboot2-urls</module>
     </modules>
 
     <properties>

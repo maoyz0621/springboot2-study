@@ -1,3 +1,0 @@
-dubboexception=com.myz.dubbo.core.dubbo.filter.DubboExceptionFilter
-myConsumerContextFilter=com.myz.dubbo.core.dubbo.filter.MyConsumerContextFilter
-providerContextFilter=com.myz.dubbo.core.dubbo.filter.ProviderContextFilter

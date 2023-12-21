@@ -1,4 +1,0 @@
-# DataSource Config
-spring:
-  profiles:
-    active: test

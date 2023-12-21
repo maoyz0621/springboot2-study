@@ -11,10 +11,10 @@
     </parent>
 
     <groupId>com.myz</groupId>
-    <artifactId>springboot2-interceptor</artifactId>
+    <artifactId>springboot2-urls</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
-    <name>springboot2-interceptor</name>
+    <name>springboot2-urls</name>
 
     <properties>
 
@@ -27,20 +27,18 @@
         </dependency>
 
         <dependency>
+            <artifactId>springboot2-logging-starter</artifactId>
+            <groupId>com.myz</groupId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-log4j2</artifactId>
-        </dependency>
     </dependencies>
+
 
 </project>
