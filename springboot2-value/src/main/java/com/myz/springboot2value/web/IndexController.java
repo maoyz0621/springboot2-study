@@ -27,9 +27,16 @@ import java.util.Map;
 public class IndexController {
     private static final Logger logger = LoggerFactory.getLogger(IndexController.class);
 
+    /**
+     * 获取属性${}
+     */
     @Value("${web.user.name}")
     private String name;
 
+    /**
+     * SpEL表达式，读取bean对象的属性.
+     * 二者结合使用时（#{'${}'}），注意单引号，不能反过来。
+     */
     // list1: 1,2,3
     @Value("#{'${list1}'.split(',')}")
     private List<Integer> list1;

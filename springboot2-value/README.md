@@ -15,3 +15,11 @@
     
     @Value("#{${maps0}}")
     private Map<String, String> maps0;
+
+3、$ #
+
+
+配置文件对应的property：`${property : default_value}`
+
+SpEL表达式对应的内容：`#{obj.property? : default_value}`
+

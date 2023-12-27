@@ -1,0 +1,5 @@
+自定义不同的log日志文件记录相对应的信息
+
+使用Disruptor异步日志的时候，不要同时使用Log4jContextSelector=org.apache.logging.log4j.core.async.AsyncLoggerContextSelector和`<asyncRoot>`
+
+给RollingRandomAccessFile配置immediateFlush="false"属性，这样让I/O线程批量刷盘（这里其实涉及到native方法调用的性能问题）

@@ -85,6 +85,17 @@
                 <TimeBasedTriggeringPolicy/>
             </Policies>
         </RollingFile>
+
+        <!--自定义日志记录文件 -->
+        <RollingFile name="RUN" fileName="${LOG_PATH}/${LOG_NAME}/run.log"
+                     filePattern="logs/$${date:yyyy-MM}/api-%d{yyyy-MM-dd}-%i.log.gz">
+            <PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss}] %-5level %L %M - %msg%xEx%n"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="500 MB"/>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+        </RollingFile>
+
     </appenders>
 
     <loggers>
@@ -95,6 +106,11 @@
             <appender-ref ref="RollingFileError"/>
             <appender-ref ref="RollingFileDebug"/>
         </root>
+
+        <!--自定义日志记录文件 -->
+        <logger name="run" level="debug" additivity="false">
+            <appender-ref ref="RUN"/>
+        </logger>
 
         <!--记录druid-sql的记录-->
         <logger name="druid.sql.Statement" level="debug" additivity="false">
