@@ -77,6 +77,11 @@ public class IndexController {
         return name;
     }
 
+    @GetMapping("/")
+    public String port() {
+        return System.getProperty("server.port");
+    }
+
     @GetMapping("/prop")
     public String prop() {
         return prop.toString();
