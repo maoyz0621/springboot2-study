@@ -1,13 +1,23 @@
 management:
   endpoint:
+    metrics:
+      enabled: true
+    prometheus:
+        enabled: true
+        path: /prometheus
     info:
       enabled: true
     health:
       enabled: true
       show-details: always
-    shutdown:
-      enabled: true   # shutdown接口默认只支持 post 请求
-
+#    shutdown:
+#      enabled: true   # shutdown接口默认只支持 post 请求
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+    tags:
+      application: ${spring.application.name}
   endpoints:
     web:
       exposure:   # 暴露信息

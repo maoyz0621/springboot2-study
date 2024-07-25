@@ -1,0 +1,2 @@
+# 自动装配
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.myz.log.opt.config.OperationLogAutoConfiguration

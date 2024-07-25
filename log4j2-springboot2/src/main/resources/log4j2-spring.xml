@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<configuration status="OFF" monitorInterval="5">
+<!-- status是log4j2自身内部的信息输出，可以不设置
+     monitorInterval是自动检测修改配置文件和重新配置本身,设置间隔秒数
+-->
+<configuration status="WARN" monitorInterval="5">
     <Properties>
         <property name="LOG_PATH" value="/opt/logs"/>
         <property name="LOG_NAME" value="log4j2-springboot2"/>
@@ -7,14 +10,16 @@
 
         <!-- 自定义输出样式 -->
         <property name="CONSOLE_LOG_PATTERN"
-                  value="%date{yyyy-MM-dd HH:mm:ss} | %highlight(%-5level) | %boldYellow(%thread) | %boldGreen(%logger) | %msg%n"/>
+                  value="%d{yyyy-MM-dd HH:mm:ss.SSS} => [%thread] => %-5level %logger{50}:(%line) - %msg%n"/>
     </Properties>
     <appenders>
 
         <Console name="Console" target="SYSTEM_OUT">
-            <!--只接受程序中DEBUG级别的日志进行处理-->
+            <!-- 设置控制台只输出level及以上级别的信息(onMatch),其他的直接拒绝(onMismatch)-->
             <ThresholdFilter level="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
-            <PatternLayout pattern="[%d{HH:mm:ss.SSS}] %-5level %class{36} %L %M - %msg%xEx%n"/>
+            <!--pattern:日期,线程名,日志级别,日志名称,日志信息,换行 -->
+            <!--<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level [%L] - %msg%n"/>-->
+            <PatternLayout pattern="${CONSOLE_LOG_PATTERN}"/>
         </Console>
 
         <!--处理DEBUG级别的日志，并把该日志放到logs/debug.log文件中-->
@@ -28,9 +33,14 @@
             <PatternLayout
                     pattern="[%d{yyyy-MM-dd HH:mm:ss}] %-5level %class{36} %L %M - %msg%xEx%n"/>
             <Policies>
+                <!--    interval:设置为1,filePattern是%d{yyyy-MM-dd}到天的格式,则间隔一天生成一个文件,如果设置为12,filePattern是%d{yyyy-MM-dd-HH}到小时的格式,则间隔12小时生成一个文件
+                    modulate:日志默认同类型日志,为true将以0点为边界进行调整
+                -->
                 <SizeBasedTriggeringPolicy size="500 MB"/>
-                <TimeBasedTriggeringPolicy/>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
             </Policies>
+            <!-- 日志默认同一文件夹下可以存放的数量,不设置此属性则默认为7个 -->
+            <DefaultRolloverStrategy max="100"/>
         </RollingFile>
 
         <!--处理INFO级别的日志，并把该日志放到logs/info.log文件中-->
@@ -99,14 +109,6 @@
     </appenders>
 
     <loggers>
-        <root level="DEBUG">
-            <appender-ref ref="Console"/>
-            <appender-ref ref="RollingFileInfo"/>
-            <appender-ref ref="RollingFileWarn"/>
-            <appender-ref ref="RollingFileError"/>
-            <appender-ref ref="RollingFileDebug"/>
-        </root>
-
         <!--自定义日志记录文件 -->
         <logger name="run" level="debug" additivity="false">
             <appender-ref ref="RUN"/>
@@ -121,6 +123,10 @@
         </logger>
         <logger name="com.myz" level="debug" additivity="false">
             <appender-ref ref="Console"/>
+            <appender-ref ref="RollingFileInfo"/>
+            <appender-ref ref="RollingFileWarn"/>
+            <appender-ref ref="RollingFileError"/>
+            <appender-ref ref="RollingFileDebug"/>
         </logger>
 
         <!--log4j2 自带过滤日志-->
@@ -129,12 +135,18 @@
         <Logger name="org.apache.coyote.http11.Http11NioProtocol" level="warn"/>
         <logger name="org.apache.sshd.common.util.SecurityUtils" level="warn"/>
         <Logger name="org.apache.tomcat.util.net.NioSelectorPool" level="warn"/>
-        <Logger name="org.crsh.plugin" level="warn"/>
-        <logger name="org.crsh.ssh" level="warn"/>
         <Logger name="org.eclipse.jetty.util.component.AbstractLifeCycle" level="error"/>
         <Logger name="org.hibernate.validator.internal.util.Version" level="warn"/>
         <logger name="org.springframework.boot.actuate.autoconfigure.CrshAutoConfiguration" level="warn"/>
         <logger name="org.springframework.boot.actuate.endpoint.jmx" level="warn"/>
         <logger name="org.thymeleaf" level="warn"/>
+
+        <root level="DEBUG">
+            <appender-ref ref="Console"/>
+            <!--<appender-ref ref="RollingFileInfo"/>-->
+            <!--<appender-ref ref="RollingFileWarn"/>-->
+            <!--<appender-ref ref="RollingFileError"/>-->
+            <!--<appender-ref ref="RollingFileDebug"/>-->
+        </root>
     </loggers>
 </configuration>

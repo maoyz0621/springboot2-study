@@ -8,6 +8,8 @@
         <module>log-aspect</module>
         <module>log-aop</module>
         <module>log-example</module>
+        <module>log-record</module>
+        <module>log-record-starter</module>
     </modules>
     <parent>
         <artifactId>springboot2-study</artifactId>

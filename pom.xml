@@ -93,6 +93,10 @@
         <module>springboot2-advice</module>
         <module>springboot2-cycle</module>
         <module>springboot2-urls</module>
+        <module>springboot2-aop/log-record</module>
+        <module>springboot2-aop/log-record-starter</module>
+        <module>springboot2-aop/log-opt</module>
+        <module>springboot2-aop/log-opt-starter</module>
     </modules>
 
     <properties>

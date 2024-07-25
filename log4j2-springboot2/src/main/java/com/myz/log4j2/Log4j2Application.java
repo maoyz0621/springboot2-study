@@ -12,8 +12,9 @@ public class Log4j2Application {
     private static final Logger log = LoggerFactory.getLogger("run");
 
     public static void main(String[] args) {
+        log.info("***************** Log4j2Application start **********************");
         SpringApplication.run(Log4j2Application.class, args);
-        log.info("***************** start **********************");
+        log.info("***************** Log4j2Application success **********************");
     }
 
 }
