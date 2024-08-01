@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
     <parent>
         <groupId>com.myz</groupId>
         <artifactId>project-boot</artifactId>
@@ -97,6 +96,7 @@
         <module>springboot2-aop/log-record-starter</module>
         <module>springboot2-aop/log-opt</module>
         <module>springboot2-aop/log-opt-starter</module>
+        <module>springboot2-start-time</module>
     </modules>
 
     <properties>
